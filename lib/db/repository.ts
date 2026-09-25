@@ -257,15 +257,40 @@ export class InMemoryRepository implements IRepository {
   }
 }
 
+import {
+  SEED_PERSONS,
+  SEED_CASES,
+  SEED_CONSENTS,
+  SEED_CHECKINS,
+  SEED_ASSESSMENTS,
+} from "@/scripts/fixtures";
+
 // Singleton repository holder
 let globalRepo: IRepository | null = null;
+
+export function createDefaultSeededRepository(): InMemoryRepository {
+  const repo = new InMemoryRepository();
+  repo.seed({
+    persons: JSON.parse(JSON.stringify(SEED_PERSONS)),
+    cases: JSON.parse(JSON.stringify(SEED_CASES)),
+    consents: JSON.parse(JSON.stringify(SEED_CONSENTS)),
+    checkins: JSON.parse(JSON.stringify(SEED_CHECKINS)),
+    assessments: JSON.parse(JSON.stringify(SEED_ASSESSMENTS)),
+  });
+  return repo;
+}
 
 export function getRepository(): IRepository {
   if (!globalRepo) {
     // Note: If Supabase credentials are present, SupabaseRepository can be returned.
-    // For universal portability, development, and unit testing, InMemoryRepository is initialized.
-    globalRepo = new InMemoryRepository();
+    // For universal portability, development, and unit testing, InMemoryRepository is initialized with default seeds.
+    globalRepo = createDefaultSeededRepository();
   }
+  return globalRepo;
+}
+
+export function resetRepository(): IRepository {
+  globalRepo = createDefaultSeededRepository();
   return globalRepo;
 }
 
