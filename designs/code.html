@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_standard" name="shell-type"/>
+<title>Havenline Support - Safe, Confidential Crisis Support</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body { margin:0; padding:0; }
+      body { overscroll-behavior:none; font-feature-settings: "cv02", "cv03", "cv04", "cv11"; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#206140",
+            "primary-container": "#2f724f",
+            "primary-light": "#e8f3ec",
+            "on-primary": "#ffffff",
+            "secondary": "#475569",
+            "secondary-container": "#e2e8f0",
+            "surface": "#f8fafc",
+            "surface-card": "#ffffff",
+            "surface-dim": "#f1f5f9",
+            "surface-container-high": "#e2e8f0",
+            "on-surface": "#0f172a",
+            "on-surface-variant": "#475569",
+            "outline": "#cbd5e1",
+            "outline-subtle": "#e2e8f0",
+            "tertiary": "#8e3d22",
+            "tertiary-light": "#fef2ee"
+          },
+          fontFamily: {
+            sans: ['Inter', -apple-system, 'BlinkMacSystemFont', 'Helvetica Neue', 'Arial', 'sans-serif'],
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface font-sans text-on-surface antialiased selection:bg-primary-light selection:text-primary min-h-screen flex flex-col">
+<!-- Persistent Header with Safe Browsing and Quick Exit -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-outline-subtle">
+<div class="max-w-6xl mx-auto px-6">
+<!-- 24/7 Hotline Quick Notice Sub-bar -->
+<div class="h-9 py-1 flex items-center justify-between border-b border-slate-100 text-xs text-on-surface-variant">
+<div class="flex items-center gap-3">
+<span class="inline-flex items-center gap-1.5 font-medium text-slate-700">
+<span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+            24/7 Free &amp; Confidential Support:
+          </span>
+<a class="font-semibold text-primary hover:text-emerald-800 transition-colors" href="tel:988">Call or Text 988</a>
+<span class="text-slate-300">•</span>
+<a class="hover:text-slate-900 transition-colors hidden sm:inline" href="tel:18002738255">1-800-273-TALK</a>
+</div>
+<div class="flex items-center gap-3">
+<span class="hidden md:inline-flex items-center gap-1 text-slate-500 font-medium">
+<span class="material-symbols-outlined text-[15px] text-primary">verified_user</span>
+            Safe connection
+          </span>
+<a class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-rose-50 text-rose-700 font-medium hover:bg-rose-100 transition-colors text-xs" href="https://weather.com" rel="nofollow noreferrer" title="Instantly leave this site">
+<span class="material-symbols-outlined text-[14px]">close</span>
+<span>Quick Exit</span>
+<kbd class="text-[10px] font-mono px-1 rounded bg-white text-slate-600 border border-rose-200">ESC</kbd>
+</a>
+</div>
+</div>
+<!-- Main Navigation Bar -->
+<div class="h-16 flex items-center justify-between">
+<div class="flex items-center gap-8">
+<a class="flex items-center gap-2.5 group" data-path="get-immediate-help" href="#">
+<img alt="Havenline Logo" class="h-8 w-8 object-contain rounded-lg" src="https://lh3.googleusercontent.com/aida/AEtjO1XtA3qHdJ5-HsXewvfAT4Dzahou5uoZRmRKvayGV4H455hvRFWHfmrl0eIk59JesSvGTjIRA8k4CDFwhqtp8kc4bdo-qvN9EjW-zZIFzwpSDL-GZvuNeSnfi1i59oiqbnvH0jKVHZqtly2vgMxAqs4BDgg7fqwdPIKiMaYg58V6MOOt_huRQZJMVPVbnP4ZwL_3Ako5QgoAvNByrXFh5J12phgZWNlp3umtsREaUyEzF5MS0_eXQsw8REg"/>
+<span class="text-lg font-semibold tracking-tight text-slate-900">Havenline</span>
+</a>
+<nav class="hidden lg:flex items-center gap-1 text-sm font-medium text-slate-600">
+<a aria-current="page" class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-900 font-semibold" data-path="get-immediate-help" href="#">Get Immediate Help</a>
+<a class="px-3 py-1.5 rounded-lg hover:text-slate-900 hover:bg-slate-50 transition-colors" data-path="how-it-works" href="#">How It Works</a>
+<a class="px-3 py-1.5 rounded-lg hover:text-slate-900 hover:bg-slate-50 transition-colors" data-path="self-care-resources" href="#">Self-Care &amp; Guides</a>
+<a class="px-3 py-1.5 rounded-lg hover:text-slate-900 hover:bg-slate-50 transition-colors" data-path="about-our-listeners" href="#">Our Listeners</a>
+<a class="px-3 py-1.5 rounded-lg hover:text-slate-900 hover:bg-slate-50 transition-colors" data-path="find-local-services" href="#">Local Support</a>
+</nav>
+</div>
+<div class="flex items-center gap-3">
+<button aria-label="Toggle discreet screen mode" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition-colors" title="Discreet screen mode" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility_off</span>
+</button>
+<a class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-white text-sm font-medium hover:bg-emerald-800 transition-colors shadow-sm" data-path="private-crisis-chat" href="#">
+<span class="material-symbols-outlined text-[18px]">chat_bubble</span>
+<span>Start Private Chat</span>
+</a>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Flow -->
+<main class="w-full pt-28 flex-grow">
+<!-- Hero Section: Balanced, Calm, Immediate Access Above Fold -->
+<section class="w-full pt-6 pb-12 md:pb-16 bg-gradient-to-b from-emerald-50/40 via-surface to-surface">
+<div class="max-w-6xl mx-auto px-6">
+<!-- Live status bar -->
+<div class="flex items-center justify-between mb-8 pb-3 border-b border-slate-200/80 text-xs sm:text-sm text-slate-600">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+<span class="font-medium text-slate-900">Listeners active and ready</span>
+<span class="text-slate-400">•</span>
+<span class="text-slate-500">Wait time under 60 seconds</span>
+</div>
+<div class="hidden sm:flex items-center gap-4 text-xs text-slate-500">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px] text-emerald-700">lock</span> Fully Anonymous</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px] text-emerald-700">volunteer_activism</span> 100% Free</span>
+</div>
+</div>
+<!-- Headline & Calming Narrative -->
+<div class="max-w-3xl mb-8">
+<h1 class="text-3xl md:text-5xl font-semibold tracking-tight text-slate-900 leading-tight md:leading-[1.15] mb-4">
+            You do not have to carry this alone.
+          </h1>
+<p class="text-base md:text-lg text-slate-600 leading-relaxed max-w-2xl font-normal">
+            Free, confidential crisis guidance available 24 hours a day. Talk with an empathetic trained listener at whatever pace feels manageable.
+          </p>
+</div>
+<!-- 3 Primary Contact Channels (Clean, Uniform, Elevated Cards) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Channel 1: Phone Support -->
+<div class="bg-surface-card rounded-2xl p-6 border border-slate-200/90 shadow-sm hover:border-slate-300 transition-all flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-4">
+<div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">call</span>
+</div>
+<span class="text-xs font-medium text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">Wait: Under 1m</span>
+</div>
+<h2 class="text-lg font-semibold text-slate-900 mb-2">Call Confidential Line</h2>
+<p class="text-sm text-slate-600 leading-relaxed mb-6 font-normal">
+                Direct voice connection with an accredited crisis counselor. Safe, warm, and zero pressure to speak quickly.
+              </p>
+</div>
+<div>
+<a class="w-full h-12 rounded-xl bg-primary hover:bg-emerald-800 text-white flex items-center justify-center gap-2 text-sm font-semibold transition-colors shadow-sm" href="tel:988">
+<span class="material-symbols-outlined text-[19px]">phone_in_talk</span>
+<span>Call 988 or 1-800-273</span>
+</a>
+<p class="text-center text-xs text-slate-500 mt-2 font-normal">Toll-free across North America</p>
+</div>
+</div>
+<!-- Channel 2: Live Web Chat -->
+<div class="bg-surface-card rounded-2xl p-6 border border-slate-200/90 shadow-sm hover:border-slate-300 transition-all flex flex-col justify-between relative ring-1 ring-emerald-600/10">
+<div>
+<div class="flex items-center justify-between mb-4">
+<div class="w-11 h-11 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">forum</span>
+</div>
+<span class="text-xs font-semibold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-full">Most Discreet</span>
+</div>
+<h2 class="text-lg font-semibold text-slate-900 mb-2">Live Web Chat</h2>
+<p class="text-sm text-slate-600 leading-relaxed mb-6 font-normal">
+                Completely anonymous browser dialogue. No personal info needed, and messages leave zero footprint when closed.
+              </p>
+</div>
+<div>
+<a class="w-full h-12 rounded-xl bg-slate-800 hover:bg-slate-900 text-white flex items-center justify-center gap-2 text-sm font-semibold transition-colors shadow-sm" data-path="private-crisis-chat" href="#">
+<span class="material-symbols-outlined text-[19px]">chat</span>
+<span>Start Anonymous Chat</span>
+</a>
+<p class="text-center text-xs text-slate-500 mt-2 font-normal">Opens isolated secure sandbox</p>
+</div>
+</div>
+<!-- Channel 3: Text Support -->
+<div class="bg-surface-card rounded-2xl p-6 border border-slate-200/90 shadow-sm hover:border-slate-300 transition-all flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-4">
+<div class="w-11 h-11 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">sms</span>
+</div>
+<span class="text-xs font-medium text-slate-600 bg-slate-100 px-2.5 py-1 rounded-full">Silent Text</span>
+</div>
+<h2 class="text-lg font-semibold text-slate-900 mb-2">Text With Us</h2>
+<p class="text-sm text-slate-600 leading-relaxed mb-6 font-normal">
+                Text quietly from any mobile phone without needing audio. Ideal if you are near others and cannot speak aloud.
+              </p>
+</div>
+<div>
+<a class="w-full h-12 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-900 flex items-center justify-center gap-2 text-sm font-semibold transition-colors" href="sms:741741?body=HOME">
+<span class="material-symbols-outlined text-[19px]">send</span>
+<span>Text HOME to 741741</span>
+</a>
+<p class="text-center text-xs text-slate-500 mt-2 font-normal">Standard mobile SMS rates apply</p>
+</div>
+</div>
+</div>
+<!-- Trust Badges Strip -->
+<div class="mt-8 pt-6 border-t border-slate-200/70 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs text-slate-600 font-medium">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[17px] text-emerald-700">verified_user</span>
+<span>100% Confidential</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[17px] text-emerald-700">favorite</span>
+<span>Zero Judgment</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[17px] text-emerald-700">savings</span>
+<span>Free Forever</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[17px] text-emerald-700">person_off</span>
+<span>No Account Required</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Grounding Breathing Tool & Pre-Contact Questions -->
+<section class="w-full py-16 bg-slate-100/70 border-y border-slate-200/70">
+<div class="max-w-6xl mx-auto px-6">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Box Breathing Widget -->
+<div class="lg:col-span-5 bg-white rounded-2xl p-7 border border-slate-200 shadow-sm flex flex-col justify-between">
+<div>
+<h2 class="text-xl font-semibold tracking-tight text-slate-900 mb-2">Need a moment to breathe first?</h2>
+<p class="text-sm text-slate-600 leading-relaxed mb-6 font-normal">
+                Take thirty seconds to calm your nervous system. There is no urgency to interact until you feel steady.
+              </p>
+</div>
+<!-- Wave & Box Breathing Animation Display -->
+<div class="w-full py-8 px-4 rounded-xl bg-slate-50 border border-slate-100 flex flex-col items-center justify-center relative overflow-hidden">
+<svg class="absolute inset-0 w-full h-full opacity-10 pointer-events-none" fill="none" viewbox="0 0 400 200">
+<path d="M0 100 C 100 60, 150 140, 250 100 C 350 60, 380 120, 400 100" fill="none" stroke="#206140" stroke-width="3"></path>
+</svg>
+<div class="relative w-36 h-36 flex items-center justify-center">
+<div class="absolute inset-0 rounded-full bg-emerald-100 transition-all duration-1000 ease-in-out" id="breathRing"></div>
+<div class="w-24 h-24 rounded-full bg-primary text-white flex flex-col items-center justify-center shadow-sm z-10 transition-transform duration-1000" id="breathCore">
+<span class="text-xs font-semibold uppercase tracking-wider" id="breathPhase">Inhale</span>
+<span class="text-xl font-bold mt-0.5" id="breathCounter">4s</span>
+</div>
+</div>
+<div class="mt-5 flex items-center gap-3">
+<button class="px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-medium flex items-center gap-1.5 transition-colors shadow-2xs" id="toggleBreathBtn">
+<span class="material-symbols-outlined text-[15px]" id="breathPlayIcon">pause</span>
+<span id="breathBtnText">Pause</span>
+</button>
+<span class="text-slate-500 text-xs">Box rhythm (4-4-4)</span>
+</div>
+</div>
+<div class="mt-6 flex items-start gap-2.5 text-xs text-slate-500 bg-slate-50 p-3 rounded-lg border border-slate-100">
+<span class="material-symbols-outlined text-emerald-700 text-[18px] shrink-0">spa</span>
+<span>Take all the time you need. Our team remains on the line whenever you are ready.</span>
+</div>
+</div>
+<!-- Common Thoughts & Concerns (Accordion Accordion) -->
+<div class="lg:col-span-7 flex flex-col justify-between">
+<div class="mb-6">
+<h2 class="text-2xl font-semibold tracking-tight text-slate-900 mb-2">Common thoughts before reaching out</h2>
+<p class="text-sm text-slate-600 font-normal">It is entirely normal to feel hesitant. Here is what to expect.</p>
+</div>
+<div class="space-y-3.5">
+<!-- Item 1 -->
+<details class="group bg-white rounded-2xl p-5 border border-slate-200 shadow-sm transition-all" open="">
+<summary class="flex items-center justify-between cursor-pointer list-none text-base font-semibold text-slate-900">
+<span class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-md bg-emerald-50 text-emerald-700 flex items-center justify-center text-xs font-bold">1</span>
+                    What if I do not know what to say?
+                  </span>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform text-[20px]">expand_more</span>
+</summary>
+<div class="pt-3 pl-9 text-sm text-slate-600 leading-relaxed font-normal">
+                  You do not need a structured story. You can begin with "I feel overwhelmed" or even a single word. Our listeners are trained to help guide the pace calmly and without pressure.
+                </div>
+</details>
+<!-- Item 2 -->
+<details class="group bg-white rounded-2xl p-5 border border-slate-200 shadow-sm transition-all">
+<summary class="flex items-center justify-between cursor-pointer list-none text-base font-semibold text-slate-900">
+<span class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-md bg-emerald-50 text-emerald-700 flex items-center justify-center text-xs font-bold">2</span>
+                    Is this genuinely confidential?
+                  </span>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform text-[20px]">expand_more</span>
+</summary>
+<div class="pt-3 pl-9 text-sm text-slate-600 leading-relaxed font-normal">
+                  Yes. Your IP is scrubbed immediately, conversations are not recorded or sold, and you do not need to provide a name, email address, or phone number.
+                </div>
+</details>
+<!-- Item 3 -->
+<details class="group bg-white rounded-2xl p-5 border border-slate-200 shadow-sm transition-all">
+<summary class="flex items-center justify-between cursor-pointer list-none text-base font-semibold text-slate-900">
+<span class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-md bg-emerald-50 text-emerald-700 flex items-center justify-center text-xs font-bold">3</span>
+                    What happens the moment we connect?
+                  </span>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform text-[20px]">expand_more</span>
+</summary>
+<div class="pt-3 pl-9 text-sm text-slate-600 leading-relaxed font-normal">
+                  A trained human listener will greet you warmly and ask how you are doing today. There are no mandatory surveys or clinical checkboxes. If you need quiet moments, they will stay present with you.
+                </div>
+</details>
+</div>
+<div class="mt-6 p-4 rounded-xl bg-white border border-slate-200 flex items-center justify-between">
+<span class="text-sm text-slate-600">Prefer self-guided comfort exercises first?</span>
+<a class="text-sm font-semibold text-primary hover:text-emerald-800 flex items-center gap-1" data-path="self-care-resources" href="#">
+<span>Browse grounding library</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Empathetic Listeners Feature Section -->
+<section class="w-full py-16">
+<div class="max-w-6xl mx-auto px-6">
+<div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-8 md:p-12">
+<!-- Listener Image -->
+<div class="lg:col-span-5 relative">
+<div class="aspect-square rounded-2xl overflow-hidden shadow-sm border border-slate-100">
+<img alt="Elena V., Senior Crisis Listener" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1UgvHX27zRIdZM5p4RJnnu2yDPjjhfLxvsECjM-6Tt8OxLtptUDN9WNgkuZM_Wl54MWupED5hyVXyCnNXc0Mu_-SeQGB-nMwv8VA3a9itwn9DiEv5f6qffikdmcZRS680C1mSbA4kMJsL7cHsYV31-h4vH_9pFzuJ7i3zCUerjTuFzi4wVnr0CgqpCNTQrZ0Ire1mdjLGv6FA2jcL8BprY0LeS8K3_RweN917kBuQujdOIN3o07_nIZ6lo"/>
+</div>
+<div class="absolute -bottom-3 right-4 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-xl shadow-md border border-slate-200 flex items-center gap-2.5">
+<span class="material-symbols-outlined text-emerald-700 text-[20px]">verified</span>
+<div>
+<span class="block text-xs font-bold text-slate-900 leading-tight">Elena V.</span>
+<span class="block text-[11px] text-slate-500 leading-tight">Accredited Listener • 4 yrs</span>
+</div>
+</div>
+</div>
+<!-- Listener Philosophy & Rigorous Standards -->
+<div class="lg:col-span-7 flex flex-col justify-center">
+<h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-slate-900 leading-snug mb-4">
+                "We listen without judgment, and we always move at your pace."
+              </h2>
+<p class="text-base text-slate-600 font-normal leading-relaxed mb-8">
+                In difficult moments, having someone listen with patience and empathy changes everything. Our listeners are rigorously trained humans, dedicated to being present when life feels heavy.
+              </p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+<span class="material-symbols-outlined text-emerald-700 text-[22px] mb-1.5 block">school</span>
+<h3 class="text-sm font-semibold text-slate-900">200+ Hours</h3>
+<p class="text-xs text-slate-500 mt-1 font-normal leading-relaxed">Comprehensive crisis intervention training.</p>
+</div>
+<div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+<span class="material-symbols-outlined text-emerald-700 text-[22px] mb-1.5 block">verified_user</span>
+<h3 class="text-sm font-semibold text-slate-900">Thoroughly Vetted</h3>
+<p class="text-xs text-slate-500 mt-1 font-normal leading-relaxed">Verified background and ethics certification.</p>
+</div>
+<div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+<span class="material-symbols-outlined text-emerald-700 text-[22px] mb-1.5 block">psychology</span>
+<h3 class="text-sm font-semibold text-slate-900">Trauma-Informed</h3>
+<p class="text-xs text-slate-500 mt-1 font-normal leading-relaxed">Gentle de-escalation with non-intrusive support.</p>
+</div>
+</div>
+<div class="mt-8 flex items-center gap-2">
+<a class="text-sm font-semibold text-primary hover:text-emerald-800 flex items-center gap-1.5 transition-colors" data-path="about-our-listeners" href="#">
+<span>Learn about our listener standards</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Guided Support Pathways -->
+<section class="w-full py-16 bg-slate-50 border-t border-slate-200">
+<div class="max-w-6xl mx-auto px-6">
+<div class="max-w-2xl mb-10">
+<h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-slate-900 mb-2">What brings you here today?</h2>
+<p class="text-base text-slate-600 font-normal">
+            Select what you are experiencing right now. We tailor our dialogue to fit what you need most.
+          </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<a class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-slate-300 hover:shadow transition-all group flex flex-col justify-between" data-path="get-immediate-help" href="#">
+<div>
+<div class="w-10 h-10 rounded-xl bg-slate-100 text-emerald-800 flex items-center justify-center mb-4 group-hover:bg-emerald-50 transition-colors">
+<span class="material-symbols-outlined text-[22px]">air</span>
+</div>
+<h3 class="text-base font-semibold text-slate-900 mb-1.5">Anxiety &amp; Panic</h3>
+<p class="text-xs text-slate-600 leading-relaxed font-normal mb-4">
+                Racing thoughts, tight chest sensations, sensory overload, or feelings of spiraling.
+              </p>
+</div>
+<span class="text-xs font-semibold text-primary flex items-center gap-1">
+              Talk through panic <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</span>
+</a>
+<a class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-slate-300 hover:shadow transition-all group flex flex-col justify-between" data-path="get-immediate-help" href="#">
+<div>
+<div class="w-10 h-10 rounded-xl bg-slate-100 text-emerald-800 flex items-center justify-center mb-4 group-hover:bg-emerald-50 transition-colors">
+<span class="material-symbols-outlined text-[22px]">person_pin_circle</span>
+</div>
+<h3 class="text-base font-semibold text-slate-900 mb-1.5">Loneliness &amp; Isolation</h3>
+<p class="text-xs text-slate-600 leading-relaxed font-normal mb-4">
+                Feeling detached, without anyone who understands, or simply seeking a sincere voice.
+              </p>
+</div>
+<span class="text-xs font-semibold text-primary flex items-center gap-1">
+              Find connection <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</span>
+</a>
+<a class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-slate-300 hover:shadow transition-all group flex flex-col justify-between" data-path="get-immediate-help" href="#">
+<div>
+<div class="w-10 h-10 rounded-xl bg-slate-100 text-emerald-800 flex items-center justify-center mb-4 group-hover:bg-emerald-50 transition-colors">
+<span class="material-symbols-outlined text-[22px]">cloud</span>
+</div>
+<h3 class="text-base font-semibold text-slate-900 mb-1.5">Depression &amp; Heavy Thoughts</h3>
+<p class="text-xs text-slate-600 leading-relaxed font-normal mb-4">
+                Numbness, loss of energy, feeling ungrounded, or wondering if things will ever lighten.
+              </p>
+</div>
+<span class="text-xs font-semibold text-primary flex items-center gap-1">
+              Share the weight <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</span>
+</a>
+<a class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-slate-300 hover:shadow transition-all group flex flex-col justify-between" data-path="get-immediate-help" href="#">
+<div>
+<div class="w-10 h-10 rounded-xl bg-slate-100 text-emerald-800 flex items-center justify-center mb-4 group-hover:bg-emerald-50 transition-colors">
+<span class="material-symbols-outlined text-[22px]">diversity_1</span>
+</div>
+<h3 class="text-base font-semibold text-slate-900 mb-1.5">Relationship &amp; Family Stress</h3>
+<p class="text-xs text-slate-600 leading-relaxed font-normal mb-4">
+                Home tension, heartbreak, emotional burnout, or challenges setting healthy personal boundaries.
+              </p>
+</div>
+<span class="text-xs font-semibold text-primary flex items-center gap-1">
+              Untangle the tension <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</span>
+</a>
+<a class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-slate-300 hover:shadow transition-all group flex flex-col justify-between" data-path="get-immediate-help" href="#">
+<div>
+<div class="w-10 h-10 rounded-xl bg-slate-100 text-emerald-800 flex items-center justify-center mb-4 group-hover:bg-emerald-50 transition-colors">
+<span class="material-symbols-outlined text-[22px]">yard</span>
+</div>
+<h3 class="text-base font-semibold text-slate-900 mb-1.5">Grief &amp; Loss</h3>
+<p class="text-xs text-slate-600 leading-relaxed font-normal mb-4">
+                Coping with the loss of a loved one, a life stage, an identity, or an unexpected change.
+              </p>
+</div>
+<span class="text-xs font-semibold text-primary flex items-center gap-1">
+              Hold space with us <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</span>
+</a>
+<a class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-slate-300 hover:shadow transition-all group flex flex-col justify-between" data-path="get-immediate-help" href="#">
+<div>
+<div class="w-10 h-10 rounded-xl bg-slate-100 text-emerald-800 flex items-center justify-center mb-4 group-hover:bg-emerald-50 transition-colors">
+<span class="material-symbols-outlined text-[22px]">supervised_user_circle</span>
+</div>
+<h3 class="text-base font-semibold text-slate-900 mb-1.5">Supporting a Loved One</h3>
+<p class="text-xs text-slate-600 leading-relaxed font-normal mb-4">
+                Practical words, safety guidance, and caregiver emotional support when you are helping someone in crisis.
+              </p>
+</div>
+<span class="text-xs font-semibold text-primary flex items-center gap-1">
+              Learn how to help <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Strict Privacy & Safety Architecture -->
+<section class="w-full py-16">
+<div class="max-w-6xl mx-auto px-6">
+<div class="bg-white rounded-2xl p-8 md:p-12 border border-slate-200 shadow-sm">
+<div class="max-w-2xl mb-8">
+<h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-slate-900 mb-2">Our strict privacy guarantee</h2>
+<p class="text-base text-slate-600 font-normal">
+              In crisis support, trust is paramount. We treat complete anonymity as an absolute fundamental right.
+            </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="p-6 rounded-xl bg-slate-50 border border-slate-100">
+<div class="w-10 h-10 rounded-lg bg-white border border-slate-200 text-emerald-700 flex items-center justify-center mb-4 shadow-2xs">
+<span class="material-symbols-outlined text-[20px]">vpn_key</span>
+</div>
+<h3 class="text-base font-semibold text-slate-900 mb-1.5">Your IP is never logged</h3>
+<p class="text-xs text-slate-600 leading-relaxed font-normal">
+                Every connection passes through an instantaneous scrubbing reverse proxy. We store zero geolocation data or device markers.
+              </p>
+</div>
+<div class="p-6 rounded-xl bg-slate-50 border border-slate-100">
+<div class="w-10 h-10 rounded-lg bg-white border border-slate-200 text-emerald-700 flex items-center justify-center mb-4 shadow-2xs">
+<span class="material-symbols-outlined text-[20px]">delete_sweep</span>
+</div>
+<h3 class="text-base font-semibold text-slate-900 mb-1.5">No transcripts retained</h3>
+<p class="text-xs text-slate-600 leading-relaxed font-normal">
+                Once a chat or call ends, session memory is wiped instantly and permanently. No saved archives or call transcripts exist.
+              </p>
+</div>
+<div class="p-6 rounded-xl bg-slate-50 border border-slate-100">
+<div class="w-10 h-10 rounded-lg bg-white border border-slate-200 text-emerald-700 flex items-center justify-center mb-4 shadow-2xs">
+<span class="material-symbols-outlined text-[20px]">exit_to_app</span>
+</div>
+<h3 class="text-base font-semibold text-slate-900 mb-1.5">One-click instant exit</h3>
+<p class="text-xs text-slate-600 leading-relaxed font-normal">
+                Press the <kbd class="px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-700 font-mono text-[11px]">ESC</kbd> key or tap Quick Exit at any time to immediately replace this site with a neutral forecast page.
+              </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Local Physical Support Directory -->
+<section class="w-full py-16 bg-slate-50 border-t border-slate-200">
+<div class="max-w-6xl mx-auto px-6">
+<div class="bg-white rounded-2xl p-8 md:p-12 border border-slate-200 shadow-sm">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+<div class="lg:col-span-7">
+<h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-slate-900 mb-2">Find in-person help near you</h2>
+<p class="text-base text-slate-600 font-normal leading-relaxed mb-6">
+                Looking for shelter, meal programs, walk-in mental health clinics, or crisis response centers? Search our confidential community directory.
+              </p>
+<form class="flex flex-col sm:flex-row items-center gap-3" onsubmit="event.preventDefault();">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
+<input class="w-full h-12 pl-11 pr-4 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-emerald-600 focus:bg-white transition-all text-sm" placeholder="Enter city or postal code (e.g. Chicago or 60601)" type="text"/>
+</div>
+<button class="w-full sm:w-auto h-12 px-6 rounded-xl bg-primary hover:bg-emerald-800 text-white font-semibold text-sm whitespace-nowrap transition-colors flex items-center justify-center gap-2" type="submit">
+<span>Search</span>
+<span class="material-symbols-outlined text-[18px]">near_me</span>
+</button>
+</form>
+<p class="mt-2 text-xs text-slate-500 font-normal">Searches are processed anonymously and never recorded.</p>
+</div>
+<div class="lg:col-span-5 flex flex-col gap-3">
+<div class="flex items-center gap-3.5 p-3.5 rounded-xl bg-slate-50 border border-slate-100">
+<div class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-800 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">night_shelter</span>
+</div>
+<div>
+<span class="text-sm font-semibold text-slate-900 block leading-tight">Emergency Shelters</span>
+<span class="text-xs text-slate-500 block leading-tight mt-0.5 font-normal">Safe, non-punitive overnight beds</span>
+</div>
+</div>
+<div class="flex items-center gap-3.5 p-3.5 rounded-xl bg-slate-50 border border-slate-100">
+<div class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-800 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">medical_services</span>
+</div>
+<div>
+<span class="text-sm font-semibold text-slate-900 block leading-tight">Walk-In Clinics</span>
+<span class="text-xs text-slate-500 block leading-tight mt-0.5 font-normal">Sliding-scale and free community health</span>
+</div>
+</div>
+<div class="flex items-center gap-3.5 p-3.5 rounded-xl bg-slate-50 border border-slate-100">
+<div class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-800 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">local_dining</span>
+</div>
+<div>
+<span class="text-sm font-semibold text-slate-900 block leading-tight">Food Pantries &amp; Meals</span>
+<span class="text-xs text-slate-500 block leading-tight mt-0.5 font-normal">No-question nutritional aid</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Comprehensive Footer -->
+<footer class="w-full bg-white border-t border-slate-200">
+<div class="max-w-6xl mx-auto px-6 py-12 flex flex-col gap-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-4">
+<!-- Logo & Mission -->
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-2">
+<img alt="Havenline" class="h-6 w-6 object-contain rounded-md" src="https://lh3.googleusercontent.com/aida/AEtjO1XtA3qHdJ5-HsXewvfAT4Dzahou5uoZRmRKvayGV4H455hvRFWHfmrl0eIk59JesSvGTjIRA8k4CDFwhqtp8kc4bdo-qvN9EjW-zZIFzwpSDL-GZvuNeSnfi1i59oiqbnvH0jKVHZqtly2vgMxAqs4BDgg7fqwdPIKiMaYg58V6MOOt_huRQZJMVPVbnP4ZwL_3Ako5QgoAvNByrXFh5J12phgZWNlp3umtsREaUyEzF5MS0_eXQsw8REg"/>
+<span class="text-base font-semibold text-slate-900">Havenline</span>
+</div>
+<p class="text-xs text-slate-500 leading-relaxed font-normal">
+            A free, non-judgmental crisis sanctuary providing continuous human emotional support around the clock.
+          </p>
+</div>
+<!-- Crisis Hotlines -->
+<div class="flex flex-col gap-2">
+<span class="text-xs font-semibold text-slate-900 uppercase tracking-wider">Immediate Crisis Lines</span>
+<div class="flex flex-col gap-1.5 text-xs">
+<a class="text-emerald-800 font-medium hover:underline" href="tel:988">988 Lifeline (Call or Text)</a>
+<a class="text-slate-600 hover:text-slate-900" href="sms:741741">Crisis Text Line: HOME to 741741</a>
+<a class="text-slate-600 hover:text-slate-900" href="tel:18664887386">The Trevor Project: 1-866-488-7386</a>
+<a class="text-slate-600 hover:text-slate-900" href="tel:18007997233">Domestic Violence: 1-800-799-SAFE</a>
+</div>
+</div>
+<!-- Compassionate Care Links -->
+<div class="flex flex-col gap-2">
+<span class="text-xs font-semibold text-slate-900 uppercase tracking-wider">Compassionate Care</span>
+<div class="flex flex-col gap-1.5 text-xs">
+<a class="text-slate-600 hover:text-slate-900" data-path="how-it-works" href="#">Listener Ethics</a>
+<a class="text-slate-600 hover:text-slate-900" data-path="privacy-security-guarantee" href="#">Zero Retention Policy</a>
+<a class="text-slate-600 hover:text-slate-900" data-path="accessibility-commitment" href="#">Accessibility Commitment</a>
+<a class="text-slate-600 hover:text-slate-900" data-path="find-local-services" href="#">Community Network</a>
+</div>
+</div>
+<!-- Privacy & Mode -->
+<div class="flex flex-col gap-2">
+<span class="text-xs font-semibold text-slate-900 uppercase tracking-wider">Privacy &amp; Safety</span>
+<p class="text-xs text-slate-500 leading-relaxed font-normal">
+            Your IP address is masked. No tracking cookies are stored. Audio calls are never saved or recorded.
+          </p>
+<div class="flex items-center gap-1.5 pt-1 text-xs text-slate-500">
+<span class="material-symbols-outlined text-[16px]">language</span>
+<span>English (US)</span>
+</div>
+</div>
+</div>
+<!-- Emergency Disclaimer & Legal -->
+<div class="flex flex-col md:flex-row items-center justify-between pt-6 border-t border-slate-100 text-xs text-slate-500 gap-4">
+<p class="text-center md:text-left font-normal">
+          If you or someone you know is in immediate life-threatening danger, dial 911 or visit the nearest emergency room.
+        </p>
+<div class="flex items-center gap-3 shrink-0">
+<a class="hover:text-slate-900" data-path="privacy-security-guarantee" href="#">Privacy Terms</a>
+<span>•</span>
+<a class="hover:text-slate-900" data-path="accessibility-commitment" href="#">Accessibility</a>
+<span>•</span>
+<span>© 2024 Havenline Support</span>
+</div>
+</div>
+</div>
+</footer>
+<!-- Box Breathing Script & ESC quick exit handler -->
+<script>
+    (function() {
+      // Box Breathing Tool Logic
+      const phases = [
+        { name: 'Inhale', duration: 4, scale: 'scale-110', ringOpacity: 'opacity-100' },
+        { name: 'Hold', duration: 4, scale: 'scale-110', ringOpacity: 'opacity-60' },
+        { name: 'Exhale', duration: 4, scale: 'scale-95', ringOpacity: 'opacity-20' },
+        { name: 'Hold', duration: 4, scale: 'scale-95', ringOpacity: 'opacity-0' }
+      ];
+
+      let phaseIndex = 0;
+      let secondsLeft = phases[0].duration;
+      let isRunning = true;
+      let timer = null;
+
+      const phaseEl = document.getElementById('breathPhase');
+      const counterEl = document.getElementById('breathCounter');
+      const coreEl = document.getElementById('breathCore');
+      const ringEl = document.getElementById('breathRing');
+      const toggleBtn = document.getElementById('toggleBreathBtn');
+      const playIcon = document.getElementById('breathPlayIcon');
+      const btnText = document.getElementById('breathBtnText');
+
+      function updateUI() {
+        const cur = phases[phaseIndex];
+        if (phaseEl) phaseEl.textContent = cur.name;
+        if (counterEl) counterEl.textContent = secondsLeft + 's';
+
+        if (coreEl) {
+          coreEl.classList.remove('scale-110', 'scale-95');
+          coreEl.classList.add(cur.scale);
+        }
+
+        if (ringEl) {
+          ringEl.classList.remove('opacity-100', 'opacity-60', 'opacity-20', 'opacity-0');
+          ringEl.classList.add(cur.ringOpacity);
+        }
+      }
+
+      function tick() {
+        if (!isRunning) return;
+        secondsLeft--;
+        if (secondsLeft <= 0) {
+          phaseIndex = (phaseIndex + 1) % phases.length;
+          secondsLeft = phases[phaseIndex].duration;
+        }
+        updateUI();
+      }
+
+      timer = setInterval(tick, 1000);
+      updateUI();
+
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', function() {
+          isRunning = !isRunning;
+          if (isRunning) {
+            playIcon.textContent = 'pause';
+            btnText.textContent = 'Pause';
+          } else {
+            playIcon.textContent = 'play_arrow';
+            btnText.textContent = 'Resume';
+          }
+        });
+      }
+
+      // Quick Exit on ESC Key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          window.location.replace('https://weather.com');
+        }
+      });
+    })();
+  </script>
+</body></html>
