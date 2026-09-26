@@ -8,12 +8,7 @@
     padding: 0;
     background-color: #f8fafc;
     color: #0f172a;
-    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-plus-jakarta-sans), 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
-}
-
-/* Custom scrollbar hiding for clean UI */
-::-webkit-scrollbar {
-  display: none;
 }

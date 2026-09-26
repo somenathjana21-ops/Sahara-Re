@@ -219,9 +219,16 @@ export async function POST(request: NextRequest) {
           reasons: ["No active legal docket or case context found"],
         };
 
+    // Lookup prior S4 to enforce monotonicity (S4 can only increase)
+    const priorAssessments = await repo.getAssessmentsByPersonId(person.id);
+    const priorS4 = priorAssessments.length > 0
+      ? priorAssessments[priorAssessments.length - 1]?.components.s4 ?? undefined
+      : undefined;
+
     const s4Result = computeS4({
       missedCount: person.missed_count,
       abandoned: req.abandoned,
+      priorS4,
     });
 
     const s5Result = computeS5(req.audioMetrics);

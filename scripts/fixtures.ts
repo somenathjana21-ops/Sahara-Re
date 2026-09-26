@@ -41,14 +41,14 @@ export const CASE_A4471: CaseRecord = {
   person_id: PERSON_A4471.id,
   atrocity_category: "land_dispossession",
   stage: "trial",
-  next_hearing_date: daysAhead(6).split("T")[0], // Within 7 days (+15)
+  next_hearing_date: daysAhead(6).split("T")[0]!, // Within 7 days (+15)
   adjournment_count: 4, // >= 3 (+10)
   bail_status: "accused_on_bail", // (+20)
-  relief_due_date: daysAgo(62).split("T")[0], // >30 days overdue (+15)
+  relief_due_date: daysAgo(62).split("T")[0]!, // >30 days overdue (+15)
   relief_paid: false,
   social_boycott_flag: false,
-  last_intimidation_report: daysAgo(1).split("T")[0], // Within 14 days (+25)
-  opened_at: daysAgo(400).split("T")[0], // >365 days (+5)
+  last_intimidation_report: daysAgo(1).split("T")[0]!, // Within 14 days (+25)
+  opened_at: daysAgo(400).split("T")[0]!, // >365 days (+5)
   // Total S3: 15 + 10 + 20 + 15 + 25 + 5 = 90 pts!
 };
 
@@ -87,7 +87,7 @@ export const CHECKINS_A4471: CheckinRecord[] = [
 export const ASSESSMENTS_A4471: AssessmentRecord[] = [
   {
     id: "11111111-5555-1111-1111-111111111101",
-    checkin_id: CHECKINS_A4471[0].id,
+    checkin_id: CHECKINS_A4471[0]!.id,
     person_id: PERSON_A4471.id,
     components: { s1: 25, s2: 20, s3: 50, s4: 0, s5: null },
     contributions: { s1: 8.75, s2: 5.0, s3: 12.5, s4: 0.0, s5: 0 },
@@ -103,7 +103,7 @@ export const ASSESSMENTS_A4471: AssessmentRecord[] = [
   },
   {
     id: "11111111-5555-1111-1111-111111111102",
-    checkin_id: CHECKINS_A4471[1].id,
+    checkin_id: CHECKINS_A4471[1]!.id,
     person_id: PERSON_A4471.id,
     components: { s1: 33.33, s2: 25, s3: 50, s4: 0, s5: null },
     contributions: { s1: 11.67, s2: 6.25, s3: 12.5, s4: 0.0, s5: 0 },
@@ -147,7 +147,7 @@ export const CASE_A6218: CaseRecord = {
   relief_paid: false,
   social_boycott_flag: false,
   last_intimidation_report: null,
-  opened_at: daysAgo(10).split("T")[0],
+  opened_at: daysAgo(10).split("T")[0]!,
 };
 
 export const CONSENT_A6218: ConsentRecord = {
@@ -180,14 +180,14 @@ export const CASE_A2301: CaseRecord = {
   person_id: PERSON_A2301.id,
   atrocity_category: "verbal_abuse",
   stage: "rehabilitation",
-  next_hearing_date: daysAhead(45).split("T")[0],
+  next_hearing_date: daysAhead(45).split("T")[0]!,
   adjournment_count: 1,
   bail_status: "in_custody",
-  relief_due_date: daysAgo(10).split("T")[0],
+  relief_due_date: daysAgo(10).split("T")[0]!,
   relief_paid: true,
   social_boycott_flag: false,
   last_intimidation_report: null,
-  opened_at: daysAgo(60).split("T")[0],
+  opened_at: daysAgo(60).split("T")[0]!,
 };
 
 export const CONSENT_A2301: ConsentRecord = {
@@ -220,14 +220,14 @@ export const CASE_A7892: CaseRecord = {
   person_id: PERSON_A7892.id,
   atrocity_category: "physical_assault",
   stage: "trial",
-  next_hearing_date: daysAhead(20).split("T")[0],
+  next_hearing_date: daysAhead(20).split("T")[0]!,
   adjournment_count: 2,
   bail_status: "in_custody",
   relief_due_date: null,
   relief_paid: true,
   social_boycott_flag: true, // +10
   last_intimidation_report: null,
-  opened_at: daysAgo(90).split("T")[0],
+  opened_at: daysAgo(90).split("T")[0]!,
 };
 
 export const CONSENT_A7892: ConsentRecord = {

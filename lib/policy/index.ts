@@ -82,16 +82,76 @@ export function parseAndValidatePolicy(yamlContent: string): PolicyDefinition {
   return PolicyDefinitionSchema.parse(parsed);
 }
 
+/**
+ * Embedded fallback policy for serverless/edge environments where
+ * the YAML file may not be traced into the bundle.
+ * Kept in sync with policy/v1.yaml — update both when policy changes.
+ */
+const EMBEDDED_POLICY_YAML = `
+version: "1.1.0"
+signed_by: "TM1"
+weights:
+  s1_self_report: 0.35
+  s2_linguistic: 0.25
+  s3_case_context: 0.25
+  s4_engagement: 0.15
+  s5_acoustic: 0.00
+baseline:
+  ewma_lambda: 0.3
+  sigma_floor: 8
+  change_point_z: 2.0
+  min_history_for_change_point: 2
+tiers:
+  - tier: RED
+    any_of:
+      - change_point: true
+      - composite_gte: 70
+      - s3_gte: 60
+  - tier: AMBER
+    any_of:
+      - composite_gte: 45
+      - z_gte: 1.2
+      - first_contact_composite_gte: 60
+      - missed_checkins_gte: 3
+  - tier: GREEN
+    default: true
+floors:
+  model_may_lower_tier: false
+  critical_requires_deterministic_trigger: true
+escalation:
+  CRITICAL:
+    ack_required: true
+    sla_minutes: 0
+    immediate_resources: true
+  RED:
+    ack_required: true
+    sla_minutes: 30
+  AMBER:
+    ack_required: false
+    sla_minutes: 1440
+  GREEN:
+    ack_required: false
+    sla_minutes: 10080
+`;
+
 export function getActivePolicy(): PolicyDefinition {
   if (cachedPolicy) return cachedPolicy;
 
-  const policyPath = path.resolve(process.cwd(), "policy", "v1.yaml");
-  if (!fs.existsSync(policyPath)) {
-    throw new Error(`Policy file not found at: ${policyPath}`);
+  // Try file-based loading first (works in development and standard Node.js)
+  try {
+    const policyPath = path.resolve(process.cwd(), "policy", "v1.yaml");
+    if (fs.existsSync(policyPath)) {
+      const rawYaml = fs.readFileSync(policyPath, "utf-8");
+      cachedPolicy = parseAndValidatePolicy(rawYaml);
+      return cachedPolicy;
+    }
+  } catch {
+    // File I/O may fail in serverless/edge — fall through to embedded policy
   }
 
-  const rawYaml = fs.readFileSync(policyPath, "utf-8");
-  cachedPolicy = parseAndValidatePolicy(rawYaml);
+  // Fallback: use embedded policy (serverless, edge, standalone builds)
+  console.warn("[SAHARA] Policy file not accessible — using embedded fallback policy");
+  cachedPolicy = parseAndValidatePolicy(EMBEDDED_POLICY_YAML);
   return cachedPolicy;
 }
 

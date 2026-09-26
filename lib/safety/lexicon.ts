@@ -15,7 +15,7 @@
 
 export const REVIEWED_BY = "Clinical & Safety Working Group (SIH 26094)";
 export const REVIEWED_ON = "2026-09-24";
-export const LEXICON_VERSION = "lexicon-v1.0.0";
+export const LEXICON_VERSION = "lexicon-v1.1.0";
 
 export type LexiconCategory =
   | "self_harm"
@@ -240,8 +240,8 @@ export const LEXICON_RULES: readonly LexiconRule[] = Object.freeze([
     id: "sh_rom_07",
     category: "self_harm",
     language: "hi_rom",
-    pattern: /\b(fa?ansi\s+laga|z?ahar\s+kha|nas\s+kaat)\b/i,
-    description: "Romanised: faansi laga / zahar kha / nas kaat",
+    pattern: /\b(fa?ansi\s+laga|z[ea]h[ae]r\s+kha|nas\s+kaat)\b/i,
+    description: "Romanised: faansi laga / zahar/zehar/zeher kha / nas kaat",
   },
   {
     id: "sh_rom_08",

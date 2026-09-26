@@ -6,7 +6,7 @@ import { CRISIS_RESOURCES, REPLY_BANK, getCrisisResources, getStaticReply } from
 
 describe("Phase 2: Deterministic Safety Lexicon & Invariants", () => {
   it("should have review metadata and correct version tag", () => {
-    assert.strictEqual(LEXICON_VERSION, "lexicon-v1.0.0");
+    assert.strictEqual(LEXICON_VERSION, "lexicon-v1.1.0");
     assert.ok(REVIEWED_BY.length > 0);
   });
 
@@ -96,7 +96,7 @@ describe("Phase 2: 100% Recall on 40 Seeded Critical Phrases", () => {
   });
 
   for (let i = 0; i < SEEDED_CRITICAL_40.length; i++) {
-    const item = SEEDED_CRITICAL_40[i];
+    const item = SEEDED_CRITICAL_40[i]!;
     it(`[Critical #${i + 1} / 40] [${item.language}] (${item.expectedCategory}) should trigger Pass 1 CRITICAL`, () => {
       const res = checkInput(item.text);
       assert.strictEqual(

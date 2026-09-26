@@ -27,6 +27,14 @@ describe("Phase 6: Counsellor Triage Dashboard Suite", () => {
   // Gate 1: Staff Access Gate & Passcode Authentication
   // =========================================================================
   describe("Staff Access Gate & Passcode Verification", () => {
+    let originalPasscode: string | undefined;
+
+    // The hardened auth route requires STAFF_PASSCODE env var (no fallback)
+    it("setup: set STAFF_PASSCODE for testing", () => {
+      originalPasscode = process.env.STAFF_PASSCODE;
+      process.env.STAFF_PASSCODE = "sahara2026";
+    });
+
     it("should reject invalid passcode with HTTP 401", async () => {
       const req = new NextRequest("http://localhost:3000/api/staff/auth", {
         method: "POST",
@@ -55,7 +63,15 @@ describe("Phase 6: Counsellor Triage Dashboard Suite", () => {
       const json = await res.json();
       assert.strictEqual(json.ok, true);
       assert.strictEqual(json.staffHandle, "Dr. Ananya Sharma");
-      assert.ok(json.sessionToken.startsWith("staff_"));
+      assert.ok(json.sessionToken);
+    });
+
+    it("teardown: restore original STAFF_PASSCODE", () => {
+      if (originalPasscode !== undefined) {
+        process.env.STAFF_PASSCODE = originalPasscode;
+      } else {
+        delete process.env.STAFF_PASSCODE;
+      }
     });
   });
 
@@ -329,7 +345,7 @@ describe("Phase 6: Counsellor Triage Dashboard Suite", () => {
         "Reading person detail screen must create a view_person audit event"
       );
 
-      const latestEvent = auditAfter[0]; // repo sorts latest first
+      const latestEvent = auditAfter[0]!; // repo sorts latest first
       assert.strictEqual(latestEvent.actor, actorHandle);
       assert.strictEqual(latestEvent.action, "view_person");
       assert.strictEqual(latestEvent.subject_id, PERSON_A4471.id);

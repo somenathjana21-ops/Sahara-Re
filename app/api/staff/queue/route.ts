@@ -38,9 +38,6 @@ export async function GET(request: NextRequest) {
 
     const repo = getRepository();
 
-    // Ensure initial demo fixtures exist (Golden Path A-4471 Day 0 RED, A-7892 Amber, etc.)
-    await ensureStaffTriageFixtures(repo);
-
     const persons = await repo.listPersons();
     const alerts = await repo.listAlerts();
 
@@ -49,11 +46,11 @@ export async function GET(request: NextRequest) {
     for (const person of persons) {
       const caseRecord = await repo.getCaseByPersonId(person.id);
       const assessments = await repo.getAssessmentsByPersonId(person.id);
-      const latestAssessment = assessments.length > 0 ? assessments[assessments.length - 1] : null;
+      const latestAssessment = assessments.length > 0 ? (assessments[assessments.length - 1] ?? null) : null;
 
       // Find active or latest alert for this person
       const personAlerts = alerts.filter((a) => a.person_id === person.id);
-      const alert = personAlerts.length > 0 ? personAlerts[0] : null;
+      const alert = personAlerts.length > 0 ? (personAlerts[0] ?? null) : null;
 
       const effectiveTier: Tier = alert
         ? alert.tier
@@ -75,7 +72,7 @@ export async function GET(request: NextRequest) {
         ];
         // Sort descending by points
         entries.sort((a, b) => b.points - a.points);
-        dominantComponent = entries[0];
+        dominantComponent = entries[0] ?? null;
       }
 
       // SLA Calculations
@@ -179,7 +176,7 @@ export async function GET(request: NextRequest) {
     );
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to fetch triage queue", message: (error as Error).message },
+      { error: "Failed to fetch triage queue" },
       { status: 500 }
     );
   }

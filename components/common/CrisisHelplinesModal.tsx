@@ -19,20 +19,26 @@ export default function CrisisHelplinesModal({
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") {
-        // Quick exit handles global redirect on Escape, but if modal is open,
-        // user might want immediate exit anyway.
+      if (e.key === "Escape" || e.code === "Escape") {
+        // SAFETY: Stop propagation to prevent QuickExit from ejecting
+        // a distressed user who is viewing crisis helplines.
+        e.stopPropagation();
+        e.preventDefault();
+        onClose();
       }
     }
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      // Use capture phase to intercept ESC before QuickExit's bubble listener
+      window.addEventListener("keydown", handleKeyDown, true);
     } else {
       document.body.style.overflow = "";
     }
     return () => {
       document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown, true);
     };
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 

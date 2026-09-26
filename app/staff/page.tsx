@@ -40,6 +40,7 @@ export default function StaffTriageQueuePage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // ACK modal state
   const [ackModalOpen, setAckModalOpen] = useState(false);
@@ -49,6 +50,7 @@ export default function StaffTriageQueuePage() {
   const fetchQueue = async (isManualRefresh = false) => {
     if (isManualRefresh) setRefreshing(true);
     try {
+      setError(null);
       const staffHandle =
         sessionStorage.getItem("sahara_staff_handle") ||
         localStorage.getItem("sahara_staff_handle") ||
@@ -78,9 +80,12 @@ export default function StaffTriageQueuePage() {
       if (res.ok) {
         setItems(data.queue || []);
         if (data.stats) setStats(data.stats);
+      } else {
+        setError(`Server error (${res.status}). Triage data may be stale.`);
       }
     } catch (err) {
       console.error("Failed to load triage queue", err);
+      setError("Failed to load triage queue. Critical alerts may be missed. Please retry.");
     } finally {
       setLoading(false);
       setRefreshing(false);

@@ -27,6 +27,8 @@ export default function QuickExit({ className = "", variant = "pill" }: QuickExi
       }
     }
 
+    // Registered on the bubbling phase so capture-phase modal interceptors
+    // (e.g., CrisisHelplinesModal) can stop propagation and dismiss without triggering QuickExit.
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);

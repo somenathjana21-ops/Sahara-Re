@@ -25,37 +25,12 @@ import {
   ResourceItem,
 } from "@/types/contract";
 
-const PRESET_PERSONAS = [
-  {
-    id: "11111111-1111-1111-1111-111111111111",
-    consentId: "11111111-3333-1111-1111-111111111111",
-    pseudonym: "A-4471",
-    label: "A-4471 (Golden Path — Land Dispossession, Trial in 6d, Bail)",
-    language: "hi",
-    s3Standing: 90,
-  },
-  {
-    id: "22222222-1111-2222-2222-222222222222",
-    consentId: "22222222-3333-2222-2222-222222222222",
-    pseudonym: "A-6218",
-    label: "A-6218 (Minor Flag — Caseworker Referral, Zero score)",
-    language: "hi",
-    s3Standing: 0,
-  },
-  {
-    id: "33333333-1111-3333-3333-333333333333",
-    consentId: "33333333-3333-3333-3333-333333333333",
-    pseudonym: "A-2301",
-    label: "A-2301 (Stable Control Persona)",
-    language: "en",
-    s3Standing: 10,
-  },
-];
+import { PRESET_PERSONAS, PresetPersona } from "@/lib/constants/personas";
 
 export default function CallPage() {
   const { t, language } = useLanguage();
 
-  const [selectedPersona, setSelectedPersona] = useState(PRESET_PERSONAS[0]);
+  const [selectedPersona, setSelectedPersona] = useState<PresetPersona>(PRESET_PERSONAS[0]!);
 
   // Telephony call state: 'idle' | 'calling' | 'connected' | 'ended'
   const [callState, setCallState] = useState<"idle" | "calling" | "connected" | "ended">("idle");
@@ -217,6 +192,12 @@ export default function CallPage() {
 
     // KEYPAD '0' EMERGENCY HANDLER: Instant local modal render!
     if (digit === "0") {
+      // SAFETY: Stop all active audio/speech before showing crisis resources
+      stopSpeechRecognition();
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+      setIsSpeaking(false);
       setHelplineTriggerReason(
         language === "hi"
           ? "कीपैड आपातकालीन '0' कुंजी दबाई गई (सीधा मानवीय संपर्क)"

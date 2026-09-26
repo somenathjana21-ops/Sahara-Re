@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { getRepository } from "@/lib/db/repository";
 import { CaseRecord } from "@/types/contract";
 
@@ -56,17 +57,42 @@ export async function GET(request: NextRequest) {
   }
 }
 
+/**
+ * Zod schema for case mutation validation.
+ * Accepts both camelCase and snake_case field names for convenience.
+ */
+const CasePatchSchema = z.object({
+  personId: z.string().uuid("personId must be a valid UUID"),
+  stage: z.enum(["investigation", "trial", "rehabilitation", "compensation"]).optional(),
+  nextHearingDate: z.string().optional(),
+  next_hearing_date: z.string().optional(),
+  adjournmentCount: z.number().int().min(0).optional(),
+  adjournment_count: z.number().int().min(0).optional(),
+  bailStatus: z.enum(["in_custody", "accused_on_bail"]).optional(),
+  bail_status: z.enum(["in_custody", "accused_on_bail"]).optional(),
+  reliefDueDate: z.string().optional(),
+  relief_due_date: z.string().optional(),
+  reliefPaid: z.boolean().optional(),
+  relief_paid: z.boolean().optional(),
+  socialBoycottFlag: z.boolean().optional(),
+  social_boycott_flag: z.boolean().optional(),
+  lastIntimidationReport: z.string().optional(),
+  last_intimidation_report: z.string().optional(),
+}).strict();
+
 export async function PATCH(request: NextRequest) {
   try {
     const body = await request.json();
-    const { personId, ...updates } = body;
 
-    if (!personId) {
+    const parseResult = CasePatchSchema.safeParse(body);
+    if (!parseResult.success) {
       return NextResponse.json(
-        { error: "personId is required to update case docket" },
+        { error: "Invalid case update payload", details: parseResult.error.flatten().fieldErrors },
         { status: 400 }
       );
     }
+
+    const { personId, ...updates } = parseResult.data;
 
     const repo = getRepository();
     const existingCase = await repo.getCaseByPersonId(personId);
@@ -81,39 +107,26 @@ export async function PATCH(request: NextRequest) {
     const updatedCase: CaseRecord = {
       ...existingCase,
       ...(updates.stage !== undefined ? { stage: updates.stage } : {}),
-      ...(updates.nextHearingDate !== undefined
-        ? { next_hearing_date: updates.nextHearingDate }
+      ...(updates.nextHearingDate ?? updates.next_hearing_date
+        ? { next_hearing_date: updates.nextHearingDate ?? updates.next_hearing_date }
         : {}),
-      ...(updates.next_hearing_date !== undefined
-        ? { next_hearing_date: updates.next_hearing_date }
+      ...(updates.adjournmentCount ?? updates.adjournment_count
+        ? { adjournment_count: updates.adjournmentCount ?? updates.adjournment_count }
         : {}),
-      ...(updates.adjournmentCount !== undefined
-        ? { adjournment_count: updates.adjournmentCount }
+      ...(updates.bailStatus ?? updates.bail_status
+        ? { bail_status: updates.bailStatus ?? updates.bail_status }
         : {}),
-      ...(updates.adjournment_count !== undefined
-        ? { adjournment_count: updates.adjournment_count }
+      ...(updates.reliefDueDate ?? updates.relief_due_date
+        ? { relief_due_date: updates.reliefDueDate ?? updates.relief_due_date }
         : {}),
-      ...(updates.bailStatus !== undefined ? { bail_status: updates.bailStatus } : {}),
-      ...(updates.bail_status !== undefined ? { bail_status: updates.bail_status } : {}),
-      ...(updates.reliefDueDate !== undefined
-        ? { relief_due_date: updates.reliefDueDate }
+      ...((updates.reliefPaid ?? updates.relief_paid) !== undefined
+        ? { relief_paid: updates.reliefPaid ?? updates.relief_paid }
         : {}),
-      ...(updates.relief_due_date !== undefined
-        ? { relief_due_date: updates.relief_due_date }
+      ...((updates.socialBoycottFlag ?? updates.social_boycott_flag) !== undefined
+        ? { social_boycott_flag: updates.socialBoycottFlag ?? updates.social_boycott_flag }
         : {}),
-      ...(updates.reliefPaid !== undefined ? { relief_paid: updates.reliefPaid } : {}),
-      ...(updates.relief_paid !== undefined ? { relief_paid: updates.relief_paid } : {}),
-      ...(updates.socialBoycottFlag !== undefined
-        ? { social_boycott_flag: updates.socialBoycottFlag }
-        : {}),
-      ...(updates.social_boycott_flag !== undefined
-        ? { social_boycott_flag: updates.social_boycott_flag }
-        : {}),
-      ...(updates.lastIntimidationReport !== undefined
-        ? { last_intimidation_report: updates.lastIntimidationReport }
-        : {}),
-      ...(updates.last_intimidation_report !== undefined
-        ? { last_intimidation_report: updates.last_intimidation_report }
+      ...(updates.lastIntimidationReport ?? updates.last_intimidation_report
+        ? { last_intimidation_report: updates.lastIntimidationReport ?? updates.last_intimidation_report }
         : {}),
     };
 
@@ -122,7 +135,7 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json({ ok: true, case: updatedCase }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to update case docket", message: (error as Error).message },
+      { error: "Failed to update case docket" },
       { status: 500 }
     );
   }

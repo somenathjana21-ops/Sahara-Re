@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ ok: true, alerts }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to list alerts", message: (error as Error).message },
+      { error: "Failed to list alerts" },
       { status: 500 }
     );
   }
@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true, alert: updatedAlert }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to acknowledge alert", message: (error as Error).message },
+      { error: "Failed to acknowledge alert" },
       { status: 500 }
     );
   }

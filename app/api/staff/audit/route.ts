@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
     );
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to list audit events", message: (error as Error).message },
+      { error: "Failed to list audit events" },
       { status: 500 }
     );
   }
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true, event }, { status: 201 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to record audit event", message: (error as Error).message },
+      { error: "Failed to record audit event" },
       { status: 500 }
     );
   }

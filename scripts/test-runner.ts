@@ -15,8 +15,8 @@ const filteredFiles = filterArg
   : testFiles;
 
 if (filteredFiles.length === 0) {
-  console.log("No test files found matching criteria:", filterArg);
-  process.exit(0);
+  console.error("No test files found matching criteria:", filterArg);
+  process.exit(1);
 }
 
 run({ files: filteredFiles })

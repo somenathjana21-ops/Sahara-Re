@@ -92,7 +92,7 @@ export default function ExplainabilityChart({
   ];
 
   // Identify highest contributing component
-  const dominantItem = [...items].sort((a, b) => b.contribution - a.contribution)[0];
+  const dominantItem = [...items].sort((a, b) => b.contribution - a.contribution)[0]!;
   const isS3Dominant = dominantItem.key === "s3";
 
   return (

@@ -290,11 +290,11 @@ export default function PersonDetailScreen({
                             Latest Ingestion Transcript & Self-Report
                           </h3>
                           <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 text-slate-600">
-                            {checkins[checkins.length - 1].channel}
+                            {checkins[checkins.length - 1]!.channel}
                           </span>
                         </div>
                         <span className="text-xs text-slate-400">
-                          {new Date(checkins[checkins.length - 1].created_at).toLocaleString()}
+                          {new Date(checkins[checkins.length - 1]!.created_at).toLocaleString()}
                         </span>
                       </div>
 
@@ -303,7 +303,7 @@ export default function PersonDetailScreen({
                           User Transcript
                         </span>
                         <p className="text-xs sm:text-sm text-slate-800 font-medium italic">
-                          &ldquo;{checkins[checkins.length - 1].transcript || "(No speech utterance - structured only)"}&rdquo;
+                          &ldquo;{checkins[checkins.length - 1]!.transcript || "(No speech utterance - structured only)"}&rdquo;
                         </p>
                       </div>
 
@@ -313,7 +313,7 @@ export default function PersonDetailScreen({
                             q₁ (Sleep)
                           </span>
                           <span className="text-base font-extrabold text-slate-800 font-mono">
-                            {checkins[checkins.length - 1].structured?.q1 ?? "N/A"}{" "}
+                            {checkins[checkins.length - 1]!.structured?.q1 ?? "N/A"}{" "}
                             <span className="text-xs text-slate-400 font-normal">/ 4</span>
                           </span>
                         </div>
@@ -323,7 +323,7 @@ export default function PersonDetailScreen({
                             q₂ (Functioning)
                           </span>
                           <span className="text-base font-extrabold text-slate-800 font-mono">
-                            {checkins[checkins.length - 1].structured?.q2 ?? "N/A"}{" "}
+                            {checkins[checkins.length - 1]!.structured?.q2 ?? "N/A"}{" "}
                             <span className="text-xs text-slate-400 font-normal">/ 4</span>
                           </span>
                         </div>
@@ -333,7 +333,7 @@ export default function PersonDetailScreen({
                             q₃ (Safety)
                           </span>
                           <span className="text-base font-extrabold text-slate-800 font-mono">
-                            {checkins[checkins.length - 1].structured?.q3 ?? "N/A"}{" "}
+                            {checkins[checkins.length - 1]!.structured?.q3 ?? "N/A"}{" "}
                             <span className="text-xs text-slate-400 font-normal">/ 4</span>
                           </span>
                         </div>

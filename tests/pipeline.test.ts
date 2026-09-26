@@ -185,7 +185,7 @@ describe("Phase 4: Core API Pipeline Integration Suite", () => {
 
       // Verify LLM modelVersion indicates deterministic bypass
       const assessments = await repo.getAssessmentsByPersonId(PERSON_A4471.id);
-      const latestAssessment = assessments[assessments.length - 1];
+      const latestAssessment = assessments[assessments.length - 1]!;
       assert.strictEqual(latestAssessment.model_version, "bypassed:deterministic_trigger");
     });
 

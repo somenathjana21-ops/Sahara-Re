@@ -134,9 +134,11 @@ export class InMemoryRepository implements IRepository {
     );
     if (matches.length === 0) return null;
     // Return latest granted
-    return matches.sort(
-      (a, b) => new Date(b.granted_at).getTime() - new Date(a.granted_at).getTime()
-    )[0];
+    return (
+      matches.sort(
+        (a, b) => new Date(b.granted_at).getTime() - new Date(a.granted_at).getTime()
+      )[0] ?? null
+    );
   }
 
   async saveConsent(consent: ConsentRecord): Promise<void> {

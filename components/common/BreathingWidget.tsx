@@ -34,7 +34,7 @@ export default function BreathingWidget({ className = "" }: { className?: string
     return () => clearInterval(timer);
   }, [isRunning, phases.length]);
 
-  const currentPhase = phases[phaseIndex];
+  const currentPhase = phases[phaseIndex % phases.length]!;
   const phaseLabel =
     currentPhase.key === "inhale"
       ? t("breathing.inhale", "Inhale")
