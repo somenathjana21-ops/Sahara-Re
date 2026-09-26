@@ -1,7 +1,6 @@
 {
   "common": {
     "appName": "Project SAHARA",
-    "appTagline": "Havenline Support",
     "safeConnection": "Safe connection",
     "quickExit": "Quick Exit",
     "quickExitDesc": "Instantly leave this site",
@@ -168,6 +167,8 @@
     "chatHeader": "Dialogue & Thoughts",
     "inputPlaceholder": "Type how you are feeling or what happened today...",
     "sendButton": "Submit Check-in",
+    "submitS1Button": "Submit Self-Report Questions",
+    "submitS1Hint": "Submits only the 3 wellbeing questions above. Chat input below can be submitted separately.",
     "sending": "Processing...",
     "clearChat": "Clear Conversation",
     "systemWelcome": "Hello. Thank you for connecting today. Please take your time, and share only what you feel comfortable sharing. We are here to support you.",

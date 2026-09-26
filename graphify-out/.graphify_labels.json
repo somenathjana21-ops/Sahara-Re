@@ -1,1 +1,24 @@
-{"0": "InMemoryRepository", "1": "checkin/route.ts", "2": "AGENTS.md - Project SAHARA Agent Instructions", "3": "fixtures.ts", "4": "useLanguage", "5": "contract.ts", "6": "dependencies", "7": "compilerOptions", "8": "devDependencies", "9": "interlock.ts", "10": "middleware.ts", "11": "rules", "12": "schema.sql", "13": "auth/route.ts", "14": "test-runner.ts", "15": "CI workflow", "16": "error.tsx", "17": "global-error.tsx", "18": "CLAUDE.md - Graphify Integration Rules", "19": "next.config.ts", "20": "postcss.config.mjs", "21": "tailwind.config.ts"}
+{
+  "0": "InMemoryRepository",
+  "1": "checkin/route.ts",
+  "2": "AGENTS.md - Project SAHARA Agent Instructions",
+  "3": "fixtures.ts",
+  "4": "useLanguage",
+  "5": "contract.ts",
+  "6": "dependencies",
+  "7": "compilerOptions",
+  "8": "devDependencies",
+  "9": "llm/index.ts",
+  "10": "middleware.ts",
+  "11": "rules",
+  "12": "schema.sql",
+  "13": "auth/route.ts",
+  "14": "test-runner.ts",
+  "15": "CI workflow",
+  "16": "error.tsx",
+  "17": "global-error.tsx",
+  "18": "CLAUDE.md - Graphify Integration Rules",
+  "19": "next.config.ts",
+  "20": "postcss.config.mjs",
+  "21": "tailwind.config.ts"
+}

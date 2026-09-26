@@ -1,16 +1,15 @@
 # Graph Report - Sahara-Re  (2026-09-27)
 
 ## Corpus Check
-- 73 files · ~71,695 words
-- Verdict: corpus is large enough that graph structure adds value.
+- cluster-only mode — file stats not available
 
 ## Summary
-- 477 nodes · 1013 edges · 22 communities (18 shown, 4 thin omitted)
+- 477 nodes · 1015 edges · 22 communities (18 shown, 4 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 13 edges (avg confidence: 0.81)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `ff07d6f3`
+- Built from commit: `7202ec17`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -24,7 +23,7 @@
 - dependencies
 - compilerOptions
 - devDependencies
-- llm/index.ts
+- interlock.ts
 - middleware.ts
 - rules
 - schema.sql
@@ -46,19 +45,19 @@
 7. `PROJECT_BRIEF.md - Project Brief SIH 26094` - 21 edges
 8. `AlertRecord` - 20 edges
 9. `compilerOptions` - 19 edges
-10. `useLanguage()` - 17 edges
+10. `PersonRecord` - 17 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `POST()` --calls--> `getRepository()`  [EXTRACTED]
-  app/api/checkin/route.ts → lib/db/repository.ts
-- `POST()` --calls--> `analyzeTranscript()`  [EXTRACTED]
-  app/api/checkin/route.ts → lib/llm/index.ts
-- `GET()` --calls--> `getRepository()`  [EXTRACTED]
-  app/api/staff/persons/[personId]/route.ts → lib/db/repository.ts
 - `TriageQueueItem` --references--> `Tier`  [EXTRACTED]
   app/api/staff/queue/route.ts → types/contract.ts
+- `AckModalProps` --references--> `AlertRecord`  [EXTRACTED]
+  components/staff/AckModal.tsx → types/contract.ts
+- `TrendChartProps` --references--> `AssessmentRecord`  [EXTRACTED]
+  components/staff/TrendChart.tsx → types/contract.ts
+- `ChatMessage` --references--> `ResourceItem`  [EXTRACTED]
+  app/checkin/page.tsx → types/contract.ts
 - `GET()` --calls--> `getRepository()`  [EXTRACTED]
-  app/api/staff/queue/route.ts → lib/db/repository.ts
+  app/api/staff/persons/[personId]/route.ts → lib/db/repository.ts
 
 ## Import Cycles
 - None detected.
@@ -76,7 +75,7 @@ Nodes (21): GET(), GET(), TIER_PRIORITY, TriageQueueItem, AckModal(), AckModalPr
 
 ### Community 1 - "checkin/route.ts"
 Cohesion: 0.06
-Nodes (52): POST(), ConditionSchema, DeterministicTriggerInput, EscalationConfigSchema, evaluatePolicy(), EvaluatePolicyInput, EvaluatePolicyResult, getActivePolicy() (+44 more)
+Nodes (49): POST(), analyzeTranscript(), cleanJsonText(), generateDeterministicMock(), LLMAnalysisResult, LLMProvider, LLMRequestOptions, PROVIDER_CONFIGS (+41 more)
 
 ### Community 2 - "AGENTS.md - Project SAHARA Agent Instructions"
 Cohesion: 0.12
@@ -106,9 +105,9 @@ Nodes (29): dom, dom.iterable, esnext, next-env.d.ts, .next/types/**/*.ts, node_
 Cohesion: 0.09
 Nodes (23): autoprefixer, eslint, eslint-config-next, devDependencies, autoprefixer, eslint, eslint-config-next, postcss (+15 more)
 
-### Community 9 - "llm/index.ts"
-Cohesion: 0.18
-Nodes (15): analyzeTranscript(), cleanJsonText(), generateDeterministicMock(), LLMAnalysisResult, LLMProvider, LLMRequestOptions, PROVIDER_CONFIGS, buildUserPrompt() (+7 more)
+### Community 9 - "interlock.ts"
+Cohesion: 0.16
+Nodes (18): BANNED_OUTPUT_RULES, BannedPatternRule, checkInput(), Pass1Result, Pass2Result, Pass2ViolationReason, LEXICON_RULES, LEXICON_VERSION (+10 more)
 
 ### Community 10 - "middleware.ts"
 Cohesion: 0.29
@@ -135,7 +134,7 @@ Cohesion: 0.67
 Nodes (3): CI workflow, CI environment variables (STAFF_PASSCODE, SESSION_SECRET), CI pipeline (npm ci, typecheck, tests, build)
 
 ## Knowledge Gaps
-- **137 isolated node(s):** `extends`, `next/core-web-vitals`, `react/no-unescaped-entities`, `CasePatchSchema`, `AuditEventCreateSchema` (+132 more)
+- **137 isolated node(s):** `StaffAuthGateProps`, `BaselineEvaluationResult`, `BaselineParameters`, `PriorBaselineState`, `S2Result` (+132 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -146,12 +145,12 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.017) - this node is a cross-community bridge._
 - **Why does `AlertRecord` connect `InMemoryRepository` to `fixtures.ts`, `contract.ts`?**
   _High betweenness centrality (0.017) - this node is a cross-community bridge._
-- **What connects `extends`, `next/core-web-vitals`, `react/no-unescaped-entities` to the rest of the system?**
+- **What connects `StaffAuthGateProps`, `BaselineEvaluationResult`, `BaselineParameters` to the rest of the system?**
   _137 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `InMemoryRepository` be split into smaller, more focused modules?**
   _Cohesion score 0.057902973395931145 - nodes in this community are weakly interconnected._
 - **Should `checkin/route.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.06009615384615385 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.060451977401129946 - nodes in this community are weakly interconnected._
 - **Should `AGENTS.md - Project SAHARA Agent Instructions` be split into smaller, more focused modules?**
   _Cohesion score 0.1161524500907441 - nodes in this community are weakly interconnected._
 - **Should `fixtures.ts` be split into smaller, more focused modules?**

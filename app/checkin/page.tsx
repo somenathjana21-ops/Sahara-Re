@@ -139,30 +139,15 @@ export default function CheckinPage() {
     }
   };
 
-  // Submit check-in
-  const handleSubmitCheckin = async (e?: React.FormEvent) => {
+  // Submit S1 structured questions (q1, q2, q3)
+  const handleSubmitS1Questions = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    if (!inputVal.trim() && q1 === undefined && q2 === undefined && q3 === undefined) {
+    if (q1 === undefined && q2 === undefined && q3 === undefined) {
       return;
     }
 
-    const currentText = inputVal.trim();
     const userMsgId = `user-${Date.now()}`;
     const nowTime = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-
-    // Append user message if text was entered
-    if (currentText) {
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: userMsgId,
-          sender: "user",
-          text: currentText,
-          timestamp: nowTime,
-        },
-      ]);
-      setInputVal("");
-    }
 
     // Check if q3 was set to 4 locally to warn or trigger modal
     if (q3 === 4) {
@@ -186,7 +171,7 @@ export default function CheckinPage() {
         personId: selectedPersona.id,
         consentId: selectedPersona.consentId,
         channel: "chat",
-        transcript: currentText || null,
+        transcript: null,
         structured: Object.keys(structured).length > 0 ? structured : undefined,
         abandoned: false,
       };
@@ -227,7 +212,6 @@ export default function CheckinPage() {
           },
         ]);
       } else if (data.status === "critical") {
-        // Instant crisis triggered by lexicon or Q3
         setMessages((prev) => [
           ...prev,
           {
@@ -240,7 +224,6 @@ export default function CheckinPage() {
             resources: data.resources,
           },
         ]);
-        // Also open helplines modal
         setHelplineTriggerReason(
           language === "hi"
             ? "सिस्टम द्वारा अति-महत्वपूर्ण संकट इंटरलॉक सक्रिय किया गया"
@@ -248,7 +231,131 @@ export default function CheckinPage() {
         );
         setIsHelplineModalOpen(true);
       } else {
-        // Standard normal response
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: `sahara-${Date.now()}`,
+            sender: "sahara",
+            text: data.reply,
+            timestamp: nowTime,
+            tier: data.tier,
+          },
+        ]);
+      }
+    } catch (err) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `err-${Date.now()}`,
+          sender: "system",
+          text:
+            language === "hi"
+              ? "नेटवर्क अनुरोध में त्रुटि हुई। कृपया पुनः प्रयास करें या आपातकालीन हेल्पलाइन पर सीधे संपर्क करें।"
+              : "Unable to connect to check-in service. Please try again or call emergency helplines directly.",
+          timestamp: nowTime,
+        },
+      ]);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  // Submit check-in (chat input only, or with S1 if not already submitted)
+  const handleSubmitCheckin = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!inputVal.trim()) {
+      return;
+    }
+
+    const currentText = inputVal.trim();
+    const userMsgId = `user-${Date.now()}`;
+    const nowTime = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+    // Append user message
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: userMsgId,
+        sender: "user",
+        text: currentText,
+        timestamp: nowTime,
+      },
+    ]);
+    setInputVal("");
+
+    setSubmitting(true);
+
+    try {
+      // Include any S1 answers that haven't been submitted yet
+      const structured: StructuredCheckin = {};
+      if (q1 !== undefined) structured.q1 = q1;
+      if (q2 !== undefined) structured.q2 = q2;
+      if (q3 !== undefined) structured.q3 = q3;
+
+      const payload: CheckInRequest = {
+        personId: selectedPersona.id,
+        consentId: selectedPersona.consentId,
+        channel: "chat",
+        transcript: currentText,
+        structured: Object.keys(structured).length > 0 ? structured : undefined,
+        abandoned: false,
+      };
+
+      const res = await fetch("/api/checkin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data: CheckInResponse = await res.json();
+
+      if (res.status === 403 || data.status === "forbidden") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: `sys-${Date.now()}`,
+            sender: "system",
+            text:
+              data.reply ||
+              (language === "hi"
+                ? "सहमति के बिना चेक-इन संसाधित नहीं किया जा सकता। कृपया ऊपर स्वैच्छिक सहमति की पुष्टि करें।"
+                : "Check-in cannot be processed without active consent. Please grant voluntary consent above."),
+            timestamp: nowTime,
+          },
+        ]);
+        setHasConsent(false);
+      } else if (data.status === "minor_routed") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: `sahara-${Date.now()}`,
+            sender: "sahara",
+            text: data.reply,
+            timestamp: nowTime,
+            isMinor: true,
+            resources: data.resources,
+          },
+        ]);
+      } else if (data.status === "critical") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: `sahara-${Date.now()}`,
+            sender: "sahara",
+            text: data.reply,
+            timestamp: nowTime,
+            tier: "CRITICAL",
+            isCritical: true,
+            resources: data.resources,
+          },
+        ]);
+        setHelplineTriggerReason(
+          language === "hi"
+            ? "सिस्टम द्वारा अति-महत्वपूर्ण संकट इंटरलॉक सक्रिय किया गया"
+            : "System Safety Interlock triggered Pass 1 Critical alert"
+        );
+        setIsHelplineModalOpen(true);
+      } else {
         setMessages((prev) => [
           ...prev,
           {
@@ -530,6 +637,32 @@ export default function CheckinPage() {
               </div>
             </div>
           </div>
+
+          {/* Submit S1 Questions Button */}
+          <div className="pt-3 border-t border-slate-100">
+            <button
+              type="button"
+              onClick={handleSubmitS1Questions}
+              disabled={
+                submitting ||
+                (q1 === undefined && q2 === undefined && q3 === undefined)
+              }
+              className="w-full py-2.5 px-4 rounded-xl bg-primary hover:bg-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
+            >
+              <CheckCircle2 className="w-4 h-4" />
+              <span>
+                {submitting
+                  ? t("checkin.sending", "Processing...")
+                  : t("checkin.submitS1Button", "Submit Self-Report Questions")}
+              </span>
+            </button>
+            <p className="text-[10px] text-slate-400 text-center mt-1.5">
+              {t(
+                "checkin.submitS1Hint",
+                "Submits only the 3 wellbeing questions above. Chat input below can be submitted separately."
+              )}
+            </p>
+          </div>
         </div>
 
         {/* Right Column: Conversational Dialogue Area */}
@@ -667,10 +800,7 @@ export default function CheckinPage() {
             />
             <button
               type="submit"
-              disabled={
-                submitting ||
-                (!inputVal.trim() && q1 === undefined && q2 === undefined && q3 === undefined)
-              }
+              disabled={submitting || !inputVal.trim()}
               className="h-11 px-4 sm:px-5 rounded-xl bg-primary hover:bg-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 transition-colors shrink-0 cursor-pointer shadow-2xs"
             >
               <Send className="w-4 h-4" />

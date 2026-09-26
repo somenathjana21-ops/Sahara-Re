@@ -262,7 +262,7 @@ export default function HomePage() {
           </div>
 
           {/* Trust Badges Strip */}
-          <div className="mt-10 pt-6 border-t border-slate-200/70 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs text-slate-600 font-medium">
+          <div className="mt-10 pt-6 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs text-slate-600 font-medium">
             <div className="flex items-center gap-2">
               <Shield className="w-4 h-4 text-primary" />
               <span>{t("common.confidentialBadge", "100% Confidential")}</span>

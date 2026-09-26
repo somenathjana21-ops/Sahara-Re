@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ShieldCheck, MessageCircle, Phone, Menu, X, HeartHandshake } from "lucide-react";
-import QuickExit from "./QuickExit";
+
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
@@ -63,9 +63,6 @@ export default function Header() {
               <ShieldCheck className="w-3.5 h-3.5 text-primary" />
               <span>{t("common.safeConnection", "Safe connection")}</span>
             </span>
-
-            {/* Quick Exit with Esc key listener */}
-            <QuickExit />
           </div>
         </div>
 
@@ -79,9 +76,6 @@ export default function Header() {
               <div className="flex flex-col">
                 <span className="text-base sm:text-lg font-bold tracking-tight text-slate-900 group-hover:text-primary transition-colors leading-tight">
                   {t("common.appName", "Project SAHARA")}
-                </span>
-                <span className="text-[11px] text-slate-500 font-normal leading-tight">
-                  {t("common.appTagline", "Havenline Support")}
                 </span>
               </div>
             </Link>
