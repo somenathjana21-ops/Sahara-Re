@@ -116,6 +116,40 @@ export const ConsentRequestSchema = z.object({
 });
 export type ConsentRequest = z.infer<typeof ConsentRequestSchema>;
 
+export const CustomPersonCaseDataSchema = z.object({
+  atrocityCategory: z.string().default("general_distress"),
+  stage: z.enum(["investigation", "trial", "rehabilitation", "compensation"]).default("trial"),
+  bailStatus: z.enum(["in_custody", "accused_on_bail"]).default("in_custody"),
+  nextHearingDays: z.number().int().nullable().optional(),
+  nextHearingDate: z.string().nullable().optional(),
+  adjournmentCount: z.number().int().min(0).default(0),
+  reliefOverdueDays: z.number().int().nullable().optional(),
+  reliefDueDate: z.string().nullable().optional(),
+  reliefPaid: z.boolean().default(true),
+  socialBoycott: z.boolean().default(false),
+  intimidationReportDaysAgo: z.number().int().nullable().optional(),
+  lastIntimidationReport: z.string().nullable().optional(),
+  caseOpenDaysAgo: z.number().int().optional(),
+  openedAt: z.string().optional(),
+});
+export type CustomPersonCaseData = z.infer<typeof CustomPersonCaseDataSchema>;
+
+export const CustomPersonRequestSchema = z.object({
+  id: z.string().uuid().optional(),
+  pseudonym: z.string().min(1).max(30).optional(),
+  language: LanguageEnum.default("en"),
+  isMinor: z.boolean().default(false),
+  baselineMean: z.number().nullable().optional(),
+  baselineVar: z.number().nullable().optional(),
+  checkinCount: z.number().int().min(0).default(0),
+  missedCount: z.number().int().min(0).default(0),
+  hasCase: z.boolean().default(false),
+  caseData: CustomPersonCaseDataSchema.optional(),
+  consentGranted: z.boolean().default(true),
+});
+export type CustomPersonRequest = z.infer<typeof CustomPersonRequestSchema>;
+
+
 // ==========================================
 // Database Models (snake_case)
 // ==========================================

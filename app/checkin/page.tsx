@@ -17,9 +17,11 @@ import {
   RefreshCw,
   Scale,
   Calendar,
+  SlidersHorizontal,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import CrisisHelplinesModal from "@/components/common/CrisisHelplinesModal";
+import CustomDataModal from "@/components/common/CustomDataModal";
 import {
   CheckInRequest,
   CheckInResponse,
@@ -45,8 +47,11 @@ export default function CheckinPage() {
 
   // Active persona state
   const [selectedPersona, setSelectedPersona] = useState<PresetPersona>(PRESET_PERSONAS[0]!);
+  const [customPersona, setCustomPersona] = useState<PresetPersona | null>(null);
+  const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
   const [hasConsent, setHasConsent] = useState(true);
   const [consentLoading, setConsentLoading] = useState(false);
+
 
   // Self-report structured answers (S1)
   const [q1, setQ1] = useState<number | undefined>(undefined);
@@ -428,36 +433,118 @@ export default function CheckinPage() {
         </button>
       </div>
 
-      {/* Interactive Persona Selector (for Demo & Evaluation) */}
-      <div className="p-3.5 mb-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs">
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="font-semibold text-slate-700">
-            {t("checkin.activePersona", "Active Persona Profile:")}
-          </span>
-          <select
-            value={selectedPersona.id}
-            onChange={(e) => {
-              const p = PRESET_PERSONAS.find((item) => item.id === e.target.value);
-              if (p) setSelectedPersona(p);
-            }}
-            className="px-2.5 py-1.5 rounded-lg bg-slate-50 border border-slate-300 text-slate-900 font-medium focus:outline-none focus:border-primary text-xs"
-          >
-            {PRESET_PERSONAS.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.label}
-              </option>
-            ))}
-          </select>
+      {/* Interactive Profile & Persona Mode Switcher */}
+      <div className="p-4 mb-5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex flex-col gap-3 text-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          {/* Mode Switch Tabs */}
+          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl self-start">
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedPersona(PRESET_PERSONAS[0]!);
+                setHasConsent(true);
+              }}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                !selectedPersona.isCustom
+                  ? "bg-white text-slate-900 shadow-2xs font-bold"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              {t("checkin.tabPresetPersonas", "Preset Demo Personas")}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                if (customPersona) {
+                  setSelectedPersona(customPersona);
+                  setHasConsent(true);
+                } else {
+                  setIsCustomModalOpen(true);
+                }
+              }}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                selectedPersona.isCustom
+                  ? "bg-primary text-white shadow-2xs font-bold"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              <User className="w-3.5 h-3.5" />
+              <span>{t("checkin.tabWithoutPersona", "Without Persona (Fill in Data)")}</span>
+            </button>
+          </div>
+
+          {/* Docket Pressure Badge */}
+          <div className="flex items-center gap-2 flex-wrap">
+            {selectedPersona.s3Standing > 0 ? (
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 font-medium">
+                <Scale className="w-3.5 h-3.5 text-amber-700" />
+                <span>
+                  {t("checkin.caseContextBanner", "Case Docket Context (S3 Standing Score)")}:{" "}
+                  <strong>{selectedPersona.s3Standing} pts</strong>
+                </span>
+              </div>
+            ) : (
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200 font-medium">
+                <ShieldAlert className="w-3.5 h-3.5 text-slate-500" />
+                <span>No active legal case (S3: 0 pts)</span>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Docket Pressure Badge */}
-        {selectedPersona.s3Standing > 0 && (
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 font-medium">
-            <Scale className="w-3.5 h-3.5 text-amber-700" />
-            <span>
-              {t("checkin.caseContextBanner", "Case Docket Context (S3 Standing Score)")}:{" "}
-              <strong>{selectedPersona.s3Standing} pts</strong>
+        {/* Dynamic Controls based on selected mode */}
+        {!selectedPersona.isCustom ? (
+          <div className="flex items-center gap-2 flex-wrap pt-2 border-t border-slate-100">
+            <span className="font-semibold text-slate-700">
+              {t("checkin.activePersona", "Active Persona Profile:")}
             </span>
+            <select
+              value={selectedPersona.id}
+              onChange={(e) => {
+                const p = PRESET_PERSONAS.find((item) => item.id === e.target.value);
+                if (p) {
+                  setSelectedPersona(p);
+                  setHasConsent(true);
+                }
+              }}
+              className="flex-1 max-w-md px-2.5 py-1.5 rounded-lg bg-slate-50 border border-slate-300 text-slate-900 font-medium focus:outline-none focus:border-primary text-xs"
+            >
+              {PRESET_PERSONAS.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        ) : (
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pt-2 border-t border-slate-100 bg-emerald-50/40 p-2.5 rounded-xl border border-emerald-100">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="font-bold text-slate-900">Custom Profile:</span>
+              <span className="px-2 py-0.5 rounded-md bg-white border border-slate-200 text-slate-800 font-mono font-bold">
+                {selectedPersona.pseudonym}
+              </span>
+              <span className="text-slate-400">•</span>
+              <span className="text-slate-600">
+                Lang: <strong>{selectedPersona.language.toUpperCase()}</strong>
+              </span>
+              {selectedPersona.isMinor && (
+                <>
+                  <span className="text-slate-400">•</span>
+                  <span className="px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 font-bold text-[10px]">
+                    Minor (Caseworker Safe Routing)
+                  </span>
+                </>
+              )}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setIsCustomModalOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 font-semibold text-xs transition-colors cursor-pointer shrink-0 shadow-2xs"
+            >
+              <SlidersHorizontal className="w-3.5 h-3.5 text-primary" />
+              <span>{t("checkin.editCustomData", "Edit Profile & Case Data")}</span>
+            </button>
           </div>
         )}
       </div>
@@ -819,6 +906,19 @@ export default function CheckinPage() {
         isOpen={isHelplineModalOpen}
         onClose={() => setIsHelplineModalOpen(false)}
         triggerReason={helplineTriggerReason}
+      />
+
+      {/* Custom User Data Modal (Allows checking in without a preset persona) */}
+      <CustomDataModal
+        isOpen={isCustomModalOpen}
+        onClose={() => setIsCustomModalOpen(false)}
+        initialPersona={customPersona || undefined}
+        onSave={(persona) => {
+          setCustomPersona(persona);
+          setSelectedPersona(persona);
+          setHasConsent(true);
+          clearChat();
+        }}
       />
     </div>
   );

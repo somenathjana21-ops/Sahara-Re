@@ -15,9 +15,12 @@ import {
   Info,
   Scale,
   Activity,
+  User,
+  SlidersHorizontal,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import CrisisHelplinesModal from "@/components/common/CrisisHelplinesModal";
+import CustomDataModal from "@/components/common/CustomDataModal";
 import {
   CheckInRequest,
   CheckInResponse,
@@ -31,6 +34,9 @@ export default function CallPage() {
   const { t, language } = useLanguage();
 
   const [selectedPersona, setSelectedPersona] = useState<PresetPersona>(PRESET_PERSONAS[0]!);
+  const [customPersona, setCustomPersona] = useState<PresetPersona | null>(null);
+  const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
+
 
   // Telephony call state: 'idle' | 'calling' | 'connected' | 'ended'
   const [callState, setCallState] = useState<"idle" | "calling" | "connected" | "ended">("idle");
@@ -327,23 +333,70 @@ export default function CallPage() {
           </p>
         </div>
 
-        {/* Persona Selector */}
-        <div className="flex items-center gap-2 text-xs">
-          <span className="font-semibold text-slate-700">Persona:</span>
-          <select
-            value={selectedPersona.id}
-            onChange={(e) => {
-              const p = PRESET_PERSONAS.find((item) => item.id === e.target.value);
-              if (p) setSelectedPersona(p);
-            }}
-            className="px-2.5 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-900 font-medium focus:outline-none focus:border-primary text-xs"
-          >
-            {PRESET_PERSONAS.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.label}
-              </option>
-            ))}
-          </select>
+        {/* Profile & Persona Mode Switcher */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 text-xs">
+          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
+            <button
+              type="button"
+              onClick={() => setSelectedPersona(PRESET_PERSONAS[0]!)}
+              className={`px-2.5 py-1 rounded-lg text-xs font-semibold cursor-pointer transition-all ${
+                !selectedPersona.isCustom
+                  ? "bg-white text-slate-900 shadow-2xs"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              Presets
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                if (customPersona) {
+                  setSelectedPersona(customPersona);
+                } else {
+                  setIsCustomModalOpen(true);
+                }
+              }}
+              className={`px-2.5 py-1 rounded-lg text-xs font-semibold cursor-pointer transition-all flex items-center gap-1 ${
+                selectedPersona.isCustom
+                  ? "bg-primary text-white shadow-2xs"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              <User className="w-3 h-3" />
+              <span>Without Persona</span>
+            </button>
+          </div>
+
+          {!selectedPersona.isCustom ? (
+            <select
+              value={selectedPersona.id}
+              onChange={(e) => {
+                const p = PRESET_PERSONAS.find((item) => item.id === e.target.value);
+                if (p) setSelectedPersona(p);
+              }}
+              className="px-2.5 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-900 font-medium focus:outline-none focus:border-primary text-xs"
+            >
+              {PRESET_PERSONAS.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.label}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <div className="flex items-center gap-1.5">
+              <span className="font-mono font-bold px-2 py-1 bg-emerald-50 text-emerald-800 rounded-lg border border-emerald-200">
+                {selectedPersona.pseudonym} (S3: {selectedPersona.s3Standing} pts)
+              </span>
+              <button
+                type="button"
+                onClick={() => setIsCustomModalOpen(true)}
+                className="px-2.5 py-1 rounded-lg bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold flex items-center gap-1 cursor-pointer"
+              >
+                <SlidersHorizontal className="w-3 h-3 text-primary" />
+                <span>Edit Data</span>
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
@@ -616,6 +669,17 @@ export default function CallPage() {
         isOpen={isHelplineModalOpen}
         onClose={() => setIsHelplineModalOpen(false)}
         triggerReason={helplineTriggerReason}
+      />
+
+      {/* Custom User Data Modal */}
+      <CustomDataModal
+        isOpen={isCustomModalOpen}
+        onClose={() => setIsCustomModalOpen(false)}
+        initialPersona={customPersona || undefined}
+        onSave={(persona) => {
+          setCustomPersona(persona);
+          setSelectedPersona(persona);
+        }}
       />
     </div>
   );

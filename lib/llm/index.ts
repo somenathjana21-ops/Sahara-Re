@@ -250,7 +250,7 @@ export async function analyzeTranscript(
           { role: "user", content: userPrompt },
         ],
         temperature: 0.1,
-        max_tokens: 300,
+        max_tokens: 1500,
         response_format: { type: "json_object" },
       }),
       signal: controller.signal,

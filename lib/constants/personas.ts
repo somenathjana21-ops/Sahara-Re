@@ -10,7 +10,20 @@ export interface PresetPersona {
   language: string;
   isMinor?: boolean;
   s3Standing: number;
+  isCustom?: boolean;
 }
+
+export const DEFAULT_CUSTOM_PERSONA: PresetPersona = {
+  id: "99999999-9999-9999-9999-999999999999",
+  consentId: "99999999-3333-9999-9999-999999999999",
+  pseudonym: "U-Custom",
+  label: "Without Persona (Direct User Data)",
+  language: "en",
+  isMinor: false,
+  s3Standing: 0,
+  isCustom: true,
+};
+
 
 export const PRESET_PERSONAS: PresetPersona[] = [
   {

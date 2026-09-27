@@ -194,11 +194,12 @@ export async function POST(request: NextRequest) {
     } else if (llmResult.reply) {
       const pass2Result = checkOutput(llmResult.reply, person.language);
       sanitizedReply = pass2Result.sanitizedReply;
+    } else if (req.abandoned) {
+      sanitizedReply = getStaticReply("closing_low", person.language);
+    } else if (!req.transcript) {
+      sanitizedReply = getStaticReply("llm_unavailable", person.language);
     } else {
-      sanitizedReply = getStaticReply(
-        req.abandoned ? "closing_low" : "fallback_reply",
-        person.language
-      );
+      sanitizedReply = getStaticReply("fallback_reply", person.language);
     }
 
     // -------------------------------------------------------------

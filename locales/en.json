@@ -221,5 +221,22 @@
     "emergency": "National Emergency Response Support",
     "emergencyNum": "112",
     "emergencyDesc": "All-in-one emergency service for immediate police, fire, or medical dispatch."
+  },
+  "customModal": {
+    "title": "Self-Directed Check-in (Without Persona)",
+    "subtitle": "Fill in your own details and case context. No pre-set persona required.",
+    "identityHeader": "1. Anonymous Identity & Preferences",
+    "pseudonymLabel": "Anonymous Identifier (Pseudonym):",
+    "zeroPiiNotice": "Strict Zero PII policy: Do not enter real names or contact details.",
+    "languageLabel": "Preferred Language:",
+    "isMinorLabel": "I am under 18 years of age (Minor)",
+    "isMinorDesc": "Project SAHARA safeguards minors by diverting directly to an accredited human caseworker without automated scoring.",
+    "caseHeader": "2. Legal Case Context (S3 Score Drivers)",
+    "noCaseNotice": "No active legal case reported. S3 case distress score will be 0 points, focusing analysis on emotional dialogue (S2) and self-report (S1).",
+    "historyHeader": "3. Prior History & Baseline",
+    "firstTimeNotice": "First-time check-in: Baseline will be established upon first contact.",
+    "consentCheckLabel": "Voluntary Consent Granted",
+    "consentCheckDesc": "I voluntarily consent to confidential distress monitoring. Answers will never affect legal outcomes or compensation claims.",
+    "applyButton": "Apply & Start Check-in"
   }
 }

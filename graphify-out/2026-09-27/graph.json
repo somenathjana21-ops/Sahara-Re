@@ -237,71 +237,6 @@
       "source_location": "L123"
     },
     {
-      "id": "lib_llm_index_llmanalysisresult",
-      "label": "LLMAnalysisResult",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "llmanalysisresult",
-      "source_file": "lib/llm/index.ts",
-      "source_location": "L18"
-    },
-    {
-      "id": "lib_llm_index_llmprovider",
-      "label": "LLMProvider",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "llmprovider",
-      "source_file": "lib/llm/index.ts",
-      "source_location": "L9"
-    },
-    {
-      "id": "lib_llm_index_llmrequestoptions",
-      "label": "LLMRequestOptions",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "llmrequestoptions",
-      "source_file": "lib/llm/index.ts",
-      "source_location": "L11"
-    },
-    {
-      "id": "lib_llm_prompt_llmmarker",
-      "label": "LLMMarker",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "llmmarker",
-      "source_file": "lib/llm/prompt.ts",
-      "source_location": "L13"
-    },
-    {
-      "id": "lib_llm_prompt_llmoutput",
-      "label": "LLMOutput",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "llmoutput",
-      "source_file": "lib/llm/prompt.ts",
-      "source_location": "L24"
-    },
-    {
       "id": "lib_policy_index_deterministictriggerinput",
       "label": "DeterministicTriggerInput",
       "_callable": true,
@@ -351,6 +286,97 @@
       "file_type": "code",
       "norm_label": "policydefinition",
       "source_file": "lib/policy/index.ts",
+      "source_location": "L64"
+    },
+    {
+      "id": "lib_safety_interlock_bannedpatternrule",
+      "label": "BannedPatternRule",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "bannedpatternrule",
+      "source_file": "lib/safety/interlock.ts",
+      "source_location": "L104"
+    },
+    {
+      "id": "lib_safety_interlock_pass1result",
+      "label": "Pass1Result",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "pass1result",
+      "source_file": "lib/safety/interlock.ts",
+      "source_location": "L36"
+    },
+    {
+      "id": "lib_safety_interlock_pass2result",
+      "label": "Pass2Result",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "pass2result",
+      "source_file": "lib/safety/interlock.ts",
+      "source_location": "L97"
+    },
+    {
+      "id": "lib_safety_interlock_pass2violationreason",
+      "label": "Pass2ViolationReason",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "pass2violationreason",
+      "source_file": "lib/safety/interlock.ts",
+      "source_location": "L88"
+    },
+    {
+      "id": "lib_safety_lexicon_lexiconcategory",
+      "label": "LexiconCategory",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "lexiconcategory",
+      "source_file": "lib/safety/lexicon.ts",
+      "source_location": "L20"
+    },
+    {
+      "id": "lib_safety_lexicon_lexiconrule",
+      "label": "LexiconRule",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "lexiconrule",
+      "source_file": "lib/safety/lexicon.ts",
+      "source_location": "L26"
+    },
+    {
+      "id": "lib_safety_replies_replybankcontent",
+      "label": "ReplyBankContent",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "replybankcontent",
+      "source_file": "lib/safety/replies.ts",
       "source_location": "L64"
     },
     {
@@ -456,6 +482,19 @@
       "norm_label": "s4result",
       "source_file": "lib/scoring/s4.ts",
       "source_location": "L10"
+    },
+    {
+      "id": "types_contract_language",
+      "label": "Language",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "language",
+      "source_file": "types/contract.ts",
+      "source_location": "L22"
     },
     {
       "id": "types_contract_tier",
@@ -783,108 +822,69 @@
       "source_location": "L41"
     },
     {
-      "id": "lib_safety_interlock_bannedpatternrule",
-      "label": "BannedPatternRule",
+      "id": "lib_llm_index_llmanalysisresult",
+      "label": "LLMAnalysisResult",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "interlock.ts",
+      "community_name": "llm/index.ts",
       "file_type": "code",
-      "norm_label": "bannedpatternrule",
-      "source_file": "lib/safety/interlock.ts",
-      "source_location": "L104"
+      "norm_label": "llmanalysisresult",
+      "source_file": "lib/llm/index.ts",
+      "source_location": "L18"
     },
     {
-      "id": "lib_safety_interlock_pass1result",
-      "label": "Pass1Result",
+      "id": "lib_llm_index_llmprovider",
+      "label": "LLMProvider",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "interlock.ts",
+      "community_name": "llm/index.ts",
       "file_type": "code",
-      "norm_label": "pass1result",
-      "source_file": "lib/safety/interlock.ts",
-      "source_location": "L36"
+      "norm_label": "llmprovider",
+      "source_file": "lib/llm/index.ts",
+      "source_location": "L9"
     },
     {
-      "id": "lib_safety_interlock_pass2result",
-      "label": "Pass2Result",
+      "id": "lib_llm_index_llmrequestoptions",
+      "label": "LLMRequestOptions",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "interlock.ts",
+      "community_name": "llm/index.ts",
       "file_type": "code",
-      "norm_label": "pass2result",
-      "source_file": "lib/safety/interlock.ts",
-      "source_location": "L97"
+      "norm_label": "llmrequestoptions",
+      "source_file": "lib/llm/index.ts",
+      "source_location": "L11"
     },
     {
-      "id": "lib_safety_interlock_pass2violationreason",
-      "label": "Pass2ViolationReason",
+      "id": "lib_llm_prompt_llmmarker",
+      "label": "LLMMarker",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "interlock.ts",
+      "community_name": "llm/index.ts",
       "file_type": "code",
-      "norm_label": "pass2violationreason",
-      "source_file": "lib/safety/interlock.ts",
-      "source_location": "L88"
+      "norm_label": "llmmarker",
+      "source_file": "lib/llm/prompt.ts",
+      "source_location": "L13"
     },
     {
-      "id": "lib_safety_lexicon_lexiconcategory",
-      "label": "LexiconCategory",
+      "id": "lib_llm_prompt_llmoutput",
+      "label": "LLMOutput",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "interlock.ts",
+      "community_name": "llm/index.ts",
       "file_type": "code",
-      "norm_label": "lexiconcategory",
-      "source_file": "lib/safety/lexicon.ts",
-      "source_location": "L20"
-    },
-    {
-      "id": "lib_safety_lexicon_lexiconrule",
-      "label": "LexiconRule",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "interlock.ts",
-      "file_type": "code",
-      "norm_label": "lexiconrule",
-      "source_file": "lib/safety/lexicon.ts",
-      "source_location": "L26"
-    },
-    {
-      "id": "lib_safety_replies_replybankcontent",
-      "label": "ReplyBankContent",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "interlock.ts",
-      "file_type": "code",
-      "norm_label": "replybankcontent",
-      "source_file": "lib/safety/replies.ts",
-      "source_location": "L64"
-    },
-    {
-      "id": "types_contract_language",
-      "label": "Language",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "interlock.ts",
-      "file_type": "code",
-      "norm_label": "language",
-      "source_file": "types/contract.ts",
-      "source_location": "L22"
+      "norm_label": "llmoutput",
+      "source_file": "lib/llm/prompt.ts",
+      "source_location": "L24"
     },
     {
       "id": "app_api_staff_persons_personid_route_get",
@@ -1499,54 +1499,6 @@
       "source_location": "L37"
     },
     {
-      "id": "lib_llm_index_analyzetranscript",
-      "label": "analyzeTranscript()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "analyzetranscript()",
-      "source_file": "lib/llm/index.ts",
-      "source_location": "L177"
-    },
-    {
-      "id": "lib_llm_index_cleanjsontext",
-      "label": "cleanJsonText()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "cleanjsontext()",
-      "source_file": "lib/llm/index.ts",
-      "source_location": "L58"
-    },
-    {
-      "id": "lib_llm_index_generatedeterministicmock",
-      "label": "generateDeterministicMock()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "generatedeterministicmock()",
-      "source_file": "lib/llm/index.ts",
-      "source_location": "L70"
-    },
-    {
-      "id": "lib_llm_prompt_builduserprompt",
-      "label": "buildUserPrompt()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "builduserprompt()",
-      "source_file": "lib/llm/prompt.ts",
-      "source_location": "L73"
-    },
-    {
       "id": "lib_policy_index_evaluatepolicy",
       "label": "evaluatePolicy()",
       "_callable": true,
@@ -1583,6 +1535,18 @@
       "source_location": "L80"
     },
     {
+      "id": "lib_safety_interlock_checkinput",
+      "label": "checkInput()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "checkinput()",
+      "source_file": "lib/safety/interlock.ts",
+      "source_location": "L49"
+    },
+    {
       "id": "lib_safety_interlock_checkoutput",
       "label": "checkOutput()",
       "_callable": true,
@@ -1593,6 +1557,30 @@
       "norm_label": "checkoutput()",
       "source_file": "lib/safety/interlock.ts",
       "source_location": "L216"
+    },
+    {
+      "id": "lib_safety_lexicon_normalizetext",
+      "label": "normalizeText()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "normalizetext()",
+      "source_file": "lib/safety/lexicon.ts",
+      "source_location": "L41"
+    },
+    {
+      "id": "lib_safety_replies_getcrisisresources",
+      "label": "getCrisisResources()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "getcrisisresources()",
+      "source_file": "lib/safety/replies.ts",
+      "source_location": "L117"
     },
     {
       "id": "lib_safety_replies_getstaticreply",
@@ -2279,40 +2267,52 @@
       "source_location": "L14"
     },
     {
-      "id": "lib_safety_interlock_checkinput",
-      "label": "checkInput()",
+      "id": "lib_llm_index_analyzetranscript",
+      "label": "analyzeTranscript()",
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "interlock.ts",
+      "community_name": "llm/index.ts",
       "file_type": "code",
-      "norm_label": "checkinput()",
-      "source_file": "lib/safety/interlock.ts",
-      "source_location": "L49"
+      "norm_label": "analyzetranscript()",
+      "source_file": "lib/llm/index.ts",
+      "source_location": "L177"
     },
     {
-      "id": "lib_safety_lexicon_normalizetext",
-      "label": "normalizeText()",
+      "id": "lib_llm_index_cleanjsontext",
+      "label": "cleanJsonText()",
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "interlock.ts",
+      "community_name": "llm/index.ts",
       "file_type": "code",
-      "norm_label": "normalizetext()",
-      "source_file": "lib/safety/lexicon.ts",
-      "source_location": "L41"
+      "norm_label": "cleanjsontext()",
+      "source_file": "lib/llm/index.ts",
+      "source_location": "L58"
     },
     {
-      "id": "lib_safety_replies_getcrisisresources",
-      "label": "getCrisisResources()",
+      "id": "lib_llm_index_generatedeterministicmock",
+      "label": "generateDeterministicMock()",
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "interlock.ts",
+      "community_name": "llm/index.ts",
       "file_type": "code",
-      "norm_label": "getcrisisresources()",
-      "source_file": "lib/safety/replies.ts",
-      "source_location": "L117"
+      "norm_label": "generatedeterministicmock()",
+      "source_file": "lib/llm/index.ts",
+      "source_location": "L70"
+    },
+    {
+      "id": "lib_llm_prompt_builduserprompt",
+      "label": "buildUserPrompt()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "llm/index.ts",
+      "file_type": "code",
+      "norm_label": "builduserprompt()",
+      "source_file": "lib/llm/prompt.ts",
+      "source_location": "L73"
     },
     {
       "id": "app_api_staff_persons_personid_route",
@@ -2414,94 +2414,6 @@
       "source_location": "L1"
     },
     {
-      "id": "lib_llm_index",
-      "label": "llm/index.ts",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "llm/index.ts",
-      "source_file": "lib/llm/index.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "lib_llm_index_provider_configs",
-      "label": "PROVIDER_CONFIGS",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "provider_configs",
-      "source_file": "lib/llm/index.ts",
-      "source_location": "L33"
-    },
-    {
-      "id": "lib_llm_prompt",
-      "label": "prompt.ts",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "prompt.ts",
-      "source_file": "lib/llm/prompt.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "lib_llm_prompt_intake_questions",
-      "label": "INTAKE_QUESTIONS",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "intake_questions",
-      "source_file": "lib/llm/prompt.ts",
-      "source_location": "L26"
-    },
-    {
-      "id": "lib_llm_prompt_llmmarkerenum",
-      "label": "LLMMarkerEnum",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "llmmarkerenum",
-      "source_file": "lib/llm/prompt.ts",
-      "source_location": "L5"
-    },
-    {
-      "id": "lib_llm_prompt_llmoutputschema",
-      "label": "LLMOutputSchema",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "llmoutputschema",
-      "source_file": "lib/llm/prompt.ts",
-      "source_location": "L15"
-    },
-    {
-      "id": "lib_llm_prompt_prompt_version",
-      "label": "PROMPT_VERSION",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "prompt_version",
-      "source_file": "lib/llm/prompt.ts",
-      "source_location": "L3"
-    },
-    {
-      "id": "lib_llm_prompt_system_prompt",
-      "label": "SYSTEM_PROMPT",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "system_prompt",
-      "source_file": "lib/llm/prompt.ts",
-      "source_location": "L44"
-    },
-    {
       "id": "lib_policy_index",
       "label": "policy/index.ts",
       "_origin": "ast",
@@ -2568,6 +2480,116 @@
       "source_location": "L26"
     },
     {
+      "id": "lib_safety_interlock",
+      "label": "interlock.ts",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "interlock.ts",
+      "source_file": "lib/safety/interlock.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "lib_safety_interlock_banned_output_rules",
+      "label": "BANNED_OUTPUT_RULES",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "banned_output_rules",
+      "source_file": "lib/safety/interlock.ts",
+      "source_location": "L113"
+    },
+    {
+      "id": "lib_safety_lexicon",
+      "label": "lexicon.ts",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "lexicon.ts",
+      "source_file": "lib/safety/lexicon.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "lib_safety_lexicon_lexicon_rules",
+      "label": "LEXICON_RULES",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "lexicon_rules",
+      "source_file": "lib/safety/lexicon.ts",
+      "source_location": "L55"
+    },
+    {
+      "id": "lib_safety_lexicon_lexicon_version",
+      "label": "LEXICON_VERSION",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "lexicon_version",
+      "source_file": "lib/safety/lexicon.ts",
+      "source_location": "L18"
+    },
+    {
+      "id": "lib_safety_lexicon_reviewed_by",
+      "label": "REVIEWED_BY",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "reviewed_by",
+      "source_file": "lib/safety/lexicon.ts",
+      "source_location": "L16"
+    },
+    {
+      "id": "lib_safety_lexicon_reviewed_on",
+      "label": "REVIEWED_ON",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "reviewed_on",
+      "source_file": "lib/safety/lexicon.ts",
+      "source_location": "L17"
+    },
+    {
+      "id": "lib_safety_replies",
+      "label": "replies.ts",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "replies.ts",
+      "source_file": "lib/safety/replies.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "lib_safety_replies_crisis_resources",
+      "label": "CRISIS_RESOURCES",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "crisis_resources",
+      "source_file": "lib/safety/replies.ts",
+      "source_location": "L17"
+    },
+    {
+      "id": "lib_safety_replies_reply_bank",
+      "label": "REPLY_BANK",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "reply_bank",
+      "source_file": "lib/safety/replies.ts",
+      "source_location": "L75"
+    },
+    {
       "id": "lib_scoring_baseline",
       "label": "baseline.ts",
       "_origin": "ast",
@@ -2631,6 +2653,17 @@
       "file_type": "code",
       "norm_label": "s4.ts",
       "source_file": "lib/scoring/s4.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_safety_test",
+      "label": "safety.test.ts",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "safety.test.ts",
+      "source_file": "tests/safety.test.ts",
       "source_location": "L1"
     },
     {
@@ -4735,125 +4768,92 @@
       "source_location": "L29"
     },
     {
-      "id": "lib_safety_interlock",
-      "label": "interlock.ts",
+      "id": "lib_llm_index",
+      "label": "llm/index.ts",
       "_origin": "ast",
       "community": 9,
-      "community_name": "interlock.ts",
+      "community_name": "llm/index.ts",
       "file_type": "code",
-      "norm_label": "interlock.ts",
-      "source_file": "lib/safety/interlock.ts",
+      "norm_label": "llm/index.ts",
+      "source_file": "lib/llm/index.ts",
       "source_location": "L1"
     },
     {
-      "id": "lib_safety_interlock_banned_output_rules",
-      "label": "BANNED_OUTPUT_RULES",
+      "id": "lib_llm_index_provider_configs",
+      "label": "PROVIDER_CONFIGS",
       "_origin": "ast",
       "community": 9,
-      "community_name": "interlock.ts",
+      "community_name": "llm/index.ts",
       "file_type": "code",
-      "norm_label": "banned_output_rules",
-      "source_file": "lib/safety/interlock.ts",
-      "source_location": "L113"
+      "norm_label": "provider_configs",
+      "source_file": "lib/llm/index.ts",
+      "source_location": "L33"
     },
     {
-      "id": "lib_safety_lexicon",
-      "label": "lexicon.ts",
+      "id": "lib_llm_prompt",
+      "label": "prompt.ts",
       "_origin": "ast",
       "community": 9,
-      "community_name": "interlock.ts",
+      "community_name": "llm/index.ts",
       "file_type": "code",
-      "norm_label": "lexicon.ts",
-      "source_file": "lib/safety/lexicon.ts",
+      "norm_label": "prompt.ts",
+      "source_file": "lib/llm/prompt.ts",
       "source_location": "L1"
     },
     {
-      "id": "lib_safety_lexicon_lexicon_rules",
-      "label": "LEXICON_RULES",
+      "id": "lib_llm_prompt_intake_questions",
+      "label": "INTAKE_QUESTIONS",
       "_origin": "ast",
       "community": 9,
-      "community_name": "interlock.ts",
+      "community_name": "llm/index.ts",
       "file_type": "code",
-      "norm_label": "lexicon_rules",
-      "source_file": "lib/safety/lexicon.ts",
-      "source_location": "L55"
+      "norm_label": "intake_questions",
+      "source_file": "lib/llm/prompt.ts",
+      "source_location": "L26"
     },
     {
-      "id": "lib_safety_lexicon_lexicon_version",
-      "label": "LEXICON_VERSION",
+      "id": "lib_llm_prompt_llmmarkerenum",
+      "label": "LLMMarkerEnum",
       "_origin": "ast",
       "community": 9,
-      "community_name": "interlock.ts",
+      "community_name": "llm/index.ts",
       "file_type": "code",
-      "norm_label": "lexicon_version",
-      "source_file": "lib/safety/lexicon.ts",
-      "source_location": "L18"
+      "norm_label": "llmmarkerenum",
+      "source_file": "lib/llm/prompt.ts",
+      "source_location": "L5"
     },
     {
-      "id": "lib_safety_lexicon_reviewed_by",
-      "label": "REVIEWED_BY",
+      "id": "lib_llm_prompt_llmoutputschema",
+      "label": "LLMOutputSchema",
       "_origin": "ast",
       "community": 9,
-      "community_name": "interlock.ts",
+      "community_name": "llm/index.ts",
       "file_type": "code",
-      "norm_label": "reviewed_by",
-      "source_file": "lib/safety/lexicon.ts",
-      "source_location": "L16"
+      "norm_label": "llmoutputschema",
+      "source_file": "lib/llm/prompt.ts",
+      "source_location": "L15"
     },
     {
-      "id": "lib_safety_lexicon_reviewed_on",
-      "label": "REVIEWED_ON",
+      "id": "lib_llm_prompt_prompt_version",
+      "label": "PROMPT_VERSION",
       "_origin": "ast",
       "community": 9,
-      "community_name": "interlock.ts",
+      "community_name": "llm/index.ts",
       "file_type": "code",
-      "norm_label": "reviewed_on",
-      "source_file": "lib/safety/lexicon.ts",
-      "source_location": "L17"
+      "norm_label": "prompt_version",
+      "source_file": "lib/llm/prompt.ts",
+      "source_location": "L3"
     },
     {
-      "id": "lib_safety_replies",
-      "label": "replies.ts",
+      "id": "lib_llm_prompt_system_prompt",
+      "label": "SYSTEM_PROMPT",
       "_origin": "ast",
       "community": 9,
-      "community_name": "interlock.ts",
+      "community_name": "llm/index.ts",
       "file_type": "code",
-      "norm_label": "replies.ts",
-      "source_file": "lib/safety/replies.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "lib_safety_replies_crisis_resources",
-      "label": "CRISIS_RESOURCES",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "interlock.ts",
-      "file_type": "code",
-      "norm_label": "crisis_resources",
-      "source_file": "lib/safety/replies.ts",
-      "source_location": "L17"
-    },
-    {
-      "id": "lib_safety_replies_reply_bank",
-      "label": "REPLY_BANK",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "interlock.ts",
-      "file_type": "code",
-      "norm_label": "reply_bank",
-      "source_file": "lib/safety/replies.ts",
-      "source_location": "L75"
-    },
-    {
-      "id": "tests_safety_test",
-      "label": "safety.test.ts",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "interlock.ts",
-      "file_type": "code",
-      "norm_label": "safety.test.ts",
-      "source_file": "tests/safety.test.ts",
-      "source_location": "L1"
+      "norm_label": "system_prompt",
+      "source_file": "lib/llm/prompt.ts",
+      "source_location": "L44"
     },
     {
       "id": "github_workflows_ci_env_vars",
@@ -5919,7 +5919,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/api/checkin/route.ts",
-      "source_location": "L207",
+      "source_location": "L208",
       "weight": 1.0
     },
     {
@@ -5931,7 +5931,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/api/checkin/route.ts",
-      "source_location": "L211",
+      "source_location": "L212",
       "weight": 1.0
     },
     {
@@ -5943,7 +5943,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/api/checkin/route.ts",
-      "source_location": "L228",
+      "source_location": "L229",
       "weight": 1.0
     },
     {
@@ -5955,7 +5955,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/api/checkin/route.ts",
-      "source_location": "L234",
+      "source_location": "L235",
       "weight": 1.0
     },
     {
@@ -5967,7 +5967,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/api/checkin/route.ts",
-      "source_location": "L236",
+      "source_location": "L237",
       "weight": 1.0
     },
     {
@@ -5979,7 +5979,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/api/checkin/route.ts",
-      "source_location": "L248",
+      "source_location": "L249",
       "weight": 1.0
     },
     {
@@ -5991,7 +5991,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/api/checkin/route.ts",
-      "source_location": "L260",
+      "source_location": "L261",
       "weight": 1.0
     },
     {
@@ -8224,18 +8224,6 @@
       "context": "import",
       "source_file": "components/common/CrisisHelplinesModal.tsx",
       "source_location": "L5",
-      "weight": 1.0
-    },
-    {
-      "source": "components_common_header",
-      "target": "components_common_quickexit_quickexit",
-      "relation": "imports",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "components/common/Header.tsx",
-      "source_location": "L7",
       "weight": 1.0
     },
     {
@@ -10696,18 +10684,6 @@
       "context": "import",
       "source_file": "components/common/CrisisHelplinesModal.tsx",
       "source_location": "L5",
-      "weight": 1.0
-    },
-    {
-      "source": "components_common_header",
-      "target": "components_common_quickexit",
-      "relation": "imports_from",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "components/common/Header.tsx",
-      "source_location": "L7",
       "weight": 1.0
     },
     {
@@ -17513,5 +17489,5 @@
       "source_file": "AGENTS.md"
     }
   ],
-  "built_at_commit": "7202ec17e036bbe1cceb1eae8c33e92f6f791fb0"
+  "built_at_commit": "135227d5609d551ece178e6cafd57adfa76dfcaa"
 }
