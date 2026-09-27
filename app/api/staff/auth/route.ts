@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
     const handle = (staffHandle && staffHandle.trim()) || "counsellor_on_duty";
     const sessionToken = generateSessionToken(handle, "counsellor");
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       {
         ok: true,
         staffHandle: handle,
@@ -44,6 +44,17 @@ export async function POST(request: NextRequest) {
       },
       { status: 200 }
     );
+
+    // Set HTTP-only cookie for seamless middleware auth
+    response.cookies.set("sahara_session", sessionToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 8 * 60 * 60, // 8 hours
+    });
+
+    return response;
   } catch {
     return NextResponse.json(
       { error: "Authentication failed" },
@@ -51,3 +62,21 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+export async function DELETE() {
+  const response = NextResponse.json(
+    { ok: true, message: "Logged out" },
+    { status: 200 }
+  );
+
+  response.cookies.set("sahara_session", "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: 0,
+  });
+
+  return response;
+}
+

@@ -23,6 +23,7 @@ import StaffAuthGate from "@/components/staff/StaffAuthGate";
 import AckModal from "@/components/staff/AckModal";
 import { TriageQueueItem } from "@/app/api/staff/queue/route";
 import { AlertRecord, Tier } from "@/types/contract";
+import { getStaffAuthHeaders } from "@/lib/auth/client";
 
 export default function StaffTriageQueuePage() {
   const [items, setItems] = useState<TriageQueueItem[]>([]);
@@ -56,11 +57,16 @@ export default function StaffTriageQueuePage() {
         localStorage.getItem("sahara_staff_handle") ||
         "Dr. Ananya Sharma";
 
+      const authHeaders = getStaffAuthHeaders();
+
       // Log view_queue audit event on initial load
       if (!isManualRefresh) {
         fetch("/api/staff/audit", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            ...authHeaders,
+          },
           body: JSON.stringify({
             actor: staffHandle,
             role: "counsellor",
@@ -74,12 +80,18 @@ export default function StaffTriageQueuePage() {
       if (statusFilter !== "ALL") queryParams.set("status", statusFilter);
       if (searchQuery.trim()) queryParams.set("q", searchQuery.trim());
 
-      const res = await fetch(`/api/staff/queue?${queryParams.toString()}`);
+      const res = await fetch(`/api/staff/queue?${queryParams.toString()}`, {
+        headers: {
+          ...authHeaders,
+        },
+      });
       const data = await res.json();
 
       if (res.ok) {
         setItems(data.queue || []);
         if (data.stats) setStats(data.stats);
+      } else if (res.status === 401) {
+        setError("Session expired or unauthorized. Please re-enter your passcode.");
       } else {
         setError(`Server error (${res.status}). Triage data may be stale.`);
       }
@@ -273,6 +285,22 @@ export default function StaffTriageQueuePage() {
               </div>
             </div>
           </div>
+
+          {/* Error Banner */}
+          {error && (
+            <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs sm:text-sm flex items-center justify-between gap-3 shadow-2xs">
+              <div className="flex items-center gap-2.5">
+                <AlertTriangle className="w-4 h-4 text-red-600 shrink-0" />
+                <span className="font-medium">{error}</span>
+              </div>
+              <button
+                onClick={() => fetchQueue(true)}
+                className="px-3 py-1 bg-red-100 hover:bg-red-200 text-red-800 rounded-lg text-xs font-semibold transition shrink-0 cursor-pointer"
+              >
+                Retry
+              </button>
+            </div>
+          )}
 
           {/* Triage Queue List */}
           {loading ? (

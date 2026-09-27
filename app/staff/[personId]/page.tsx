@@ -30,6 +30,7 @@ import {
   AlertRecord,
   AuditEventRecord,
 } from "@/types/contract";
+import { getStaffAuthHeaders } from "@/lib/auth/client";
 
 export default function PersonDetailScreen({
   params,
@@ -61,9 +62,16 @@ export default function PersonDetailScreen({
         localStorage.getItem("sahara_staff_handle") ||
         "Dr. Ananya Sharma";
 
+      const authHeaders = getStaffAuthHeaders();
+
       // Fetch person data (API automatically logs 'view_person' in audit_events)
       const res = await fetch(
-        `/api/staff/persons/${personId}?actor=${encodeURIComponent(staffHandle)}`
+        `/api/staff/persons/${personId}?actor=${encodeURIComponent(staffHandle)}`,
+        {
+          headers: {
+            ...authHeaders,
+          },
+        }
       );
       const data = await res.json();
 

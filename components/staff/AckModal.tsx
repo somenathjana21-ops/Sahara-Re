@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { X, CheckCircle2, ShieldAlert, PhoneCall, ArrowUpRight, CheckCheck } from "lucide-react";
 import { AlertDisposition, AlertRecord } from "@/types/contract";
+import { getStaffAuthHeaders } from "@/lib/auth/client";
 
 interface AckModalProps {
   isOpen: boolean;
@@ -49,9 +50,13 @@ export default function AckModal({
     setErrorMsg(null);
 
     try {
+      const authHeaders = getStaffAuthHeaders();
       const res = await fetch("/api/alerts", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...authHeaders,
+        },
         body: JSON.stringify({
           alertId: alert.id,
           ackedBy: ackedBy.trim(),

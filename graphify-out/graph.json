@@ -78,7 +78,7 @@
       "file_type": "code",
       "norm_label": "ackmodalprops",
       "source_file": "components/staff/AckModal.tsx",
-      "source_location": "L7"
+      "source_location": "L8"
     },
     {
       "id": "components_staff_staffauthgate_staffauthgateprops",
@@ -131,6 +131,32 @@
       "norm_label": "irepository",
       "source_file": "lib/db/repository.ts",
       "source_location": "L12"
+    },
+    {
+      "id": "lib_policy_index_deterministictriggerinput",
+      "label": "DeterministicTriggerInput",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "InMemoryRepository",
+      "file_type": "code",
+      "norm_label": "deterministictriggerinput",
+      "source_file": "lib/policy/index.ts",
+      "source_location": "L167"
+    },
+    {
+      "id": "lib_policy_index_evaluatepolicyresult",
+      "label": "EvaluatePolicyResult",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "InMemoryRepository",
+      "file_type": "code",
+      "norm_label": "evaluatepolicyresult",
+      "source_file": "lib/policy/index.ts",
+      "source_location": "L185"
     },
     {
       "id": "types_contract_alertdisposition",
@@ -248,6 +274,19 @@
       "norm_label": "tier",
       "source_file": "types/contract.ts",
       "source_location": "L8"
+    },
+    {
+      "id": "types_contract_triggersource",
+      "label": "TriggerSource",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "InMemoryRepository",
+      "file_type": "code",
+      "norm_label": "triggersource",
+      "source_file": "types/contract.ts",
+      "source_location": "L19"
     },
     {
       "id": "lib_llm_index_llmanalysisresult",
@@ -731,19 +770,6 @@
       "source_location": "L41"
     },
     {
-      "id": "lib_policy_index_deterministictriggerinput",
-      "label": "DeterministicTriggerInput",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "deterministictriggerinput",
-      "source_file": "lib/policy/index.ts",
-      "source_location": "L167"
-    },
-    {
       "id": "lib_policy_index_evaluatepolicyinput",
       "label": "EvaluatePolicyInput",
       "_callable": true,
@@ -755,19 +781,6 @@
       "norm_label": "evaluatepolicyinput",
       "source_file": "lib/policy/index.ts",
       "source_location": "L173"
-    },
-    {
-      "id": "lib_policy_index_evaluatepolicyresult",
-      "label": "EvaluatePolicyResult",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "evaluatepolicyresult",
-      "source_file": "lib/policy/index.ts",
-      "source_location": "L185"
     },
     {
       "id": "lib_policy_index_policydefinition",
@@ -965,17 +978,16 @@
       "source_location": "L22"
     },
     {
-      "id": "types_contract_triggersource",
-      "label": "TriggerSource",
+      "id": "app_api_staff_queue_route_get",
+      "label": "GET()",
       "_callable": true,
-      "_callable_class": true,
       "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
+      "community": 0,
+      "community_name": "InMemoryRepository",
       "file_type": "code",
-      "norm_label": "triggersource",
-      "source_file": "types/contract.ts",
-      "source_location": "L19"
+      "norm_label": "get()",
+      "source_file": "app/api/staff/queue/route.ts",
+      "source_location": "L32"
     },
     {
       "id": "app_staff_page_stafftriagequeuepage",
@@ -987,7 +999,7 @@
       "file_type": "code",
       "norm_label": "stafftriagequeuepage()",
       "source_file": "app/staff/page.tsx",
-      "source_location": "L27"
+      "source_location": "L28"
     },
     {
       "id": "app_staff_personid_page_persondetailscreen",
@@ -999,7 +1011,7 @@
       "file_type": "code",
       "norm_label": "persondetailscreen()",
       "source_file": "app/staff/[personId]/page.tsx",
-      "source_location": "L34"
+      "source_location": "L35"
     },
     {
       "id": "components_staff_ackmodal_ackmodal",
@@ -1011,7 +1023,7 @@
       "file_type": "code",
       "norm_label": "ackmodal()",
       "source_file": "components/staff/AckModal.tsx",
-      "source_location": "L15"
+      "source_location": "L16"
     },
     {
       "id": "components_staff_staffauthgate_staffauthgate",
@@ -1036,6 +1048,18 @@
       "norm_label": "trendchart()",
       "source_file": "components/staff/TrendChart.tsx",
       "source_location": "L14"
+    },
+    {
+      "id": "lib_auth_client_getstaffauthheaders",
+      "label": "getStaffAuthHeaders()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "InMemoryRepository",
+      "file_type": "code",
+      "norm_label": "getstaffauthheaders()",
+      "source_file": "lib/auth/client.ts",
+      "source_location": "L8"
     },
     {
       "id": "lib_db_repository_inmemoryrepository_acknowledgealert",
@@ -1710,12 +1734,24 @@
       "source_location": "L45"
     },
     {
+      "id": "app_api_staff_auth_route_delete",
+      "label": "DELETE()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "auth/route.ts",
+      "file_type": "code",
+      "norm_label": "delete()",
+      "source_file": "app/api/staff/auth/route.ts",
+      "source_location": "L66"
+    },
+    {
       "id": "app_api_staff_auth_route_post",
       "label": "POST()",
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "session.ts",
+      "community_name": "auth/route.ts",
       "file_type": "code",
       "norm_label": "post()",
       "source_file": "app/api/staff/auth/route.ts",
@@ -1727,7 +1763,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "session.ts",
+      "community_name": "auth/route.ts",
       "file_type": "code",
       "norm_label": "generatesessiontoken()",
       "source_file": "lib/auth/session.ts",
@@ -1739,7 +1775,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "session.ts",
+      "community_name": "auth/route.ts",
       "file_type": "code",
       "norm_label": "getsessionsecret()",
       "source_file": "lib/auth/session.ts",
@@ -1751,7 +1787,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "session.ts",
+      "community_name": "auth/route.ts",
       "file_type": "code",
       "norm_label": "timingsafeequal()",
       "source_file": "lib/auth/session.ts",
@@ -1763,7 +1799,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "session.ts",
+      "community_name": "auth/route.ts",
       "file_type": "code",
       "norm_label": "verifypasscode()",
       "source_file": "lib/auth/session.ts",
@@ -1775,7 +1811,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "session.ts",
+      "community_name": "auth/route.ts",
       "file_type": "code",
       "norm_label": "verifysessiontoken()",
       "source_file": "lib/auth/session.ts",
@@ -1996,18 +2032,6 @@
       "norm_label": "get()",
       "source_file": "app/api/staff/persons/[personId]/route.ts",
       "source_location": "L5"
-    },
-    {
-      "id": "app_api_staff_queue_route_get",
-      "label": "GET()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "fixtures.ts",
-      "file_type": "code",
-      "norm_label": "get()",
-      "source_file": "app/api/staff/queue/route.ts",
-      "source_location": "L32"
     },
     {
       "id": "lib_db_client_getsupabaseclient",
@@ -2615,6 +2639,17 @@
       "source_location": "L1"
     },
     {
+      "id": "lib_auth_client",
+      "label": "auth/client.ts",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "InMemoryRepository",
+      "file_type": "code",
+      "norm_label": "auth/client.ts",
+      "source_file": "lib/auth/client.ts",
+      "source_location": "L1"
+    },
+    {
       "id": "lib_llm_index",
       "label": "llm/index.ts",
       "_origin": "ast",
@@ -2938,7 +2973,7 @@
       "label": "auth/route.ts",
       "_origin": "ast",
       "community": 13,
-      "community_name": "session.ts",
+      "community_name": "auth/route.ts",
       "file_type": "code",
       "norm_label": "auth/route.ts",
       "source_file": "app/api/staff/auth/route.ts",
@@ -2949,7 +2984,7 @@
       "label": "session.ts",
       "_origin": "ast",
       "community": 13,
-      "community_name": "session.ts",
+      "community_name": "auth/route.ts",
       "file_type": "code",
       "norm_label": "session.ts",
       "source_file": "lib/auth/session.ts",
@@ -3243,12 +3278,12 @@
     },
     {
       "id": "lib_db_client",
-      "label": "client.ts",
+      "label": "db/client.ts",
       "_origin": "ast",
       "community": 3,
       "community_name": "fixtures.ts",
       "file_type": "code",
-      "norm_label": "client.ts",
+      "norm_label": "db/client.ts",
       "source_file": "lib/db/client.ts",
       "source_location": "L1"
     },
@@ -3605,6 +3640,39 @@
       "source_location": "L1"
     },
     {
+      "id": "types_contract_checkinrequestschema",
+      "label": "CheckInRequestSchema",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "fixtures.ts",
+      "file_type": "code",
+      "norm_label": "checkinrequestschema",
+      "source_file": "types/contract.ts",
+      "source_location": "L56"
+    },
+    {
+      "id": "types_contract_checkinresponseschema",
+      "label": "CheckInResponseSchema",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "fixtures.ts",
+      "file_type": "code",
+      "norm_label": "checkinresponseschema",
+      "source_file": "types/contract.ts",
+      "source_location": "L94"
+    },
+    {
+      "id": "types_contract_tierenum",
+      "label": "TierEnum",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "fixtures.ts",
+      "file_type": "code",
+      "norm_label": "tierenum",
+      "source_file": "types/contract.ts",
+      "source_location": "L7"
+    },
+    {
       "id": "app_call_page",
       "label": "call/page.tsx",
       "_origin": "ast",
@@ -3957,28 +4025,6 @@
       "source_location": "L50"
     },
     {
-      "id": "types_contract_checkinrequestschema",
-      "label": "CheckInRequestSchema",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "contract.ts",
-      "file_type": "code",
-      "norm_label": "checkinrequestschema",
-      "source_file": "types/contract.ts",
-      "source_location": "L56"
-    },
-    {
-      "id": "types_contract_checkinresponseschema",
-      "label": "CheckInResponseSchema",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "contract.ts",
-      "file_type": "code",
-      "norm_label": "checkinresponseschema",
-      "source_file": "types/contract.ts",
-      "source_location": "L94"
-    },
-    {
       "id": "types_contract_componentsbreakdownschema",
       "label": "ComponentsBreakdownSchema",
       "_origin": "ast",
@@ -4054,17 +4100,6 @@
       "norm_label": "structuredcheckinschema",
       "source_file": "types/contract.ts",
       "source_location": "L36"
-    },
-    {
-      "id": "types_contract_tierenum",
-      "label": "TierEnum",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "contract.ts",
-      "file_type": "code",
-      "norm_label": "tierenum",
-      "source_file": "types/contract.ts",
-      "source_location": "L7"
     },
     {
       "id": "types_contract_triggersourceenum",
@@ -6620,6 +6655,18 @@
       "weight": 1.0
     },
     {
+      "source": "app_api_staff_queue_route_get",
+      "target": "lib_db_staff_seed_ensurestafftriagefixtures",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "app/api/staff/queue/route.ts",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
       "source": "app_call_page_callpage",
       "target": "lib_i18n_languagecontext_uselanguage",
       "relation": "calls",
@@ -6653,6 +6700,30 @@
       "context": "call",
       "source_file": "app/page.tsx",
       "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "app_staff_page_stafftriagequeuepage",
+      "target": "lib_auth_client_getstaffauthheaders",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "app/staff/page.tsx",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "app_staff_personid_page_persondetailscreen",
+      "target": "lib_auth_client_getstaffauthheaders",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "app/staff/[personId]/page.tsx",
+      "source_location": "L65",
       "weight": 1.0
     },
     {
@@ -6749,6 +6820,18 @@
       "context": "call",
       "source_file": "components/common/QuickExit.tsx",
       "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "components_staff_ackmodal_ackmodal",
+      "target": "lib_auth_client_getstaffauthheaders",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "components/staff/AckModal.tsx",
+      "source_location": "L53",
       "weight": 1.0
     },
     {
@@ -7252,7 +7335,7 @@
       "confidence_score": 1.0,
       "context": "field",
       "source_file": "components/staff/AckModal.tsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0
     },
     {
@@ -8780,6 +8863,18 @@
       "weight": 1.0
     },
     {
+      "source": "app_staff_page",
+      "target": "lib_auth_client_getstaffauthheaders",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/staff/page.tsx",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
       "source": "app_staff_personid_page",
       "target": "components_staff_staffauthgate_staffauthgate",
       "relation": "imports",
@@ -8909,6 +9004,18 @@
       "context": "import",
       "source_file": "app/staff/[personId]/page.tsx",
       "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "app_staff_personid_page",
+      "target": "lib_auth_client_getstaffauthheaders",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/staff/[personId]/page.tsx",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -9065,6 +9172,18 @@
       "context": "import",
       "source_file": "components/staff/AckModal.tsx",
       "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "components_staff_ackmodal",
+      "target": "lib_auth_client_getstaffauthheaders",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "components/staff/AckModal.tsx",
+      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -10425,6 +10544,30 @@
     },
     {
       "source": "tests_phase6_test",
+      "target": "app_api_staff_audit_route_get",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/phase6.test.ts",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_phase6_test",
+      "target": "app_api_staff_audit_route_post",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/phase6.test.ts",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_phase6_test",
       "target": "app_api_alerts_route_get",
       "relation": "imports",
       "_origin": "ast",
@@ -10432,7 +10575,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/phase6.test.ts",
-      "source_location": "L11",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -10444,7 +10587,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/phase6.test.ts",
-      "source_location": "L11",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -10456,7 +10599,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/phase6.test.ts",
-      "source_location": "L15",
+      "source_location": "L18",
       "weight": 1.0
     },
     {
@@ -10468,7 +10611,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/phase6.test.ts",
-      "source_location": "L15",
+      "source_location": "L18",
       "weight": 1.0
     },
     {
@@ -10480,7 +10623,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/phase6.test.ts",
-      "source_location": "L16",
+      "source_location": "L19",
       "weight": 1.0
     },
     {
@@ -10492,7 +10635,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/phase6.test.ts",
-      "source_location": "L17",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -10504,7 +10647,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/phase6.test.ts",
-      "source_location": "L17",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -10516,7 +10659,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/phase6.test.ts",
-      "source_location": "L17",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -10528,7 +10671,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/phase6.test.ts",
-      "source_location": "L17",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -10557,7 +10700,7 @@
     },
     {
       "source": "tests_phase6_test",
-      "target": "app_api_staff_auth_route_post",
+      "target": "app_api_staff_auth_route_delete",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -10569,26 +10712,14 @@
     },
     {
       "source": "tests_phase6_test",
-      "target": "app_api_staff_audit_route_get",
+      "target": "app_api_staff_auth_route_post",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/phase6.test.ts",
-      "source_location": "L7",
-      "weight": 1.0
-    },
-    {
-      "source": "tests_phase6_test",
-      "target": "app_api_staff_audit_route_post",
-      "relation": "imports",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "tests/phase6.test.ts",
-      "source_location": "L7",
+      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -11636,6 +11767,18 @@
       "weight": 1.0
     },
     {
+      "source": "app_staff_page",
+      "target": "lib_auth_client",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/staff/page.tsx",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
       "source": "app_staff_personid_page",
       "target": "components_staff_staffauthgate",
       "relation": "imports_from",
@@ -11693,6 +11836,18 @@
       "context": "import",
       "source_file": "app/staff/[personId]/page.tsx",
       "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "app_staff_personid_page",
+      "target": "lib_auth_client",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/staff/[personId]/page.tsx",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -11813,6 +11968,18 @@
       "context": "import",
       "source_file": "components/staff/AckModal.tsx",
       "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "components_staff_ackmodal",
+      "target": "lib_auth_client",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "components/staff/AckModal.tsx",
+      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -12297,6 +12464,18 @@
     },
     {
       "source": "tests_phase6_test",
+      "target": "app_api_staff_audit_route",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/phase6.test.ts",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_phase6_test",
       "target": "app_api_alerts_route",
       "relation": "imports_from",
       "_origin": "ast",
@@ -12304,7 +12483,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/phase6.test.ts",
-      "source_location": "L11",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -12316,7 +12495,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/phase6.test.ts",
-      "source_location": "L15",
+      "source_location": "L18",
       "weight": 1.0
     },
     {
@@ -12328,7 +12507,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/phase6.test.ts",
-      "source_location": "L16",
+      "source_location": "L19",
       "weight": 1.0
     },
     {
@@ -12340,7 +12519,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tests/phase6.test.ts",
-      "source_location": "L17",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -12377,18 +12556,6 @@
       "context": "import",
       "source_file": "tests/phase6.test.ts",
       "source_location": "L6",
-      "weight": 1.0
-    },
-    {
-      "source": "tests_phase6_test",
-      "target": "app_api_staff_audit_route",
-      "relation": "imports_from",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "tests/phase6.test.ts",
-      "source_location": "L7",
       "weight": 1.0
     },
     {
@@ -12977,6 +13144,17 @@
       "weight": 1.0
     },
     {
+      "source": "app_api_staff_auth_route",
+      "target": "app_api_staff_auth_route_delete",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/api/staff/auth/route.ts",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
       "source": "app_api_staff_persons_personid_route",
       "target": "app_api_staff_persons_personid_route_get",
       "relation": "contains",
@@ -13127,7 +13305,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/staff/page.tsx",
-      "source_location": "L27",
+      "source_location": "L28",
       "weight": 1.0
     },
     {
@@ -13138,7 +13316,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/staff/[personId]/page.tsx",
-      "source_location": "L34",
+      "source_location": "L35",
       "weight": 1.0
     },
     {
@@ -13270,7 +13448,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/staff/AckModal.tsx",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -13281,7 +13459,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/staff/AckModal.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0
     },
     {
@@ -13403,6 +13581,17 @@
       "confidence_score": 1.0,
       "source_file": ".eslintrc.json",
       "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_auth_client",
+      "target": "lib_auth_client_getstaffauthheaders",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/auth/client.ts",
+      "source_location": "L8",
       "weight": 1.0
     },
     {
@@ -18999,5 +19188,5 @@
       "source_file": "AGENTS.md"
     }
   ],
-  "built_at_commit": "47f13df29eb76d9d6ac4af40740bd0bca53d96ea"
+  "built_at_commit": "cb79d6f065fe1a5ef26f3ee3f8196397c6ff8b90"
 }

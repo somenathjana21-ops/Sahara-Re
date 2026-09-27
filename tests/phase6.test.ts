@@ -3,7 +3,10 @@ import assert from "node:assert";
 import { NextRequest } from "next/server";
 import { GET as queueGetHandler } from "@/app/api/staff/queue/route";
 import { GET as personGetHandler } from "@/app/api/staff/persons/[personId]/route";
-import { POST as authPostHandler } from "@/app/api/staff/auth/route";
+import {
+  POST as authPostHandler,
+  DELETE as authDeleteHandler,
+} from "@/app/api/staff/auth/route";
 import {
   GET as auditGetHandler,
   POST as auditPostHandler,
@@ -64,6 +67,18 @@ describe("Phase 6: Counsellor Triage Dashboard Suite", () => {
       assert.strictEqual(json.ok, true);
       assert.strictEqual(json.staffHandle, "Dr. Ananya Sharma");
       assert.ok(json.sessionToken);
+
+      const cookie = res.cookies.get("sahara_session");
+      assert.ok(cookie, "Auth response must set sahara_session cookie");
+      assert.strictEqual(cookie.value, json.sessionToken);
+    });
+
+    it("should clear session cookie on DELETE /api/staff/auth", async () => {
+      const res = await authDeleteHandler();
+      assert.strictEqual(res.status, 200);
+      const cookie = res.cookies.get("sahara_session");
+      assert.ok(cookie);
+      assert.strictEqual(cookie.value, "");
     });
 
     it("teardown: restore original STAFF_PASSCODE", () => {

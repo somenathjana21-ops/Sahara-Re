@@ -1,16 +1,16 @@
 # Graph Report - Sahara-Re  (2026-09-27)
 
 ## Corpus Check
-- 79 files · ~84,597 words
+- 80 files · ~84,923 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 513 nodes · 1106 edges · 23 communities (19 shown, 4 thin omitted)
+- 516 nodes · 1119 edges · 23 communities (19 shown, 4 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 14 edges (avg confidence: 0.81)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `47f13df2`
+- Built from commit: `cb79d6f0`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -28,7 +28,7 @@
 - middleware.ts
 - rules
 - schema.sql
-- session.ts
+- auth/route.ts
 - test-runner.ts
 - CI workflow
 - CLAUDE.md - Graphify Integration Rules
@@ -73,7 +73,7 @@
 
 ### Community 0 - "InMemoryRepository"
 Cohesion: 0.06
-Nodes (20): TIER_PRIORITY, TriageQueueItem, AckModal(), AckModalProps, StaffAuthGate(), StaffAuthGateProps, TrendChart(), TrendChartProps (+12 more)
+Nodes (27): GET(), TIER_PRIORITY, TriageQueueItem, StaffTriageQueuePage(), PersonDetailScreen(), AckModal(), AckModalProps, StaffAuthGate() (+19 more)
 
 ### Community 1 - "llm/index.ts"
 Cohesion: 0.16
@@ -85,7 +85,7 @@ Nodes (58): AGENTS.md - Project SAHARA Agent Instructions, ARCHITECTURE.md - Tec
 
 ### Community 3 - "fixtures.ts"
 Cohesion: 0.08
-Nodes (43): GET(), POST(), CasePatchSchema, GET(), PATCH(), DELETE(), GET(), POST() (+35 more)
+Nodes (45): GET(), POST(), CasePatchSchema, GET(), PATCH(), DELETE(), GET(), POST() (+37 more)
 
 ### Community 4 - "useLanguage"
 Cohesion: 0.08
@@ -93,7 +93,7 @@ Nodes (32): CallPage(), ChatMessage, CheckinPage(), metadata, plusJakartaSans, H
 
 ### Community 5 - "contract.ts"
 Cohesion: 0.07
-Nodes (35): ExplainabilityChart(), ExplainabilityChartProps, BASE_WEIGHTS, CompositeDistressResult, RawScores, ScoringWeights, S1Result, S5_CAVEAT (+27 more)
+Nodes (32): ExplainabilityChart(), ExplainabilityChartProps, BASE_WEIGHTS, CompositeDistressResult, RawScores, ScoringWeights, S1Result, S5_CAVEAT (+24 more)
 
 ### Community 6 - "dependencies"
 Cohesion: 0.06
@@ -109,7 +109,7 @@ Nodes (23): autoprefixer, eslint, eslint-config-next, devDependencies, autoprefi
 
 ### Community 9 - "checkin/route.ts"
 Cohesion: 0.07
-Nodes (47): POST(), ConditionSchema, DeterministicTriggerInput, EscalationConfigSchema, evaluatePolicy(), EvaluatePolicyInput, EvaluatePolicyResult, getActivePolicy() (+39 more)
+Nodes (44): POST(), ConditionSchema, EscalationConfigSchema, evaluatePolicy(), EvaluatePolicyInput, getActivePolicy(), parseAndValidatePolicy(), PolicyDefinition (+36 more)
 
 ### Community 10 - "middleware.ts"
 Cohesion: 0.27
@@ -123,9 +123,9 @@ Nodes (7): extends, rules, no-console, react/no-unescaped-entities, @typescript-
 Cohesion: 0.54
 Nodes (7): alerts, assessments, audit_events, cases, checkins, consents, persons
 
-### Community 13 - "session.ts"
-Cohesion: 0.54
-Nodes (6): POST(), generateSessionToken(), getSessionSecret(), timingSafeEqual(), verifyPasscode(), verifySessionToken()
+### Community 13 - "auth/route.ts"
+Cohesion: 0.44
+Nodes (7): DELETE(), POST(), generateSessionToken(), getSessionSecret(), timingSafeEqual(), verifyPasscode(), verifySessionToken()
 
 ### Community 14 - "test-runner.ts"
 Cohesion: 0.50
@@ -149,15 +149,15 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `PersonRecord` connect `InMemoryRepository` to `fixtures.ts`, `contract.ts`, `persons/route.ts`?**
   _High betweenness centrality (0.017) - this node is a cross-community bridge._
-- **Why does `InMemoryRepository` connect `InMemoryRepository` to `fixtures.ts`?**
+- **Why does `AlertRecord` connect `InMemoryRepository` to `fixtures.ts`, `contract.ts`?**
   _High betweenness centrality (0.016) - this node is a cross-community bridge._
 - **What connects `extends`, `next/core-web-vitals`, `react/no-unescaped-entities` to the rest of the system?**
   _152 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `InMemoryRepository` be split into smaller, more focused modules?**
-  _Cohesion score 0.06086956521739131 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05719298245614035 - nodes in this community are weakly interconnected._
 - **Should `AGENTS.md - Project SAHARA Agent Instructions` be split into smaller, more focused modules?**
   _Cohesion score 0.1161524500907441 - nodes in this community are weakly interconnected._
 - **Should `fixtures.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.0847457627118644 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07978142076502732 - nodes in this community are weakly interconnected._
 - **Should `useLanguage` be split into smaller, more focused modules?**
   _Cohesion score 0.08163265306122448 - nodes in this community are weakly interconnected._

@@ -37,6 +37,8 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get("q")?.toLowerCase();
 
     const repo = getRepository();
+    // Ensure initial demo fixtures exist (matches persons/[personId]/route.ts)
+    await ensureStaffTriageFixtures(repo);
 
     const persons = await repo.listPersons();
     const alerts = await repo.listAlerts();

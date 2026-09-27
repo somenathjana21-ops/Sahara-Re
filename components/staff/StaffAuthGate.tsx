@@ -63,7 +63,12 @@ export default function StaffAuthGate({ children }: StaffAuthGateProps) {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/staff/auth", { method: "DELETE" });
+    } catch {
+      // Ignore network errors on logout
+    }
     sessionStorage.removeItem("sahara_staff_token");
     sessionStorage.removeItem("sahara_staff_handle");
     localStorage.removeItem("sahara_staff_token");

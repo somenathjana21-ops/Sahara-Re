@@ -299,7 +299,7 @@
       "file_type": "code",
       "norm_label": "historyturn",
       "source_file": "lib/llm/prompt.ts",
-      "source_location": "L101"
+      "source_location": "L109"
     },
     {
       "id": "lib_llm_prompt_llmmarker",
@@ -325,7 +325,7 @@
       "file_type": "code",
       "norm_label": "llmoutput",
       "source_file": "lib/llm/prompt.ts",
-      "source_location": "L24"
+      "source_location": "L26"
     },
     {
       "id": "lib_llm_prompt_topiccoverage",
@@ -338,7 +338,7 @@
       "file_type": "code",
       "norm_label": "topiccoverage",
       "source_file": "lib/llm/prompt.ts",
-      "source_location": "L106"
+      "source_location": "L114"
     },
     {
       "id": "lib_safety_pii_scrubresult",
@@ -741,7 +741,7 @@
       "file_type": "code",
       "norm_label": "deterministictriggerinput",
       "source_file": "lib/policy/index.ts",
-      "source_location": "L162"
+      "source_location": "L167"
     },
     {
       "id": "lib_policy_index_evaluatepolicyinput",
@@ -754,7 +754,7 @@
       "file_type": "code",
       "norm_label": "evaluatepolicyinput",
       "source_file": "lib/policy/index.ts",
-      "source_location": "L168"
+      "source_location": "L173"
     },
     {
       "id": "lib_policy_index_evaluatepolicyresult",
@@ -767,7 +767,7 @@
       "file_type": "code",
       "norm_label": "evaluatepolicyresult",
       "source_file": "lib/policy/index.ts",
-      "source_location": "L178"
+      "source_location": "L185"
     },
     {
       "id": "lib_policy_index_policydefinition",
@@ -780,7 +780,7 @@
       "file_type": "code",
       "norm_label": "policydefinition",
       "source_file": "lib/policy/index.ts",
-      "source_location": "L64"
+      "source_location": "L66"
     },
     {
       "id": "lib_safety_interlock_bannedpatternrule",
@@ -1563,7 +1563,7 @@
       "file_type": "code",
       "norm_label": "analyzetranscript()",
       "source_file": "lib/llm/index.ts",
-      "source_location": "L309"
+      "source_location": "L326"
     },
     {
       "id": "lib_llm_index_cleanjsontext",
@@ -1575,7 +1575,7 @@
       "file_type": "code",
       "norm_label": "cleanjsontext()",
       "source_file": "lib/llm/index.ts",
-      "source_location": "L59"
+      "source_location": "L61"
     },
     {
       "id": "lib_llm_index_generatedeterministicmock",
@@ -1587,7 +1587,7 @@
       "file_type": "code",
       "norm_label": "generatedeterministicmock()",
       "source_file": "lib/llm/index.ts",
-      "source_location": "L71"
+      "source_location": "L73"
     },
     {
       "id": "lib_llm_prompt_builduserprompt",
@@ -1599,7 +1599,7 @@
       "file_type": "code",
       "norm_label": "builduserprompt()",
       "source_file": "lib/llm/prompt.ts",
-      "source_location": "L168"
+      "source_location": "L176"
     },
     {
       "id": "lib_llm_prompt_detecttopiccoverage",
@@ -1611,7 +1611,7 @@
       "file_type": "code",
       "norm_label": "detecttopiccoverage()",
       "source_file": "lib/llm/prompt.ts",
-      "source_location": "L116"
+      "source_location": "L124"
     },
     {
       "id": "lib_auth_session_edge_base64urldecode",
@@ -2355,7 +2355,7 @@
       "file_type": "code",
       "norm_label": "evaluatepolicy()",
       "source_file": "lib/policy/index.ts",
-      "source_location": "L197"
+      "source_location": "L204"
     },
     {
       "id": "lib_policy_index_getactivepolicy",
@@ -2367,7 +2367,7 @@
       "file_type": "code",
       "norm_label": "getactivepolicy()",
       "source_file": "lib/policy/index.ts",
-      "source_location": "L137"
+      "source_location": "L142"
     },
     {
       "id": "lib_policy_index_parseandvalidatepolicy",
@@ -2379,7 +2379,7 @@
       "file_type": "code",
       "norm_label": "parseandvalidatepolicy()",
       "source_file": "lib/policy/index.ts",
-      "source_location": "L80"
+      "source_location": "L82"
     },
     {
       "id": "lib_safety_interlock_checkinput",
@@ -2634,7 +2634,7 @@
       "file_type": "code",
       "norm_label": "provider_configs",
       "source_file": "lib/llm/index.ts",
-      "source_location": "L34"
+      "source_location": "L36"
     },
     {
       "id": "lib_llm_prompt",
@@ -2656,7 +2656,7 @@
       "file_type": "code",
       "norm_label": "intake_questions",
       "source_file": "lib/llm/prompt.ts",
-      "source_location": "L26"
+      "source_location": "L28"
     },
     {
       "id": "lib_llm_prompt_llmmarkerenum",
@@ -2700,7 +2700,7 @@
       "file_type": "code",
       "norm_label": "system_prompt",
       "source_file": "lib/llm/prompt.ts",
-      "source_location": "L44"
+      "source_location": "L46"
     },
     {
       "id": "tests_llm_conversational_test",
@@ -5054,7 +5054,7 @@
       "file_type": "code",
       "norm_label": "policydefinitionschema",
       "source_file": "lib/policy/index.ts",
-      "source_location": "L34"
+      "source_location": "L36"
     },
     {
       "id": "lib_policy_index_tier_rank",
@@ -5065,7 +5065,7 @@
       "file_type": "code",
       "norm_label": "tier_rank",
       "source_file": "lib/policy/index.ts",
-      "source_location": "L67"
+      "source_location": "L69"
     },
     {
       "id": "lib_policy_index_tierruleschema",
@@ -5076,7 +5076,7 @@
       "file_type": "code",
       "norm_label": "tierruleschema",
       "source_file": "lib/policy/index.ts",
-      "source_location": "L26"
+      "source_location": "L28"
     },
     {
       "id": "lib_safety_interlock",
@@ -6880,7 +6880,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/llm/index.ts",
-      "source_location": "L319",
+      "source_location": "L336",
       "weight": 1.0
     },
     {
@@ -6892,7 +6892,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/llm/index.ts",
-      "source_location": "L372",
+      "source_location": "L397",
       "weight": 1.0
     },
     {
@@ -6904,7 +6904,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/llm/index.ts",
-      "source_location": "L414",
+      "source_location": "L439",
       "weight": 1.0
     },
     {
@@ -6916,7 +6916,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/llm/prompt.ts",
-      "source_location": "L189",
+      "source_location": "L197",
       "weight": 1.0
     },
     {
@@ -6928,7 +6928,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/policy/index.ts",
-      "source_location": "L145",
+      "source_location": "L150",
       "weight": 1.0
     },
     {
@@ -7348,7 +7348,7 @@
       "confidence_score": 1.0,
       "context": "field",
       "source_file": "lib/policy/index.ts",
-      "source_location": "L163",
+      "source_location": "L168",
       "weight": 1.0
     },
     {
@@ -7360,7 +7360,7 @@
       "confidence_score": 1.0,
       "context": "field",
       "source_file": "lib/policy/index.ts",
-      "source_location": "L164",
+      "source_location": "L169",
       "weight": 1.0
     },
     {
@@ -7372,7 +7372,7 @@
       "confidence_score": 1.0,
       "context": "field",
       "source_file": "lib/policy/index.ts",
-      "source_location": "L179",
+      "source_location": "L186",
       "weight": 1.0
     },
     {
@@ -7384,7 +7384,7 @@
       "confidence_score": 1.0,
       "context": "field",
       "source_file": "lib/policy/index.ts",
-      "source_location": "L180",
+      "source_location": "L187",
       "weight": 1.0
     },
     {
@@ -13743,7 +13743,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/llm/index.ts",
-      "source_location": "L309",
+      "source_location": "L326",
       "weight": 1.0
     },
     {
@@ -13754,7 +13754,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/llm/index.ts",
-      "source_location": "L34",
+      "source_location": "L36",
       "weight": 1.0
     },
     {
@@ -13765,7 +13765,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/llm/index.ts",
-      "source_location": "L59",
+      "source_location": "L61",
       "weight": 1.0
     },
     {
@@ -13776,7 +13776,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/llm/index.ts",
-      "source_location": "L71",
+      "source_location": "L73",
       "weight": 1.0
     },
     {
@@ -13798,7 +13798,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/llm/prompt.ts",
-      "source_location": "L101",
+      "source_location": "L109",
       "weight": 1.0
     },
     {
@@ -13809,7 +13809,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/llm/prompt.ts",
-      "source_location": "L106",
+      "source_location": "L114",
       "weight": 1.0
     },
     {
@@ -13820,7 +13820,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/llm/prompt.ts",
-      "source_location": "L116",
+      "source_location": "L124",
       "weight": 1.0
     },
     {
@@ -13853,7 +13853,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/llm/prompt.ts",
-      "source_location": "L168",
+      "source_location": "L176",
       "weight": 1.0
     },
     {
@@ -13864,7 +13864,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/llm/prompt.ts",
-      "source_location": "L24",
+      "source_location": "L26",
       "weight": 1.0
     },
     {
@@ -13875,7 +13875,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/llm/prompt.ts",
-      "source_location": "L26",
+      "source_location": "L28",
       "weight": 1.0
     },
     {
@@ -13897,7 +13897,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/llm/prompt.ts",
-      "source_location": "L44",
+      "source_location": "L46",
       "weight": 1.0
     },
     {
@@ -13930,7 +13930,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/policy/index.ts",
-      "source_location": "L137",
+      "source_location": "L142",
       "weight": 1.0
     },
     {
@@ -13941,18 +13941,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/policy/index.ts",
-      "source_location": "L162",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_policy_index",
-      "target": "lib_policy_index_evaluatepolicyinput",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/policy/index.ts",
-      "source_location": "L168",
+      "source_location": "L167",
       "weight": 1.0
     },
     {
@@ -13968,13 +13957,24 @@
     },
     {
       "source": "lib_policy_index",
+      "target": "lib_policy_index_evaluatepolicyinput",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/policy/index.ts",
+      "source_location": "L173",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_policy_index",
       "target": "lib_policy_index_evaluatepolicyresult",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/policy/index.ts",
-      "source_location": "L178",
+      "source_location": "L185",
       "weight": 1.0
     },
     {
@@ -13985,7 +13985,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/policy/index.ts",
-      "source_location": "L197",
+      "source_location": "L204",
       "weight": 1.0
     },
     {
@@ -13996,7 +13996,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/policy/index.ts",
-      "source_location": "L26",
+      "source_location": "L28",
       "weight": 1.0
     },
     {
@@ -14007,7 +14007,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/policy/index.ts",
-      "source_location": "L34",
+      "source_location": "L36",
       "weight": 1.0
     },
     {
@@ -14018,7 +14018,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/policy/index.ts",
-      "source_location": "L64",
+      "source_location": "L66",
       "weight": 1.0
     },
     {
@@ -14029,7 +14029,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/policy/index.ts",
-      "source_location": "L67",
+      "source_location": "L69",
       "weight": 1.0
     },
     {
@@ -14040,7 +14040,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/policy/index.ts",
-      "source_location": "L80",
+      "source_location": "L82",
       "weight": 1.0
     },
     {
