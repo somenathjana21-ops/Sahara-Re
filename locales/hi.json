@@ -186,7 +186,9 @@
     "skipS1": "इस सत्र के लिए छोड़ें",
     "skipped": "छोड़ा गया",
     "sessionStatus": "सत्र स्थिति:",
-    "dialogueActive": "संवाद जारी है"
+    "dialogueActive": "संवाद जारी है",
+    "needHumanAssistance": "क्या आपको अभी किसी काउंसलर या सहायता अधिकारी से बात करनी है?",
+    "talkToPersonPill": "किसी व्यक्ति से बात करें (24/7 हेल्पलाइन)"
   },
   "call": {
     "pageTitle": "सिम्युलेटेड वॉयस कॉल (IVRS)",

@@ -1,11 +1,11 @@
 # Graph Report - sahara-re  (2026-09-27)
 
 ## Corpus Check
-- 77 files · ~81,221 words
+- 77 files · ~81,523 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 503 nodes · 1085 edges · 21 communities (17 shown, 4 thin omitted)
+- 504 nodes · 1086 edges · 22 communities (18 shown, 4 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 14 edges (avg confidence: 0.81)
 - Token cost: 0 input · 0 output
 
@@ -28,6 +28,7 @@
 - middleware.ts
 - rules
 - schema.sql
+- auth/route.ts
 - test-runner.ts
 - CI workflow
 - CLAUDE.md - Graphify Integration Rules
@@ -67,11 +68,11 @@
 - **6-Phase Implementation Plan** — concept_phase1_contracts, concept_phase2_safety, concept_phase3_scoring, concept_phase4_pipeline, concept_phase5_ui, concept_phase6_dashboard [EXTRACTED 0.90]
 - **Safety Interlock System (Two-Pass)** — concept_pass1_interlock, concept_pass2_interlock, concept_lexicon_v1, concept_boxed_llm_call [EXTRACTED 0.90]
 
-## Communities (21 total, 4 thin omitted)
+## Communities (22 total, 4 thin omitted)
 
 ### Community 0 - "InMemoryRepository"
 Cohesion: 0.06
-Nodes (23): GET(), TIER_PRIORITY, TriageQueueItem, AckModal(), AckModalProps, ExplainabilityChart(), StaffAuthGate(), StaffAuthGateProps (+15 more)
+Nodes (20): TIER_PRIORITY, TriageQueueItem, AckModal(), AckModalProps, ExplainabilityChart(), StaffAuthGate(), StaffAuthGateProps, TrendChart() (+12 more)
 
 ### Community 1 - "llm/index.ts"
 Cohesion: 0.16
@@ -83,7 +84,7 @@ Nodes (58): AGENTS.md - Project SAHARA Agent Instructions, ARCHITECTURE.md - Tec
 
 ### Community 3 - "fixtures.ts"
 Cohesion: 0.08
-Nodes (44): GET(), POST(), CasePatchSchema, GET(), PATCH(), DELETE(), GET(), POST() (+36 more)
+Nodes (46): GET(), POST(), CasePatchSchema, GET(), PATCH(), DELETE(), GET(), POST() (+38 more)
 
 ### Community 4 - "useLanguage"
 Cohesion: 0.08
@@ -91,19 +92,19 @@ Nodes (31): CallPage(), ChatMessage, CheckinPage(), metadata, plusJakartaSans, H
 
 ### Community 5 - "contract.ts"
 Cohesion: 0.06
-Nodes (41): GET(), POST(), ExplainabilityChartProps, BASE_WEIGHTS, CompositeDistressResult, RawScores, ScoringWeights, S1Result (+33 more)
+Nodes (38): GET(), POST(), ExplainabilityChartProps, BASE_WEIGHTS, CompositeDistressResult, RawScores, ScoringWeights, S1Result (+30 more)
 
 ### Community 6 - "dependencies"
-Cohesion: 0.06
-Nodes (30): clsx, lucide-react, next, dependencies, clsx, lucide-react, next, react (+22 more)
+Cohesion: 0.11
+Nodes (19): clsx, lucide-react, next, dependencies, clsx, lucide-react, next, react (+11 more)
 
 ### Community 7 - "compilerOptions"
 Cohesion: 0.07
 Nodes (29): dom, dom.iterable, esnext, next-env.d.ts, .next/types/**/*.ts, node_modules, **/*.ts, **/*.tsx (+21 more)
 
 ### Community 8 - "devDependencies"
-Cohesion: 0.09
-Nodes (23): autoprefixer, eslint, eslint-config-next, devDependencies, autoprefixer, eslint, eslint-config-next, postcss (+15 more)
+Cohesion: 0.06
+Nodes (34): autoprefixer, eslint, eslint-config-next, devDependencies, autoprefixer, eslint, eslint-config-next, postcss (+26 more)
 
 ### Community 9 - "checkin/route.ts"
 Cohesion: 0.06
@@ -121,6 +122,10 @@ Nodes (7): extends, rules, no-console, react/no-unescaped-entities, @typescript-
 Cohesion: 0.54
 Nodes (7): alerts, assessments, audit_events, cases, checkins, consents, persons
 
+### Community 13 - "auth/route.ts"
+Cohesion: 0.57
+Nodes (5): POST(), generateSessionToken(), timingSafeEqual(), verifyPasscode(), verifySessionToken()
+
 ### Community 14 - "test-runner.ts"
 Cohesion: 0.50
 Nodes (3): filterArg, testFiles, testsDir
@@ -130,7 +135,7 @@ Cohesion: 0.67
 Nodes (3): CI workflow, CI environment variables (STAFF_PASSCODE, SESSION_SECRET), CI pipeline (npm ci, typecheck, tests, build)
 
 ## Knowledge Gaps
-- **149 isolated node(s):** `extends`, `next/core-web-vitals`, `react/no-unescaped-entities`, `CasePatchSchema`, `AuditEventCreateSchema` (+144 more)
+- **150 isolated node(s):** `extends`, `next/core-web-vitals`, `react/no-unescaped-entities`, `CasePatchSchema`, `AuditEventCreateSchema` (+145 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -142,12 +147,12 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `PersonRecord` connect `InMemoryRepository` to `fixtures.ts`, `contract.ts`?**
   _High betweenness centrality (0.017) - this node is a cross-community bridge._
 - **What connects `extends`, `next/core-web-vitals`, `react/no-unescaped-entities` to the rest of the system?**
-  _149 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _150 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `InMemoryRepository` be split into smaller, more focused modules?**
-  _Cohesion score 0.0563165905631659 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.060041407867494824 - nodes in this community are weakly interconnected._
 - **Should `AGENTS.md - Project SAHARA Agent Instructions` be split into smaller, more focused modules?**
   _Cohesion score 0.1161524500907441 - nodes in this community are weakly interconnected._
 - **Should `fixtures.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.07932310946589106 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07826546800634585 - nodes in this community are weakly interconnected._
 - **Should `useLanguage` be split into smaller, more focused modules?**
   _Cohesion score 0.08421985815602837 - nodes in this community are weakly interconnected._

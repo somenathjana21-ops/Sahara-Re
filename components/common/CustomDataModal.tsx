@@ -11,6 +11,7 @@ import {
   RefreshCw,
   FileText,
   Search,
+  Sparkles,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { PresetPersona } from "@/lib/constants/personas";
@@ -450,6 +451,17 @@ export default function CustomDataModal({
                   className="rounded text-primary focus:ring-primary w-4 h-4 cursor-pointer"
                 />
               </label>
+            </div>
+
+            {/* Informational Guidance: How Case Context Drives Priority Caseworker Support */}
+            <div className="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 text-xs text-slate-700 space-y-1">
+              <span className="font-bold text-emerald-900 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
+                <span>How Case Context Drives Priority Support (S3 Engine)</span>
+              </span>
+              <p className="text-[11px] leading-relaxed text-slate-600">
+                Adding legal docket milestones—such as court hearings within 7 days (+15), accused released on bail (+20), or recent intimidation reports (+25)—activates the deterministic S3 scoring engine. When S3 ≥ 60 or composite distress is elevated, the system automatically escalates your check-in to high-priority triage on the caseworker dashboard.
+              </p>
             </div>
 
             {hasCase ? (

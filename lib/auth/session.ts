@@ -1,24 +1,25 @@
 import crypto from "node:crypto";
 
-const SESSION_SECRET = process.env.SESSION_SECRET || process.env.STAFF_PASSCODE || "";
+function getSessionSecret(): string {
+  return process.env.SESSION_SECRET || process.env.STAFF_PASSCODE || "";
+}
 
 /**
  * Constant-time string comparison to prevent timing side-channel attacks.
+ * Hashing both inputs with SHA-256 before crypto.timingSafeEqual guarantees
+ * fixed-length 32-byte buffers, preventing any length-based timing leak.
  */
 function timingSafeEqual(a: string, b: string): boolean {
-  if (a.length !== b.length) {
-    // Compare against self to consume constant time, then return false
-    const buf = Buffer.from(a);
-    crypto.timingSafeEqual(buf, buf);
-    return false;
-  }
-  return crypto.timingSafeEqual(Buffer.from(a), Buffer.from(b));
+  const hashA = crypto.createHash("sha256").update(String(a)).digest();
+  const hashB = crypto.createHash("sha256").update(String(b)).digest();
+  return crypto.timingSafeEqual(hashA, hashB);
 }
 
 /**
  * Generate an HMAC-signed session token that can be verified by middleware.
  */
 export function generateSessionToken(staffHandle: string, role: string): string {
+  const secret = getSessionSecret();
   const payload = JSON.stringify({
     sub: staffHandle,
     role,
@@ -27,7 +28,7 @@ export function generateSessionToken(staffHandle: string, role: string): string 
   });
   const payloadB64 = Buffer.from(payload).toString("base64url");
   const signature = crypto
-    .createHmac("sha256", SESSION_SECRET)
+    .createHmac("sha256", secret)
     .update(payloadB64)
     .digest("base64url");
   return `${payloadB64}.${signature}`;
@@ -39,14 +40,15 @@ export function generateSessionToken(staffHandle: string, role: string): string 
 export function verifySessionToken(
   token: string
 ): { sub: string; role: string; iat: number; exp: number } | null {
-  if (!SESSION_SECRET) return null;
+  const secret = getSessionSecret();
+  if (!secret) return null;
   const parts = token.split(".");
   if (parts.length !== 2) return null;
 
   const [payloadB64, signature] = parts;
   if (!payloadB64 || !signature) return null;
   const expectedSig = crypto
-    .createHmac("sha256", SESSION_SECRET)
+    .createHmac("sha256", secret)
     .update(payloadB64)
     .digest("base64url");
 

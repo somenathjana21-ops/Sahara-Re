@@ -186,7 +186,9 @@
     "skipS1": "Skip for this session",
     "skipped": "Skipped",
     "sessionStatus": "Session Status:",
-    "dialogueActive": "Dialogue in Progress"
+    "dialogueActive": "Dialogue in Progress",
+    "needHumanAssistance": "Need to speak with a human caseworker or helpline right now?",
+    "talkToPersonPill": "Talk to a Person (24/7 Helplines)"
   },
   "call": {
     "pageTitle": "Simulated Voice Call (IVRS)",

@@ -107,17 +107,17 @@ export async function PATCH(request: NextRequest) {
     const updatedCase: CaseRecord = {
       ...existingCase,
       ...(updates.stage !== undefined ? { stage: updates.stage } : {}),
-      ...(updates.nextHearingDate ?? updates.next_hearing_date
-        ? { next_hearing_date: updates.nextHearingDate ?? updates.next_hearing_date }
+      ...(updates.nextHearingDate !== undefined || updates.next_hearing_date !== undefined
+        ? { next_hearing_date: (updates.nextHearingDate ?? updates.next_hearing_date) || null }
         : {}),
-      ...(updates.adjournmentCount ?? updates.adjournment_count
-        ? { adjournment_count: updates.adjournmentCount ?? updates.adjournment_count }
+      ...(updates.adjournmentCount !== undefined || updates.adjournment_count !== undefined
+        ? { adjournment_count: updates.adjournmentCount ?? updates.adjournment_count ?? 0 }
         : {}),
-      ...(updates.bailStatus ?? updates.bail_status
+      ...(updates.bailStatus !== undefined || updates.bail_status !== undefined
         ? { bail_status: updates.bailStatus ?? updates.bail_status }
         : {}),
-      ...(updates.reliefDueDate ?? updates.relief_due_date
-        ? { relief_due_date: updates.reliefDueDate ?? updates.relief_due_date }
+      ...(updates.reliefDueDate !== undefined || updates.relief_due_date !== undefined
+        ? { relief_due_date: (updates.reliefDueDate ?? updates.relief_due_date) || null }
         : {}),
       ...((updates.reliefPaid ?? updates.relief_paid) !== undefined
         ? { relief_paid: updates.reliefPaid ?? updates.relief_paid }
@@ -125,8 +125,8 @@ export async function PATCH(request: NextRequest) {
       ...((updates.socialBoycottFlag ?? updates.social_boycott_flag) !== undefined
         ? { social_boycott_flag: updates.socialBoycottFlag ?? updates.social_boycott_flag }
         : {}),
-      ...(updates.lastIntimidationReport ?? updates.last_intimidation_report
-        ? { last_intimidation_report: updates.lastIntimidationReport ?? updates.last_intimidation_report }
+      ...(updates.lastIntimidationReport !== undefined || updates.last_intimidation_report !== undefined
+        ? { last_intimidation_report: (updates.lastIntimidationReport ?? updates.last_intimidation_report) || null }
         : {}),
     };
 

@@ -55,19 +55,6 @@
   },
   "nodes": [
     {
-      "id": "app_api_staff_queue_route_triagequeueitem",
-      "label": "TriageQueueItem",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "InMemoryRepository",
-      "file_type": "code",
-      "norm_label": "triagequeueitem",
-      "source_file": "app/api/staff/queue/route.ts",
-      "source_location": "L6"
-    },
-    {
       "id": "components_staff_ackmodal_ackmodalprops",
       "label": "AckModalProps",
       "_callable": true,
@@ -237,95 +224,108 @@
       "source_location": "L167"
     },
     {
-      "id": "lib_llm_index_llmanalysisresult",
-      "label": "LLMAnalysisResult",
+      "id": "lib_safety_interlock_bannedpatternrule",
+      "label": "BannedPatternRule",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "llmanalysisresult",
-      "source_file": "lib/llm/index.ts",
-      "source_location": "L19"
+      "norm_label": "bannedpatternrule",
+      "source_file": "lib/safety/interlock.ts",
+      "source_location": "L104"
     },
     {
-      "id": "lib_llm_index_llmprovider",
-      "label": "LLMProvider",
+      "id": "lib_safety_interlock_pass1result",
+      "label": "Pass1Result",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "llmprovider",
-      "source_file": "lib/llm/index.ts",
-      "source_location": "L9"
+      "norm_label": "pass1result",
+      "source_file": "lib/safety/interlock.ts",
+      "source_location": "L36"
     },
     {
-      "id": "lib_llm_index_llmrequestoptions",
-      "label": "LLMRequestOptions",
+      "id": "lib_safety_interlock_pass2result",
+      "label": "Pass2Result",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "llmrequestoptions",
-      "source_file": "lib/llm/index.ts",
-      "source_location": "L11"
+      "norm_label": "pass2result",
+      "source_file": "lib/safety/interlock.ts",
+      "source_location": "L97"
     },
     {
-      "id": "lib_llm_prompt_historyturn",
-      "label": "HistoryTurn",
+      "id": "lib_safety_interlock_pass2violationreason",
+      "label": "Pass2ViolationReason",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "historyturn",
-      "source_file": "lib/llm/prompt.ts",
-      "source_location": "L100"
+      "norm_label": "pass2violationreason",
+      "source_file": "lib/safety/interlock.ts",
+      "source_location": "L88"
     },
     {
-      "id": "lib_llm_prompt_llmmarker",
-      "label": "LLMMarker",
+      "id": "lib_safety_lexicon_lexiconcategory",
+      "label": "LexiconCategory",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "llmmarker",
-      "source_file": "lib/llm/prompt.ts",
-      "source_location": "L13"
+      "norm_label": "lexiconcategory",
+      "source_file": "lib/safety/lexicon.ts",
+      "source_location": "L20"
     },
     {
-      "id": "lib_llm_prompt_llmoutput",
-      "label": "LLMOutput",
+      "id": "lib_safety_lexicon_lexiconrule",
+      "label": "LexiconRule",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "llmoutput",
-      "source_file": "lib/llm/prompt.ts",
-      "source_location": "L24"
+      "norm_label": "lexiconrule",
+      "source_file": "lib/safety/lexicon.ts",
+      "source_location": "L26"
     },
     {
-      "id": "lib_llm_prompt_topiccoverage",
-      "label": "TopicCoverage",
+      "id": "lib_safety_replies_replybankcontent",
+      "label": "ReplyBankContent",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "topiccoverage",
-      "source_file": "lib/llm/prompt.ts",
-      "source_location": "L105"
+      "norm_label": "replybankcontent",
+      "source_file": "lib/safety/replies.ts",
+      "source_location": "L64"
+    },
+    {
+      "id": "types_contract_language",
+      "label": "Language",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "interlock.ts",
+      "file_type": "code",
+      "norm_label": "language",
+      "source_file": "types/contract.ts",
+      "source_location": "L22"
     },
     {
       "id": "app_checkin_page_chatmessage",
@@ -364,7 +364,7 @@
       "file_type": "code",
       "norm_label": "customdatamodalprops",
       "source_file": "components/common/CustomDataModal.tsx",
-      "source_location": "L19"
+      "source_location": "L20"
     },
     {
       "id": "components_common_languageswitcher_languageswitcherprops",
@@ -458,19 +458,6 @@
       "source_location": "L110"
     },
     {
-      "id": "types_contract_custompersonrequest",
-      "label": "CustomPersonRequest",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "useLanguage",
-      "file_type": "code",
-      "norm_label": "custompersonrequest",
-      "source_file": "types/contract.ts",
-      "source_location": "L160"
-    },
-    {
       "id": "types_contract_resourceitem",
       "label": "ResourceItem",
       "_callable": true,
@@ -547,32 +534,6 @@
       "norm_label": "s1result",
       "source_file": "lib/scoring/s1.ts",
       "source_location": "L3"
-    },
-    {
-      "id": "lib_scoring_s3_s3conditionbreakdown",
-      "label": "S3ConditionBreakdown",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "contract.ts",
-      "file_type": "code",
-      "norm_label": "s3conditionbreakdown",
-      "source_file": "lib/scoring/s3.ts",
-      "source_location": "L3"
-    },
-    {
-      "id": "lib_scoring_s3_s3result",
-      "label": "S3Result",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "contract.ts",
-      "file_type": "code",
-      "norm_label": "s3result",
-      "source_file": "lib/scoring/s3.ts",
-      "source_location": "L12"
     },
     {
       "id": "lib_scoring_s5_s5result",
@@ -692,6 +653,19 @@
       "source_location": "L145"
     },
     {
+      "id": "types_contract_custompersonrequest",
+      "label": "CustomPersonRequest",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "contract.ts",
+      "file_type": "code",
+      "norm_label": "custompersonrequest",
+      "source_file": "types/contract.ts",
+      "source_location": "L160"
+    },
+    {
       "id": "types_contract_structuredcheckin",
       "label": "StructuredCheckin",
       "_callable": true,
@@ -703,6 +677,110 @@
       "norm_label": "structuredcheckin",
       "source_file": "types/contract.ts",
       "source_location": "L41"
+    },
+    {
+      "id": "app_api_staff_queue_route_triagequeueitem",
+      "label": "TriageQueueItem",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "triagequeueitem",
+      "source_file": "app/api/staff/queue/route.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "lib_llm_index_llmanalysisresult",
+      "label": "LLMAnalysisResult",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "llmanalysisresult",
+      "source_file": "lib/llm/index.ts",
+      "source_location": "L19"
+    },
+    {
+      "id": "lib_llm_index_llmprovider",
+      "label": "LLMProvider",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "llmprovider",
+      "source_file": "lib/llm/index.ts",
+      "source_location": "L9"
+    },
+    {
+      "id": "lib_llm_index_llmrequestoptions",
+      "label": "LLMRequestOptions",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "llmrequestoptions",
+      "source_file": "lib/llm/index.ts",
+      "source_location": "L11"
+    },
+    {
+      "id": "lib_llm_prompt_historyturn",
+      "label": "HistoryTurn",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "historyturn",
+      "source_file": "lib/llm/prompt.ts",
+      "source_location": "L100"
+    },
+    {
+      "id": "lib_llm_prompt_llmmarker",
+      "label": "LLMMarker",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "llmmarker",
+      "source_file": "lib/llm/prompt.ts",
+      "source_location": "L13"
+    },
+    {
+      "id": "lib_llm_prompt_llmoutput",
+      "label": "LLMOutput",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "llmoutput",
+      "source_file": "lib/llm/prompt.ts",
+      "source_location": "L24"
+    },
+    {
+      "id": "lib_llm_prompt_topiccoverage",
+      "label": "TopicCoverage",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "topiccoverage",
+      "source_file": "lib/llm/prompt.ts",
+      "source_location": "L105"
     },
     {
       "id": "lib_policy_index_deterministictriggerinput",
@@ -754,97 +832,6 @@
       "file_type": "code",
       "norm_label": "policydefinition",
       "source_file": "lib/policy/index.ts",
-      "source_location": "L64"
-    },
-    {
-      "id": "lib_safety_interlock_bannedpatternrule",
-      "label": "BannedPatternRule",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "bannedpatternrule",
-      "source_file": "lib/safety/interlock.ts",
-      "source_location": "L104"
-    },
-    {
-      "id": "lib_safety_interlock_pass1result",
-      "label": "Pass1Result",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "pass1result",
-      "source_file": "lib/safety/interlock.ts",
-      "source_location": "L36"
-    },
-    {
-      "id": "lib_safety_interlock_pass2result",
-      "label": "Pass2Result",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "pass2result",
-      "source_file": "lib/safety/interlock.ts",
-      "source_location": "L97"
-    },
-    {
-      "id": "lib_safety_interlock_pass2violationreason",
-      "label": "Pass2ViolationReason",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "pass2violationreason",
-      "source_file": "lib/safety/interlock.ts",
-      "source_location": "L88"
-    },
-    {
-      "id": "lib_safety_lexicon_lexiconcategory",
-      "label": "LexiconCategory",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "lexiconcategory",
-      "source_file": "lib/safety/lexicon.ts",
-      "source_location": "L20"
-    },
-    {
-      "id": "lib_safety_lexicon_lexiconrule",
-      "label": "LexiconRule",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "lexiconrule",
-      "source_file": "lib/safety/lexicon.ts",
-      "source_location": "L26"
-    },
-    {
-      "id": "lib_safety_replies_replybankcontent",
-      "label": "ReplyBankContent",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "replybankcontent",
-      "source_file": "lib/safety/replies.ts",
       "source_location": "L64"
     },
     {
@@ -900,6 +887,32 @@
       "source_location": "L1"
     },
     {
+      "id": "lib_scoring_s3_s3conditionbreakdown",
+      "label": "S3ConditionBreakdown",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "s3conditionbreakdown",
+      "source_file": "lib/scoring/s3.ts",
+      "source_location": "L3"
+    },
+    {
+      "id": "lib_scoring_s3_s3result",
+      "label": "S3Result",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "s3result",
+      "source_file": "lib/scoring/s3.ts",
+      "source_location": "L12"
+    },
+    {
       "id": "lib_scoring_s4_s4input",
       "label": "S4Input",
       "_callable": true,
@@ -924,19 +937,6 @@
       "norm_label": "s4result",
       "source_file": "lib/scoring/s4.ts",
       "source_location": "L10"
-    },
-    {
-      "id": "types_contract_language",
-      "label": "Language",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "language",
-      "source_file": "types/contract.ts",
-      "source_location": "L22"
     },
     {
       "id": "types_contract_tier",
@@ -999,18 +999,6 @@
       "norm_label": "ackmodal()",
       "source_file": "components/staff/AckModal.tsx",
       "source_location": "L15"
-    },
-    {
-      "id": "components_staff_explainabilitychart_explainabilitychart",
-      "label": "ExplainabilityChart()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "InMemoryRepository",
-      "file_type": "code",
-      "norm_label": "explainabilitychart()",
-      "source_file": "components/staff/ExplainabilityChart.tsx",
-      "source_location": "L14"
     },
     {
       "id": "components_staff_staffauthgate_staffauthgate",
@@ -1553,64 +1541,76 @@
       "source_location": "L19"
     },
     {
-      "id": "lib_llm_index_analyzetranscript",
-      "label": "analyzeTranscript()",
+      "id": "lib_safety_interlock_checkinput",
+      "label": "checkInput()",
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "analyzetranscript()",
-      "source_file": "lib/llm/index.ts",
-      "source_location": "L305"
+      "norm_label": "checkinput()",
+      "source_file": "lib/safety/interlock.ts",
+      "source_location": "L49"
     },
     {
-      "id": "lib_llm_index_cleanjsontext",
-      "label": "cleanJsonText()",
+      "id": "lib_safety_interlock_checkoutput",
+      "label": "checkOutput()",
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "cleanjsontext()",
-      "source_file": "lib/llm/index.ts",
-      "source_location": "L59"
+      "norm_label": "checkoutput()",
+      "source_file": "lib/safety/interlock.ts",
+      "source_location": "L216"
     },
     {
-      "id": "lib_llm_index_generatedeterministicmock",
-      "label": "generateDeterministicMock()",
+      "id": "lib_safety_lexicon_normalizetext",
+      "label": "normalizeText()",
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "generatedeterministicmock()",
-      "source_file": "lib/llm/index.ts",
-      "source_location": "L71"
+      "norm_label": "normalizetext()",
+      "source_file": "lib/safety/lexicon.ts",
+      "source_location": "L41"
     },
     {
-      "id": "lib_llm_prompt_builduserprompt",
-      "label": "buildUserPrompt()",
+      "id": "lib_safety_replies_getcrisisresources",
+      "label": "getCrisisResources()",
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "builduserprompt()",
-      "source_file": "lib/llm/prompt.ts",
-      "source_location": "L167"
+      "norm_label": "getcrisisresources()",
+      "source_file": "lib/safety/replies.ts",
+      "source_location": "L117"
     },
     {
-      "id": "lib_llm_prompt_detecttopiccoverage",
-      "label": "detectTopicCoverage()",
+      "id": "lib_safety_replies_getstaticreply",
+      "label": "getStaticReply()",
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "detecttopiccoverage()",
-      "source_file": "lib/llm/prompt.ts",
-      "source_location": "L115"
+      "norm_label": "getstaticreply()",
+      "source_file": "lib/safety/replies.ts",
+      "source_location": "L124"
+    },
+    {
+      "id": "tests_phase5_test_createjsonrequest",
+      "label": "createJsonRequest()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "interlock.ts",
+      "file_type": "code",
+      "norm_label": "createjsonrequest()",
+      "source_file": "tests/phase5.test.ts",
+      "source_location": "L133"
     },
     {
       "id": "lib_auth_session_edge_base64urldecode",
@@ -1622,7 +1622,7 @@
       "file_type": "code",
       "norm_label": "base64urldecode()",
       "source_file": "lib/auth/session-edge.ts",
-      "source_location": "L19"
+      "source_location": "L21"
     },
     {
       "id": "lib_auth_session_edge_base64urlencode",
@@ -1634,7 +1634,7 @@
       "file_type": "code",
       "norm_label": "base64urlencode()",
       "source_file": "lib/auth/session-edge.ts",
-      "source_location": "L32"
+      "source_location": "L34"
     },
     {
       "id": "lib_auth_session_edge_getkey",
@@ -1646,7 +1646,19 @@
       "file_type": "code",
       "norm_label": "getkey()",
       "source_file": "lib/auth/session-edge.ts",
-      "source_location": "L8"
+      "source_location": "L10"
+    },
+    {
+      "id": "lib_auth_session_edge_getsessionsecret",
+      "label": "getSessionSecret()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "middleware.ts",
+      "file_type": "code",
+      "norm_label": "getsessionsecret()",
+      "source_file": "lib/auth/session-edge.ts",
+      "source_location": "L6"
     },
     {
       "id": "lib_auth_session_edge_verifysessiontokenedge",
@@ -1658,7 +1670,7 @@
       "file_type": "code",
       "norm_label": "verifysessiontokenedge()",
       "source_file": "lib/auth/session-edge.ts",
-      "source_location": "L48"
+      "source_location": "L50"
     },
     {
       "id": "middleware_enforceauth",
@@ -1702,7 +1714,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "auth/route.ts",
+      "community_name": "session.ts",
       "file_type": "code",
       "norm_label": "post()",
       "source_file": "app/api/staff/auth/route.ts",
@@ -1714,11 +1726,23 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "auth/route.ts",
+      "community_name": "session.ts",
       "file_type": "code",
       "norm_label": "generatesessiontoken()",
       "source_file": "lib/auth/session.ts",
       "source_location": "L21"
+    },
+    {
+      "id": "lib_auth_session_getsessionsecret",
+      "label": "getSessionSecret()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "session.ts",
+      "file_type": "code",
+      "norm_label": "getsessionsecret()",
+      "source_file": "lib/auth/session.ts",
+      "source_location": "L3"
     },
     {
       "id": "lib_auth_session_timingsafeequal",
@@ -1726,11 +1750,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "auth/route.ts",
+      "community_name": "session.ts",
       "file_type": "code",
       "norm_label": "timingsafeequal()",
       "source_file": "lib/auth/session.ts",
-      "source_location": "L8"
+      "source_location": "L12"
     },
     {
       "id": "lib_auth_session_verifypasscode",
@@ -1738,11 +1762,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "auth/route.ts",
+      "community_name": "session.ts",
       "file_type": "code",
       "norm_label": "verifypasscode()",
       "source_file": "lib/auth/session.ts",
-      "source_location": "L68"
+      "source_location": "L70"
     },
     {
       "id": "lib_auth_session_verifysessiontoken",
@@ -1750,11 +1774,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 13,
-      "community_name": "auth/route.ts",
+      "community_name": "session.ts",
       "file_type": "code",
       "norm_label": "verifysessiontoken()",
       "source_file": "lib/auth/session.ts",
-      "source_location": "L39"
+      "source_location": "L40"
     },
     {
       "id": "app_error_error",
@@ -2126,7 +2150,7 @@
       "file_type": "code",
       "norm_label": "customdatamodal()",
       "source_file": "components/common/CustomDataModal.tsx",
-      "source_location": "L26"
+      "source_location": "L27"
     },
     {
       "id": "components_common_customdatamodal_customdatamodal_handlekeydown",
@@ -2138,7 +2162,7 @@
       "file_type": "code",
       "norm_label": "handlekeydown()",
       "source_file": "components/common/CustomDataModal.tsx",
-      "source_location": "L173"
+      "source_location": "L174"
     },
     {
       "id": "components_common_header_header",
@@ -2225,52 +2249,16 @@
       "source_location": "L87"
     },
     {
-      "id": "app_api_persons_route_get",
-      "label": "GET()",
+      "id": "components_staff_explainabilitychart_explainabilitychart",
+      "label": "ExplainabilityChart()",
       "_callable": true,
       "_origin": "ast",
       "community": 5,
       "community_name": "contract.ts",
       "file_type": "code",
-      "norm_label": "get()",
-      "source_file": "app/api/persons/route.ts",
-      "source_location": "L176"
-    },
-    {
-      "id": "app_api_persons_route_post",
-      "label": "POST()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "contract.ts",
-      "file_type": "code",
-      "norm_label": "post()",
-      "source_file": "app/api/persons/route.ts",
-      "source_location": "L19"
-    },
-    {
-      "id": "lib_scoring_s3_computes3",
-      "label": "computeS3()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "contract.ts",
-      "file_type": "code",
-      "norm_label": "computes3()",
-      "source_file": "lib/scoring/s3.ts",
-      "source_location": "L50"
-    },
-    {
-      "id": "lib_scoring_s3_tomidnightms",
-      "label": "toMidnightMs()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "contract.ts",
-      "file_type": "code",
-      "norm_label": "tomidnightms()",
-      "source_file": "lib/scoring/s3.ts",
-      "source_location": "L25"
+      "norm_label": "explainabilitychart()",
+      "source_file": "components/staff/ExplainabilityChart.tsx",
+      "source_location": "L14"
     },
     {
       "id": "app_api_checkin_route_post",
@@ -2283,6 +2271,90 @@
       "norm_label": "post()",
       "source_file": "app/api/checkin/route.ts",
       "source_location": "L37"
+    },
+    {
+      "id": "app_api_persons_route_get",
+      "label": "GET()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "get()",
+      "source_file": "app/api/persons/route.ts",
+      "source_location": "L176"
+    },
+    {
+      "id": "app_api_persons_route_post",
+      "label": "POST()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "post()",
+      "source_file": "app/api/persons/route.ts",
+      "source_location": "L19"
+    },
+    {
+      "id": "lib_llm_index_analyzetranscript",
+      "label": "analyzeTranscript()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "analyzetranscript()",
+      "source_file": "lib/llm/index.ts",
+      "source_location": "L305"
+    },
+    {
+      "id": "lib_llm_index_cleanjsontext",
+      "label": "cleanJsonText()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "cleanjsontext()",
+      "source_file": "lib/llm/index.ts",
+      "source_location": "L59"
+    },
+    {
+      "id": "lib_llm_index_generatedeterministicmock",
+      "label": "generateDeterministicMock()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "generatedeterministicmock()",
+      "source_file": "lib/llm/index.ts",
+      "source_location": "L71"
+    },
+    {
+      "id": "lib_llm_prompt_builduserprompt",
+      "label": "buildUserPrompt()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "builduserprompt()",
+      "source_file": "lib/llm/prompt.ts",
+      "source_location": "L167"
+    },
+    {
+      "id": "lib_llm_prompt_detecttopiccoverage",
+      "label": "detectTopicCoverage()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "detecttopiccoverage()",
+      "source_file": "lib/llm/prompt.ts",
+      "source_location": "L115"
     },
     {
       "id": "lib_policy_index_evaluatepolicy",
@@ -2319,66 +2391,6 @@
       "norm_label": "parseandvalidatepolicy()",
       "source_file": "lib/policy/index.ts",
       "source_location": "L80"
-    },
-    {
-      "id": "lib_safety_interlock_checkinput",
-      "label": "checkInput()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "checkinput()",
-      "source_file": "lib/safety/interlock.ts",
-      "source_location": "L49"
-    },
-    {
-      "id": "lib_safety_interlock_checkoutput",
-      "label": "checkOutput()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "checkoutput()",
-      "source_file": "lib/safety/interlock.ts",
-      "source_location": "L216"
-    },
-    {
-      "id": "lib_safety_lexicon_normalizetext",
-      "label": "normalizeText()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "normalizetext()",
-      "source_file": "lib/safety/lexicon.ts",
-      "source_location": "L41"
-    },
-    {
-      "id": "lib_safety_replies_getcrisisresources",
-      "label": "getCrisisResources()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "getcrisisresources()",
-      "source_file": "lib/safety/replies.ts",
-      "source_location": "L117"
-    },
-    {
-      "id": "lib_safety_replies_getstaticreply",
-      "label": "getStaticReply()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "getstaticreply()",
-      "source_file": "lib/safety/replies.ts",
-      "source_location": "L124"
     },
     {
       "id": "lib_scoring_baseline_evaluatebaseline",
@@ -2441,6 +2453,30 @@
       "source_location": "L16"
     },
     {
+      "id": "lib_scoring_s3_computes3",
+      "label": "computeS3()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "computes3()",
+      "source_file": "lib/scoring/s3.ts",
+      "source_location": "L50"
+    },
+    {
+      "id": "lib_scoring_s3_tomidnightms",
+      "label": "toMidnightMs()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "tomidnightms()",
+      "source_file": "lib/scoring/s3.ts",
+      "source_location": "L25"
+    },
+    {
       "id": "lib_scoring_s4_computes4",
       "label": "computeS4()",
       "_callable": true,
@@ -2463,40 +2499,6 @@
       "norm_label": "computes5()",
       "source_file": "lib/scoring/s5.ts",
       "source_location": "L30"
-    },
-    {
-      "id": "tests_phase5_test_createjsonrequest",
-      "label": "createJsonRequest()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "createjsonrequest()",
-      "source_file": "tests/phase5.test.ts",
-      "source_location": "L133"
-    },
-    {
-      "id": "app_api_staff_queue_route",
-      "label": "queue/route.ts",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "InMemoryRepository",
-      "file_type": "code",
-      "norm_label": "queue/route.ts",
-      "source_file": "app/api/staff/queue/route.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_api_staff_queue_route_tier_priority",
-      "label": "TIER_PRIORITY",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "InMemoryRepository",
-      "file_type": "code",
-      "norm_label": "tier_priority",
-      "source_file": "app/api/staff/queue/route.ts",
-      "source_location": "L25"
     },
     {
       "id": "app_staff_page",
@@ -2554,102 +2556,135 @@
       "source_location": "L1"
     },
     {
-      "id": "lib_llm_index",
-      "label": "llm/index.ts",
+      "id": "lib_safety_interlock",
+      "label": "interlock.ts",
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "llm/index.ts",
-      "source_file": "lib/llm/index.ts",
+      "norm_label": "interlock.ts",
+      "source_file": "lib/safety/interlock.ts",
       "source_location": "L1"
     },
     {
-      "id": "lib_llm_index_provider_configs",
-      "label": "PROVIDER_CONFIGS",
+      "id": "lib_safety_interlock_banned_output_rules",
+      "label": "BANNED_OUTPUT_RULES",
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "provider_configs",
-      "source_file": "lib/llm/index.ts",
-      "source_location": "L34"
+      "norm_label": "banned_output_rules",
+      "source_file": "lib/safety/interlock.ts",
+      "source_location": "L113"
     },
     {
-      "id": "lib_llm_prompt",
-      "label": "prompt.ts",
+      "id": "lib_safety_lexicon",
+      "label": "lexicon.ts",
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "prompt.ts",
-      "source_file": "lib/llm/prompt.ts",
+      "norm_label": "lexicon.ts",
+      "source_file": "lib/safety/lexicon.ts",
       "source_location": "L1"
     },
     {
-      "id": "lib_llm_prompt_intake_questions",
-      "label": "INTAKE_QUESTIONS",
+      "id": "lib_safety_lexicon_lexicon_rules",
+      "label": "LEXICON_RULES",
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "intake_questions",
-      "source_file": "lib/llm/prompt.ts",
-      "source_location": "L26"
+      "norm_label": "lexicon_rules",
+      "source_file": "lib/safety/lexicon.ts",
+      "source_location": "L55"
     },
     {
-      "id": "lib_llm_prompt_llmmarkerenum",
-      "label": "LLMMarkerEnum",
+      "id": "lib_safety_lexicon_lexicon_version",
+      "label": "LEXICON_VERSION",
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "llmmarkerenum",
-      "source_file": "lib/llm/prompt.ts",
-      "source_location": "L5"
+      "norm_label": "lexicon_version",
+      "source_file": "lib/safety/lexicon.ts",
+      "source_location": "L18"
     },
     {
-      "id": "lib_llm_prompt_llmoutputschema",
-      "label": "LLMOutputSchema",
+      "id": "lib_safety_lexicon_reviewed_by",
+      "label": "REVIEWED_BY",
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "llmoutputschema",
-      "source_file": "lib/llm/prompt.ts",
-      "source_location": "L15"
+      "norm_label": "reviewed_by",
+      "source_file": "lib/safety/lexicon.ts",
+      "source_location": "L16"
     },
     {
-      "id": "lib_llm_prompt_prompt_version",
-      "label": "PROMPT_VERSION",
+      "id": "lib_safety_lexicon_reviewed_on",
+      "label": "REVIEWED_ON",
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "prompt_version",
-      "source_file": "lib/llm/prompt.ts",
-      "source_location": "L3"
+      "norm_label": "reviewed_on",
+      "source_file": "lib/safety/lexicon.ts",
+      "source_location": "L17"
     },
     {
-      "id": "lib_llm_prompt_system_prompt",
-      "label": "SYSTEM_PROMPT",
+      "id": "lib_safety_replies",
+      "label": "replies.ts",
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "system_prompt",
-      "source_file": "lib/llm/prompt.ts",
-      "source_location": "L44"
+      "norm_label": "replies.ts",
+      "source_file": "lib/safety/replies.ts",
+      "source_location": "L1"
     },
     {
-      "id": "tests_llm_conversational_test",
-      "label": "llm-conversational.test.ts",
+      "id": "lib_safety_replies_crisis_resources",
+      "label": "CRISIS_RESOURCES",
       "_origin": "ast",
       "community": 1,
-      "community_name": "llm/index.ts",
+      "community_name": "interlock.ts",
       "file_type": "code",
-      "norm_label": "llm-conversational.test.ts",
-      "source_file": "tests/llm-conversational.test.ts",
+      "norm_label": "crisis_resources",
+      "source_file": "lib/safety/replies.ts",
+      "source_location": "L17"
+    },
+    {
+      "id": "lib_safety_replies_reply_bank",
+      "label": "REPLY_BANK",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "interlock.ts",
+      "file_type": "code",
+      "norm_label": "reply_bank",
+      "source_file": "lib/safety/replies.ts",
+      "source_location": "L75"
+    },
+    {
+      "id": "tests_phase5_test",
+      "label": "phase5.test.ts",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "interlock.ts",
+      "file_type": "code",
+      "norm_label": "phase5.test.ts",
+      "source_file": "tests/phase5.test.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_safety_test",
+      "label": "safety.test.ts",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "interlock.ts",
+      "file_type": "code",
+      "norm_label": "safety.test.ts",
+      "source_file": "tests/safety.test.ts",
       "source_location": "L1"
     },
     {
@@ -2877,7 +2912,7 @@
       "label": "auth/route.ts",
       "_origin": "ast",
       "community": 13,
-      "community_name": "auth/route.ts",
+      "community_name": "session.ts",
       "file_type": "code",
       "norm_label": "auth/route.ts",
       "source_file": "app/api/staff/auth/route.ts",
@@ -2888,7 +2923,7 @@
       "label": "session.ts",
       "_origin": "ast",
       "community": 13,
-      "community_name": "auth/route.ts",
+      "community_name": "session.ts",
       "file_type": "code",
       "norm_label": "session.ts",
       "source_file": "lib/auth/session.ts",
@@ -3102,6 +3137,28 @@
       "norm_label": "[personid]/route.ts",
       "source_file": "app/api/staff/persons/[personId]/route.ts",
       "source_location": "L1"
+    },
+    {
+      "id": "app_api_staff_queue_route",
+      "label": "queue/route.ts",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "fixtures.ts",
+      "file_type": "code",
+      "norm_label": "queue/route.ts",
+      "source_file": "app/api/staff/queue/route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_api_staff_queue_route_tier_priority",
+      "label": "TIER_PRIORITY",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "fixtures.ts",
+      "file_type": "code",
+      "norm_label": "tier_priority",
+      "source_file": "app/api/staff/queue/route.ts",
+      "source_location": "L25"
     },
     {
       "id": "lib_db_client",
@@ -3335,17 +3392,6 @@
       "source_location": "L166"
     },
     {
-      "id": "scripts_fixtures_person_a4471",
-      "label": "PERSON_A4471",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "fixtures.ts",
-      "file_type": "code",
-      "norm_label": "person_a4471",
-      "source_file": "scripts/fixtures.ts",
-      "source_location": "L27"
-    },
-    {
       "id": "scripts_fixtures_person_a6218",
       "label": "PERSON_A6218",
       "_origin": "ast",
@@ -3487,6 +3533,17 @@
       "norm_label": "checkinresponseschema",
       "source_file": "types/contract.ts",
       "source_location": "L94"
+    },
+    {
+      "id": "types_contract_consentrequestschema",
+      "label": "ConsentRequestSchema",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "fixtures.ts",
+      "file_type": "code",
+      "norm_label": "consentrequestschema",
+      "source_file": "types/contract.ts",
+      "source_location": "L119"
     },
     {
       "id": "types_contract_tierenum",
@@ -3698,17 +3755,6 @@
       "source_location": "L17"
     },
     {
-      "id": "app_api_persons_route",
-      "label": "persons/route.ts",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "contract.ts",
-      "file_type": "code",
-      "norm_label": "persons/route.ts",
-      "source_file": "app/api/persons/route.ts",
-      "source_location": "L1"
-    },
-    {
       "id": "components_staff_explainabilitychart",
       "label": "ExplainabilityChart.tsx",
       "_origin": "ast",
@@ -3753,17 +3799,6 @@
       "source_location": "L1"
     },
     {
-      "id": "lib_scoring_s3",
-      "label": "s3.ts",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "contract.ts",
-      "file_type": "code",
-      "norm_label": "s3.ts",
-      "source_file": "lib/scoring/s3.ts",
-      "source_location": "L1"
-    },
-    {
       "id": "lib_scoring_s5",
       "label": "s5.ts",
       "_origin": "ast",
@@ -3795,17 +3830,6 @@
       "norm_label": "s5_weight",
       "source_file": "lib/scoring/s5.ts",
       "source_location": "L15"
-    },
-    {
-      "id": "tests_custom_person_test",
-      "label": "custom-person.test.ts",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "contract.ts",
-      "file_type": "code",
-      "norm_label": "custom-person.test.ts",
-      "source_file": "tests/custom-person.test.ts",
-      "source_location": "L1"
     },
     {
       "id": "types_contract",
@@ -3885,17 +3909,6 @@
       "source_location": "L76"
     },
     {
-      "id": "types_contract_consentrequestschema",
-      "label": "ConsentRequestSchema",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "contract.ts",
-      "file_type": "code",
-      "norm_label": "consentrequestschema",
-      "source_file": "types/contract.ts",
-      "source_location": "L119"
-    },
-    {
       "id": "types_contract_contributionsbreakdownschema",
       "label": "ContributionsBreakdownSchema",
       "_origin": "ast",
@@ -3916,17 +3929,6 @@
       "norm_label": "custompersoncasedataschema",
       "source_file": "types/contract.ts",
       "source_location": "L126"
-    },
-    {
-      "id": "types_contract_custompersonrequestschema",
-      "label": "CustomPersonRequestSchema",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "contract.ts",
-      "file_type": "code",
-      "norm_label": "custompersonrequestschema",
-      "source_file": "types/contract.ts",
-      "source_location": "L147"
     },
     {
       "id": "types_contract_languageenum",
@@ -3971,6 +3973,17 @@
       "norm_label": "triggersourceenum",
       "source_file": "types/contract.ts",
       "source_location": "L13"
+    },
+    {
+      "id": "package",
+      "label": "package.json",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "dependencies",
+      "file_type": "code",
+      "norm_label": "package.json",
+      "source_file": "package.json",
+      "source_location": "L1"
     },
     {
       "id": "package_dependencies",
@@ -4081,6 +4094,127 @@
       "norm_label": "zod",
       "source_file": "package.json",
       "source_location": "L23"
+    },
+    {
+      "id": "package_name",
+      "label": "name",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "dependencies",
+      "file_type": "code",
+      "norm_label": "name",
+      "source_file": "package.json",
+      "source_location": "L2"
+    },
+    {
+      "id": "package_private",
+      "label": "private",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "dependencies",
+      "file_type": "code",
+      "norm_label": "private",
+      "source_file": "package.json",
+      "source_location": "L4"
+    },
+    {
+      "id": "package_scripts",
+      "label": "scripts",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "dependencies",
+      "file_type": "code",
+      "norm_label": "scripts",
+      "source_file": "package.json",
+      "source_location": "L5"
+    },
+    {
+      "id": "package_scripts_build",
+      "label": "build",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "dependencies",
+      "file_type": "code",
+      "norm_label": "build",
+      "source_file": "package.json",
+      "source_location": "L7"
+    },
+    {
+      "id": "package_scripts_dev",
+      "label": "dev",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "dependencies",
+      "file_type": "code",
+      "norm_label": "dev",
+      "source_file": "package.json",
+      "source_location": "L6"
+    },
+    {
+      "id": "package_scripts_lint",
+      "label": "lint",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "dependencies",
+      "file_type": "code",
+      "norm_label": "lint",
+      "source_file": "package.json",
+      "source_location": "L9"
+    },
+    {
+      "id": "package_scripts_seed",
+      "label": "seed",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "dependencies",
+      "file_type": "code",
+      "norm_label": "seed",
+      "source_file": "package.json",
+      "source_location": "L12"
+    },
+    {
+      "id": "package_scripts_start",
+      "label": "start",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "dependencies",
+      "file_type": "code",
+      "norm_label": "start",
+      "source_file": "package.json",
+      "source_location": "L8"
+    },
+    {
+      "id": "package_scripts_test",
+      "label": "test",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "dependencies",
+      "file_type": "code",
+      "norm_label": "test",
+      "source_file": "package.json",
+      "source_location": "L11"
+    },
+    {
+      "id": "package_scripts_typecheck",
+      "label": "typecheck",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "dependencies",
+      "file_type": "code",
+      "norm_label": "typecheck",
+      "source_file": "package.json",
+      "source_location": "L10"
+    },
+    {
+      "id": "package_version",
+      "label": "version",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "dependencies",
+      "file_type": "code",
+      "norm_label": "version",
+      "source_file": "package.json",
+      "source_location": "L3"
     },
     {
       "id": "clsx",
@@ -4512,17 +4646,6 @@
       "source_location": "L28"
     },
     {
-      "id": "package",
-      "label": "package.json",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "package.json",
-      "source_file": "package.json",
-      "source_location": "L1"
-    },
-    {
       "id": "package_devdependencies",
       "label": "devDependencies",
       "_origin": "ast",
@@ -4653,127 +4776,6 @@
       "norm_label": "@typescript-eslint/eslint-plugin",
       "source_file": "package.json",
       "source_location": "L29"
-    },
-    {
-      "id": "package_name",
-      "label": "name",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "name",
-      "source_file": "package.json",
-      "source_location": "L2"
-    },
-    {
-      "id": "package_private",
-      "label": "private",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "private",
-      "source_file": "package.json",
-      "source_location": "L4"
-    },
-    {
-      "id": "package_scripts",
-      "label": "scripts",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "scripts",
-      "source_file": "package.json",
-      "source_location": "L5"
-    },
-    {
-      "id": "package_scripts_build",
-      "label": "build",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "build",
-      "source_file": "package.json",
-      "source_location": "L7"
-    },
-    {
-      "id": "package_scripts_dev",
-      "label": "dev",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "dev",
-      "source_file": "package.json",
-      "source_location": "L6"
-    },
-    {
-      "id": "package_scripts_lint",
-      "label": "lint",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "lint",
-      "source_file": "package.json",
-      "source_location": "L9"
-    },
-    {
-      "id": "package_scripts_seed",
-      "label": "seed",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "seed",
-      "source_file": "package.json",
-      "source_location": "L12"
-    },
-    {
-      "id": "package_scripts_start",
-      "label": "start",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "start",
-      "source_file": "package.json",
-      "source_location": "L8"
-    },
-    {
-      "id": "package_scripts_test",
-      "label": "test",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "test",
-      "source_file": "package.json",
-      "source_location": "L11"
-    },
-    {
-      "id": "package_scripts_typecheck",
-      "label": "typecheck",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "typecheck",
-      "source_file": "package.json",
-      "source_location": "L10"
-    },
-    {
-      "id": "package_version",
-      "label": "version",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "version",
-      "source_file": "package.json",
-      "source_location": "L3"
     },
     {
       "id": "autoprefixer",
@@ -4908,6 +4910,105 @@
       "source_location": "L1"
     },
     {
+      "id": "app_api_persons_route",
+      "label": "persons/route.ts",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "persons/route.ts",
+      "source_file": "app/api/persons/route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "lib_llm_index",
+      "label": "llm/index.ts",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "llm/index.ts",
+      "source_file": "lib/llm/index.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "lib_llm_index_provider_configs",
+      "label": "PROVIDER_CONFIGS",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "provider_configs",
+      "source_file": "lib/llm/index.ts",
+      "source_location": "L34"
+    },
+    {
+      "id": "lib_llm_prompt",
+      "label": "prompt.ts",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "prompt.ts",
+      "source_file": "lib/llm/prompt.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "lib_llm_prompt_intake_questions",
+      "label": "INTAKE_QUESTIONS",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "intake_questions",
+      "source_file": "lib/llm/prompt.ts",
+      "source_location": "L26"
+    },
+    {
+      "id": "lib_llm_prompt_llmmarkerenum",
+      "label": "LLMMarkerEnum",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "llmmarkerenum",
+      "source_file": "lib/llm/prompt.ts",
+      "source_location": "L5"
+    },
+    {
+      "id": "lib_llm_prompt_llmoutputschema",
+      "label": "LLMOutputSchema",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "llmoutputschema",
+      "source_file": "lib/llm/prompt.ts",
+      "source_location": "L15"
+    },
+    {
+      "id": "lib_llm_prompt_prompt_version",
+      "label": "PROMPT_VERSION",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "prompt_version",
+      "source_file": "lib/llm/prompt.ts",
+      "source_location": "L3"
+    },
+    {
+      "id": "lib_llm_prompt_system_prompt",
+      "label": "SYSTEM_PROMPT",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "system_prompt",
+      "source_file": "lib/llm/prompt.ts",
+      "source_location": "L44"
+    },
+    {
       "id": "lib_policy_index",
       "label": "policy/index.ts",
       "_origin": "ast",
@@ -4974,116 +5075,6 @@
       "source_location": "L26"
     },
     {
-      "id": "lib_safety_interlock",
-      "label": "interlock.ts",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "interlock.ts",
-      "source_file": "lib/safety/interlock.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "lib_safety_interlock_banned_output_rules",
-      "label": "BANNED_OUTPUT_RULES",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "banned_output_rules",
-      "source_file": "lib/safety/interlock.ts",
-      "source_location": "L113"
-    },
-    {
-      "id": "lib_safety_lexicon",
-      "label": "lexicon.ts",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "lexicon.ts",
-      "source_file": "lib/safety/lexicon.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "lib_safety_lexicon_lexicon_rules",
-      "label": "LEXICON_RULES",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "lexicon_rules",
-      "source_file": "lib/safety/lexicon.ts",
-      "source_location": "L55"
-    },
-    {
-      "id": "lib_safety_lexicon_lexicon_version",
-      "label": "LEXICON_VERSION",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "lexicon_version",
-      "source_file": "lib/safety/lexicon.ts",
-      "source_location": "L18"
-    },
-    {
-      "id": "lib_safety_lexicon_reviewed_by",
-      "label": "REVIEWED_BY",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "reviewed_by",
-      "source_file": "lib/safety/lexicon.ts",
-      "source_location": "L16"
-    },
-    {
-      "id": "lib_safety_lexicon_reviewed_on",
-      "label": "REVIEWED_ON",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "reviewed_on",
-      "source_file": "lib/safety/lexicon.ts",
-      "source_location": "L17"
-    },
-    {
-      "id": "lib_safety_replies",
-      "label": "replies.ts",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "replies.ts",
-      "source_file": "lib/safety/replies.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "lib_safety_replies_crisis_resources",
-      "label": "CRISIS_RESOURCES",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "crisis_resources",
-      "source_file": "lib/safety/replies.ts",
-      "source_location": "L17"
-    },
-    {
-      "id": "lib_safety_replies_reply_bank",
-      "label": "REPLY_BANK",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "checkin/route.ts",
-      "file_type": "code",
-      "norm_label": "reply_bank",
-      "source_file": "lib/safety/replies.ts",
-      "source_location": "L75"
-    },
-    {
       "id": "lib_scoring_baseline",
       "label": "baseline.ts",
       "_origin": "ast",
@@ -5128,6 +5119,17 @@
       "source_location": "L1"
     },
     {
+      "id": "lib_scoring_s3",
+      "label": "s3.ts",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "s3.ts",
+      "source_file": "lib/scoring/s3.ts",
+      "source_location": "L1"
+    },
+    {
       "id": "lib_scoring_s4",
       "label": "s4.ts",
       "_origin": "ast",
@@ -5139,25 +5141,36 @@
       "source_location": "L1"
     },
     {
-      "id": "tests_phase5_test",
-      "label": "phase5.test.ts",
+      "id": "scripts_fixtures_person_a4471",
+      "label": "PERSON_A4471",
       "_origin": "ast",
       "community": 9,
       "community_name": "checkin/route.ts",
       "file_type": "code",
-      "norm_label": "phase5.test.ts",
-      "source_file": "tests/phase5.test.ts",
+      "norm_label": "person_a4471",
+      "source_file": "scripts/fixtures.ts",
+      "source_location": "L27"
+    },
+    {
+      "id": "tests_custom_person_test",
+      "label": "custom-person.test.ts",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "custom-person.test.ts",
+      "source_file": "tests/custom-person.test.ts",
       "source_location": "L1"
     },
     {
-      "id": "tests_safety_test",
-      "label": "safety.test.ts",
+      "id": "tests_llm_conversational_test",
+      "label": "llm-conversational.test.ts",
       "_origin": "ast",
       "community": 9,
       "community_name": "checkin/route.ts",
       "file_type": "code",
-      "norm_label": "safety.test.ts",
-      "source_file": "tests/safety.test.ts",
+      "norm_label": "llm-conversational.test.ts",
+      "source_file": "tests/llm-conversational.test.ts",
       "source_location": "L1"
     },
     {
@@ -5170,6 +5183,17 @@
       "norm_label": "scoring.test.ts",
       "source_file": "tests/scoring.test.ts",
       "source_location": "L1"
+    },
+    {
+      "id": "types_contract_custompersonrequestschema",
+      "label": "CustomPersonRequestSchema",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "custompersonrequestschema",
+      "source_file": "types/contract.ts",
+      "source_location": "L147"
     },
     {
       "id": "github_workflows_ci_env_vars",
@@ -6559,7 +6583,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "components/common/CustomDataModal.tsx",
-      "source_location": "L32",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -6624,6 +6648,18 @@
     },
     {
       "source": "lib_auth_session_edge_verifysessiontokenedge",
+      "target": "lib_auth_session_edge_getsessionsecret",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "lib/auth/session-edge.ts",
+      "source_location": "L53",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_auth_session_edge_verifysessiontokenedge",
       "target": "lib_auth_session_edge_getkey",
       "relation": "calls",
       "_origin": "ast",
@@ -6631,7 +6667,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/auth/session-edge.ts",
-      "source_location": "L60",
+      "source_location": "L63",
       "weight": 1.0
     },
     {
@@ -6643,7 +6679,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/auth/session-edge.ts",
-      "source_location": "L63",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_auth_session_generatesessiontoken",
+      "target": "lib_auth_session_getsessionsecret",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "lib/auth/session.ts",
+      "source_location": "L22",
       "weight": 1.0
     },
     {
@@ -6655,7 +6703,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/auth/session.ts",
-      "source_location": "L71",
+      "source_location": "L73",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_auth_session_verifysessiontoken",
+      "target": "lib_auth_session_getsessionsecret",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "lib/auth/session.ts",
+      "source_location": "L43",
       "weight": 1.0
     },
     {
@@ -6667,7 +6727,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/auth/session.ts",
-      "source_location": "L53",
+      "source_location": "L55",
       "weight": 1.0
     },
     {
@@ -7075,7 +7135,7 @@
       "confidence_score": 1.0,
       "context": "field",
       "source_file": "components/common/CustomDataModal.tsx",
-      "source_location": "L22",
+      "source_location": "L23",
       "weight": 1.0
     },
     {
@@ -8755,7 +8815,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "components/common/CustomDataModal.tsx",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -8767,7 +8827,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "components/common/CustomDataModal.tsx",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -8779,7 +8839,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "components/common/CustomDataModal.tsx",
-      "source_location": "L17",
+      "source_location": "L18",
       "weight": 1.0
     },
     {
@@ -11479,7 +11539,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "components/common/CustomDataModal.tsx",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -11491,7 +11551,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "components/common/CustomDataModal.tsx",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -11503,7 +11563,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "components/common/CustomDataModal.tsx",
-      "source_location": "L17",
+      "source_location": "L18",
       "weight": 1.0
     },
     {
@@ -12921,7 +12981,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/common/CustomDataModal.tsx",
-      "source_location": "L19",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -12932,7 +12992,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/common/CustomDataModal.tsx",
-      "source_location": "L26",
+      "source_location": "L27",
       "weight": 1.0
     },
     {
@@ -13146,6 +13206,17 @@
     },
     {
       "source": "lib_auth_session",
+      "target": "lib_auth_session_timingsafeequal",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/auth/session.ts",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_auth_session",
       "target": "lib_auth_session_generatesessiontoken",
       "relation": "contains",
       "_origin": "ast",
@@ -13157,13 +13228,24 @@
     },
     {
       "source": "lib_auth_session",
+      "target": "lib_auth_session_getsessionsecret",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/auth/session.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_auth_session",
       "target": "lib_auth_session_verifysessiontoken",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/auth/session.ts",
-      "source_location": "L39",
+      "source_location": "L40",
       "weight": 1.0
     },
     {
@@ -13174,51 +13256,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/auth/session.ts",
-      "source_location": "L68",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_auth_session",
-      "target": "lib_auth_session_timingsafeequal",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/auth/session.ts",
-      "source_location": "L8",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_auth_session_edge",
-      "target": "lib_auth_session_edge_base64urldecode",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/auth/session-edge.ts",
-      "source_location": "L19",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_auth_session_edge",
-      "target": "lib_auth_session_edge_base64urlencode",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/auth/session-edge.ts",
-      "source_location": "L32",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_auth_session_edge",
-      "target": "lib_auth_session_edge_verifysessiontokenedge",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/auth/session-edge.ts",
-      "source_location": "L48",
+      "source_location": "L70",
       "weight": 1.0
     },
     {
@@ -13229,7 +13267,51 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/auth/session-edge.ts",
-      "source_location": "L8",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_auth_session_edge",
+      "target": "lib_auth_session_edge_base64urldecode",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/auth/session-edge.ts",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_auth_session_edge",
+      "target": "lib_auth_session_edge_base64urlencode",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/auth/session-edge.ts",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_auth_session_edge",
+      "target": "lib_auth_session_edge_verifysessiontokenedge",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/auth/session-edge.ts",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_auth_session_edge",
+      "target": "lib_auth_session_edge_getsessionsecret",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/auth/session-edge.ts",
+      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -16450,7 +16532,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "components/common/CustomDataModal.tsx",
-      "source_location": "L182",
+      "source_location": "L183",
       "weight": 1.0
     },
     {
@@ -18661,5 +18743,5 @@
       "source_file": "AGENTS.md"
     }
   ],
-  "built_at_commit": "67769939d9477361eb10433e559e06b1882277de"
+  "built_at_commit": "1d8467fbc6d7baa0f84bcb91c22b091a8837dbc0"
 }

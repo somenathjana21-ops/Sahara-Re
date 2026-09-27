@@ -48,9 +48,9 @@ export async function GET(request: NextRequest) {
       const assessments = await repo.getAssessmentsByPersonId(person.id);
       const latestAssessment = assessments.length > 0 ? (assessments[assessments.length - 1] ?? null) : null;
 
-      // Find active or latest alert for this person
+      // Find active pending or latest alert for this person
       const personAlerts = alerts.filter((a) => a.person_id === person.id);
-      const alert = personAlerts.length > 0 ? (personAlerts[0] ?? null) : null;
+      const alert = personAlerts.find((a) => a.acked_at === null) ?? (personAlerts[0] ?? null);
 
       const effectiveTier: Tier = alert
         ? alert.tier

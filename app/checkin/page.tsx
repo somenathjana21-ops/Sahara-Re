@@ -1095,31 +1095,56 @@ export default function CheckinPage() {
           {/* Chat Input & Submit */}
           <form
             onSubmit={handleSubmitCheckin}
-            className="p-3.5 border-t border-slate-100 bg-white rounded-b-2xl flex items-center gap-2"
+            className="p-3 border-t border-slate-100 bg-white rounded-b-2xl flex flex-col gap-2"
           >
-            <input
-              type="text"
-              value={inputVal}
-              onChange={(e) => setInputVal(e.target.value)}
-              placeholder={t(
-                "checkin.inputPlaceholder",
-                "Type how you are feeling or what happened today..."
-              )}
-              disabled={submitting}
-              className="flex-1 h-11 px-4 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-primary focus:bg-white transition-all"
-            />
-            <button
-              type="submit"
-              disabled={submitting || !inputVal.trim()}
-              className="h-11 px-4 sm:px-5 rounded-xl bg-primary hover:bg-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 transition-colors shrink-0 cursor-pointer shadow-2xs"
-            >
-              <Send className="w-4 h-4" />
-              <span>
-                {submitting
-                  ? t("checkin.sending", "Processing...")
-                  : t("checkin.sendButton", "Submit Check-in")}
+            {/* Quick Action Bar for Human Support */}
+            <div className="flex items-center justify-between gap-2 px-1 text-xs">
+              <span className="text-slate-500 text-[11px] hidden sm:inline">
+                {t(
+                  "checkin.needHumanAssistance",
+                  "Need to speak with a human caseworker or helpline right now?"
+                )}
               </span>
-            </button>
+              <button
+                type="button"
+                onClick={handleTalkToPersonClick}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-semibold transition-colors cursor-pointer ml-auto shadow-2xs"
+              >
+                <Phone className="w-3 h-3 text-rose-600 animate-pulse" />
+                <span>
+                  {t(
+                    "checkin.talkToPersonPill",
+                    "Talk to a Person (24/7 Helplines)"
+                  )}
+                </span>
+              </button>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                value={inputVal}
+                onChange={(e) => setInputVal(e.target.value)}
+                placeholder={t(
+                  "checkin.inputPlaceholder",
+                  "Type how you are feeling or what happened today..."
+                )}
+                disabled={submitting}
+                className="flex-1 h-11 px-4 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-primary focus:bg-white transition-all"
+              />
+              <button
+                type="submit"
+                disabled={submitting || !inputVal.trim()}
+                className="h-11 px-4 sm:px-5 rounded-xl bg-primary hover:bg-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 transition-colors shrink-0 cursor-pointer shadow-2xs"
+              >
+                <Send className="w-4 h-4" />
+                <span>
+                  {submitting
+                    ? t("checkin.sending", "Processing...")
+                    : t("checkin.sendButton", "Submit Check-in")}
+                </span>
+              </button>
+            </div>
           </form>
         </div>
       </div>

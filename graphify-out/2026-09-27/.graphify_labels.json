@@ -12,6 +12,7 @@
   "10": "middleware.ts",
   "11": "rules",
   "12": "schema.sql",
+  "13": "auth/route.ts",
   "14": "test-runner.ts",
   "15": "CI workflow",
   "16": "error.tsx",

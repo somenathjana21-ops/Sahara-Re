@@ -3,13 +3,15 @@
  * Used by middleware.ts (which runs in Edge runtime where node:crypto is unavailable).
  */
 
-const SESSION_SECRET = process.env.SESSION_SECRET || process.env.STAFF_PASSCODE || "";
+function getSessionSecret(): string {
+  return process.env.SESSION_SECRET || process.env.STAFF_PASSCODE || "";
+}
 
-async function getKey(): Promise<CryptoKey> {
+async function getKey(secret: string): Promise<CryptoKey> {
   const encoder = new TextEncoder();
   return crypto.subtle.importKey(
     "raw",
-    encoder.encode(SESSION_SECRET),
+    encoder.encode(secret),
     { name: "HMAC", hash: "SHA-256" },
     false,
     ["sign", "verify"]
@@ -48,7 +50,8 @@ function base64urlEncode(buffer: ArrayBuffer): string {
 export async function verifySessionTokenEdge(
   token: string
 ): Promise<{ sub: string; role: string; iat: number; exp: number } | null> {
-  if (!SESSION_SECRET) return null;
+  const secret = getSessionSecret();
+  if (!secret) return null;
 
   const parts = token.split(".");
   if (parts.length !== 2) return null;
@@ -57,7 +60,7 @@ export async function verifySessionTokenEdge(
   if (!payloadB64 || !signature) return null;
 
   try {
-    const key = await getKey();
+    const key = await getKey(secret);
     const encoder = new TextEncoder();
     const data = encoder.encode(payloadB64);
     const sigBuffer = base64urlDecode(signature);

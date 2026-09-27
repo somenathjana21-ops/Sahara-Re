@@ -609,6 +609,13 @@ export const LEXICON_RULES: readonly LexiconRule[] = Object.freeze([
     pattern: /\b(sos)\b/i,
     description: "English: sos",
   },
+  {
+    id: "dr_en_07",
+    category: "direct_request",
+    language: "en",
+    pattern: /\b((i\s+)?(want|need)\s+to\s+(talk|speak)\s+to\s+a\s+(human|person|counsellor|caseworker|doctor)|connect\s+me\s+to\s+a\s+(human|person|counsellor|caseworker)|transfer\s+(me\s+)?to\s+a\s+(human|person|counsellor|caseworker)|speak\s+with\s+a\s+real\s+person|human\s+help\s+please)\b/i,
+    description: "English: request to talk/speak to a human, person, or counsellor",
+  },
 
   // Hindi (Devanagari)
   {
@@ -632,6 +639,13 @@ export const LEXICON_RULES: readonly LexiconRule[] = Object.freeze([
     pattern: /पुलिस\s*(को\s*)?बुलाओ/i,
     description: "Devanagari: पुलिस बुलाओ",
   },
+  {
+    id: "dr_dev_04",
+    category: "direct_request",
+    language: "hi_dev",
+    pattern: /((किसी\s*)?(इंसान|व्यक्ति|काउंसलर)\s*से\s*बात(\s*करनी\s*है)?|किसी\s*(इंसान|व्यक्ति|काउंसलर)\s*से\s*जोड़ो|इंसान\s*से\s*कनेक्ट)/i,
+    description: "Devanagari: इंसान/व्यक्ति/काउंसलर से बात करने का अनुरोध",
+  },
 
   // Hindi (Romanised)
   {
@@ -654,5 +668,12 @@ export const LEXICON_RULES: readonly LexiconRule[] = Object.freeze([
     language: "hi_rom",
     pattern: /\b(police\s+(ko\s+)?bulao)\b/i,
     description: "Romanised: police bulao",
+  },
+  {
+    id: "dr_rom_04",
+    category: "direct_request",
+    language: "hi_rom",
+    pattern: /\b((kisi\s+)?(insan|human|person|counsellor|caseworker|real\s+person)\s+se\s+baat(\s+karni\s+hai)?|kisi\s+(human|person)\s+se\s+connect(\s+karo)?)\b/i,
+    description: "Romanised: insan/person/counsellor se baat karni hai",
   },
 ]);

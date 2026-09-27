@@ -113,6 +113,32 @@ describe("Phase 2: 100% Recall on 40 Seeded Critical Phrases", () => {
   }
 });
 
+describe("Phase 2: Direct Request Human Handoff Intent Triggers", () => {
+  it("should trigger Pass 1 CRITICAL when user requests to talk to a human or counsellor", () => {
+    const humanRequests = [
+      "I want to talk to a human",
+      "need to speak to a person right now",
+      "please connect me to a counsellor",
+      "transfer me to a caseworker",
+      "human help please",
+      "मुझे किसी इंसान से बात करनी है",
+      "कृपया किसी काउंसलर से बात करनी है",
+      "mujhe kisi person se baat karni hai",
+      "human se baat karni hai please",
+    ];
+
+    for (const text of humanRequests) {
+      const res = checkInput(text);
+      assert.strictEqual(
+        res.hit,
+        true,
+        `Expected human request to trigger Pass 1: "${text}"`
+      );
+      assert.strictEqual(res.category, "direct_request");
+    }
+  });
+});
+
 describe("Phase 2: Negation Handling & Safe-Fail Invariant", () => {
   it("should trigger CRITICAL on negated crisis statements (fails safe)", () => {
     const negationCases = [
