@@ -47,6 +47,12 @@ export const AudioMetricsSchema = z.object({
 });
 export type AudioMetrics = z.infer<typeof AudioMetricsSchema>;
 
+export const ChatMessagePayloadSchema = z.object({
+  role: z.enum(["user", "assistant", "system"]),
+  content: z.string(),
+});
+export type ChatMessagePayload = z.infer<typeof ChatMessagePayloadSchema>;
+
 export const CheckInRequestSchema = z.object({
   personId: z.string().uuid(),
   consentId: z.string().uuid(),
@@ -56,6 +62,7 @@ export const CheckInRequestSchema = z.object({
   abandoned: z.boolean().optional().default(false),
   keypadDigit: z.string().optional(),
   audioMetrics: AudioMetricsSchema.optional(),
+  history: z.array(ChatMessagePayloadSchema).optional(),
 });
 export type CheckInRequest = z.infer<typeof CheckInRequestSchema>;
 
@@ -131,6 +138,9 @@ export const CustomPersonCaseDataSchema = z.object({
   lastIntimidationReport: z.string().nullable().optional(),
   caseOpenDaysAgo: z.number().int().optional(),
   openedAt: z.string().optional(),
+  customCategory: z.string().nullable().optional(),
+  customCaseDetails: z.string().nullable().optional(),
+  otherPressureDetails: z.string().nullable().optional(),
 });
 export type CustomPersonCaseData = z.infer<typeof CustomPersonCaseDataSchema>;
 
@@ -141,8 +151,8 @@ export const CustomPersonRequestSchema = z.object({
   isMinor: z.boolean().default(false),
   baselineMean: z.number().nullable().optional(),
   baselineVar: z.number().nullable().optional(),
-  checkinCount: z.number().int().min(0).default(0),
-  missedCount: z.number().int().min(0).default(0),
+  checkinCount: z.number().int().min(0).default(0).optional(),
+  missedCount: z.number().int().min(0).default(0).optional(),
   hasCase: z.boolean().default(false),
   caseData: CustomPersonCaseDataSchema.optional(),
   consentGranted: z.boolean().default(true),
@@ -179,6 +189,8 @@ export interface CaseRecord {
   social_boycott_flag: boolean;
   last_intimidation_report: string | null;
   opened_at: string;
+  custom_case_details?: string | null;
+  other_pressure_details?: string | null;
 }
 
 export interface ConsentRecord {

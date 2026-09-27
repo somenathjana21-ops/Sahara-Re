@@ -34,11 +34,16 @@ export async function POST(request: NextRequest) {
     const data = parseResult.data;
     const repo = getRepository();
 
-    // Determine or generate person UUID
-    const personId = data.id || crypto.randomUUID();
+    // Check if person already exists by id OR pseudonym (mutation/matching vs creation)
+    let existingPerson: PersonRecord | null = null;
+    if (data.id) {
+      existingPerson = await repo.getPerson(data.id);
+    }
+    if (!existingPerson && data.pseudonym) {
+      existingPerson = await repo.getPersonByPseudonym(data.pseudonym.trim());
+    }
 
-    // Check if person already exists (mutation vs creation)
-    const existingPerson = await repo.getPerson(personId);
+    const personId = existingPerson?.id || data.id || crypto.randomUUID();
 
     const personRecord: PersonRecord = {
       id: personId,
@@ -47,8 +52,8 @@ export async function POST(request: NextRequest) {
       is_minor_flag: data.isMinor,
       baseline_mean: data.baselineMean !== undefined ? data.baselineMean : (existingPerson?.baseline_mean ?? null),
       baseline_var: data.baselineVar !== undefined ? data.baselineVar : (existingPerson?.baseline_var ?? null),
-      checkin_count: data.checkinCount ?? existingPerson?.checkin_count ?? 0,
-      missed_count: data.missedCount ?? existingPerson?.missed_count ?? 0,
+      checkin_count: data.checkinCount !== undefined && data.checkinCount > 0 ? data.checkinCount : (existingPerson?.checkin_count ?? 0),
+      missed_count: data.missedCount !== undefined && data.missedCount > 0 ? data.missedCount : (existingPerson?.missed_count ?? 0),
       created_at: existingPerson?.created_at || new Date().toISOString(),
     };
 
@@ -131,6 +136,8 @@ export async function POST(request: NextRequest) {
         social_boycott_flag: cd.socialBoycott ?? false,
         last_intimidation_report: lastIntimidationReport,
         opened_at: openedAt,
+        custom_case_details: cd.customCaseDetails || null,
+        other_pressure_details: cd.otherPressureDetails || null,
       };
 
       await repo.saveCase(caseRecord);
@@ -141,12 +148,15 @@ export async function POST(request: NextRequest) {
       s3Details = computed;
     }
 
+    const checkins = await repo.getCheckinsByPersonId(personId);
+
     return NextResponse.json(
       {
         ok: true,
         person: personRecord,
         consent: consentRecord,
         case: caseRecord,
+        checkins,
         s3Standing: s3Score,
         s3Details,
       },
@@ -167,15 +177,20 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const personId = searchParams.get("personId");
+    const pseudonym = searchParams.get("pseudonym");
     const repo = getRepository();
 
-    if (personId) {
-      const person = await repo.getPerson(personId);
+    if (personId || pseudonym) {
+      const person = personId
+        ? await repo.getPerson(personId)
+        : await repo.getPersonByPseudonym(pseudonym!.trim());
+
       if (!person) {
         return NextResponse.json({ error: "Person not found" }, { status: 404 });
       }
       const caseRecord = await repo.getCaseByPersonId(person.id);
       const consent = await repo.getActiveConsent(person.id);
+      const checkins = await repo.getCheckinsByPersonId(person.id);
       const s3Details = caseRecord ? computeS3(caseRecord) : null;
 
       return NextResponse.json(
@@ -184,6 +199,7 @@ export async function GET(request: NextRequest) {
           person,
           case: caseRecord,
           consent,
+          checkins,
           s3Standing: s3Details ? s3Details.score : 0,
           s3Details,
         },

@@ -385,7 +385,7 @@ export default function CallPage() {
           ) : (
             <div className="flex items-center gap-1.5">
               <span className="font-mono font-bold px-2 py-1 bg-emerald-50 text-emerald-800 rounded-lg border border-emerald-200">
-                {selectedPersona.pseudonym} (S3: {selectedPersona.s3Standing} pts)
+                {selectedPersona.pseudonym} (Self-Directed)
               </span>
               <button
                 type="button"

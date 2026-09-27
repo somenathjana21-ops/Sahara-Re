@@ -7,14 +7,10 @@ import {
   Scale,
   ShieldCheck,
   AlertTriangle,
-  History,
   CheckCircle2,
   RefreshCw,
-  Sparkles,
-  Info,
-  Calendar,
-  Lock,
-  ChevronRight,
+  FileText,
+  Search,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { PresetPersona } from "@/lib/constants/personas";
@@ -41,9 +37,23 @@ export default function CustomDataModal({
   const [isMinor, setIsMinor] = useState(false);
   const [consentGranted, setConsentGranted] = useState(true);
 
-  // Legal Case Context (S3 factors)
+  // Matched existing user state
+  const [matchedUser, setMatchedUser] = useState<{
+    id: string;
+    pseudonym: string;
+    checkinsCount: number;
+    missedCount: number;
+    lastCheckin?: string;
+  } | null>(null);
+  const [matchedPersonId, setMatchedPersonId] = useState<string | null>(null);
+  const [lookupLoading, setLookupLoading] = useState(false);
+
+  // Legal Case Context fields
   const [hasCase, setHasCase] = useState(true);
   const [atrocityCategory, setAtrocityCategory] = useState("land_dispossession");
+  const [customCategory, setCustomCategory] = useState("");
+  const [customCaseDetails, setCustomCaseDetails] = useState("");
+  const [otherPressureDetails, setOtherPressureDetails] = useState("");
   const [stage, setStage] = useState<"investigation" | "trial" | "rehabilitation" | "compensation">("trial");
   const [bailStatus, setBailStatus] = useState<"in_custody" | "accused_on_bail">("accused_on_bail");
   const [nextHearingWithin7d, setNextHearingWithin7d] = useState(true);
@@ -52,14 +62,96 @@ export default function CustomDataModal({
   const [adjournmentsGte3, setAdjournmentsGte3] = useState(false);
   const [socialBoycott, setSocialBoycott] = useState(false);
   const [caseOpenGt365d, setCaseOpenGt365d] = useState(true);
-
-  // Prior Baseline / History
-  const [hasBaselineHistory, setHasBaselineHistory] = useState(false);
-  const [baselineMean, setBaselineMean] = useState(28);
-  const [missedCount, setMissedCount] = useState(0);
+  const [legalAidNeeded, setLegalAidNeeded] = useState(false);
 
   const [saving, setSaving] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  // Lookup existing user when pseudonym is typed or updated
+  useEffect(() => {
+    const clean = pseudonym.trim();
+    if (!clean || clean.length < 2) {
+      setMatchedUser(null);
+      setMatchedPersonId(null);
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      try {
+        setLookupLoading(true);
+        const res = await fetch(`/api/persons?pseudonym=${encodeURIComponent(clean)}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.person) {
+            setMatchedUser({
+              id: data.person.id,
+              pseudonym: data.person.pseudonym,
+              checkinsCount: data.checkins?.length ?? data.person.checkin_count ?? 0,
+              missedCount: data.person.missed_count ?? 0,
+              lastCheckin:
+                data.checkins && data.checkins.length > 0
+                  ? data.checkins[data.checkins.length - 1].created_at
+                  : undefined,
+            });
+            setMatchedPersonId(data.person.id);
+
+            if (data.person.language === "en" || data.person.language === "hi") {
+              setSelectedLanguage(data.person.language);
+            }
+            if (data.person.is_minor_flag !== undefined) {
+              setIsMinor(data.person.is_minor_flag);
+            }
+            if (data.case) {
+              setHasCase(true);
+              const knownCategories = [
+                "land_dispossession",
+                "physical_assault",
+                "caste_discrimination",
+                "verbal_abuse",
+                "social_boycott",
+                "sexual_harassment",
+                "witness_intimidation",
+                "police_inaction",
+                "retaliatory_case",
+                "property_destruction",
+                "denial_of_rights",
+                "general_distress",
+              ];
+              if (knownCategories.includes(data.case.atrocity_category)) {
+                setAtrocityCategory(data.case.atrocity_category);
+              } else {
+                setAtrocityCategory("other_custom");
+                setCustomCategory(data.case.atrocity_category);
+              }
+              setStage(data.case.stage || "trial");
+              setBailStatus(data.case.bail_status || "in_custody");
+              setSocialBoycott(Boolean(data.case.social_boycott_flag));
+              setIntimidationWithin14d(Boolean(data.case.last_intimidation_report));
+              setNextHearingWithin7d(Boolean(data.case.next_hearing_date));
+              setReliefOverdue30d(!data.case.relief_paid);
+              setAdjournmentsGte3((data.case.adjournment_count || 0) >= 3);
+              if (data.case.custom_case_details) {
+                setCustomCaseDetails(data.case.custom_case_details);
+              }
+              if (data.case.other_pressure_details) {
+                setOtherPressureDetails(data.case.other_pressure_details);
+              }
+            }
+            return;
+          }
+        }
+        setMatchedUser(null);
+        setMatchedPersonId(null);
+      } catch {
+        setMatchedUser(null);
+        setMatchedPersonId(null);
+      } finally {
+        setLookupLoading(false);
+      }
+    }, 350);
+
+    return () => clearTimeout(timer);
+  }, [pseudonym]);
 
   // Synchronize with initialPersona if present
   useEffect(() => {
@@ -99,22 +191,6 @@ export default function CustomDataModal({
 
   if (!isOpen) return null;
 
-  // Real-time deterministic calculation of S3 preview score
-  const calculatePreviewS3 = () => {
-    if (!hasCase) return 0;
-    let pts = 0;
-    if (intimidationWithin14d) pts += 25;
-    if (bailStatus === "accused_on_bail") pts += 20;
-    if (nextHearingWithin7d) pts += 15;
-    if (reliefOverdue30d) pts += 15;
-    if (adjournmentsGte3) pts += 10;
-    if (socialBoycott) pts += 10;
-    if (caseOpenGt365d) pts += 5;
-    return Math.min(100, pts);
-  };
-
-  const previewS3 = calculatePreviewS3();
-
   const handleGenerateRandomId = () => {
     const randomNum = Math.floor(1000 + Math.random() * 9000);
     setPseudonym(`A-${randomNum}`);
@@ -126,16 +202,26 @@ export default function CustomDataModal({
     setErrorMsg(null);
 
     try {
+      const resolvedCategory =
+        atrocityCategory === "other_custom"
+          ? customCategory.trim() || "general_distress"
+          : atrocityCategory;
+
       const payload: CustomPersonRequest = {
-        id: initialPersona?.isCustom ? initialPersona.id : undefined,
+        id: matchedPersonId || (initialPersona?.isCustom ? initialPersona.id : undefined),
         pseudonym: pseudonym.trim() || `A-${Math.floor(1000 + Math.random() * 9000)}`,
         language: selectedLanguage,
         isMinor,
         consentGranted,
+        checkinCount: matchedUser?.checkinsCount ?? 0,
+        missedCount: matchedUser?.missedCount ?? 0,
         hasCase,
         caseData: hasCase
           ? {
-              atrocityCategory,
+              atrocityCategory: resolvedCategory,
+              customCategory: atrocityCategory === "other_custom" ? customCategory.trim() : undefined,
+              customCaseDetails: customCaseDetails.trim() || undefined,
+              otherPressureDetails: otherPressureDetails.trim() || undefined,
               stage,
               bailStatus,
               nextHearingDays: nextHearingWithin7d ? 5 : null,
@@ -147,10 +233,6 @@ export default function CustomDataModal({
               caseOpenDaysAgo: caseOpenGt365d ? 400 : 90,
             }
           : undefined,
-        baselineMean: hasBaselineHistory ? baselineMean : null,
-        baselineVar: hasBaselineHistory ? 2.5 : null,
-        checkinCount: hasBaselineHistory ? 2 : 0,
-        missedCount: hasBaselineHistory ? missedCount : 0,
       };
 
       const res = await fetch("/api/persons", {
@@ -162,7 +244,7 @@ export default function CustomDataModal({
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || "Failed to create custom user profile");
+        throw new Error(data.error || "Failed to save check-in profile");
       }
 
       // If user chose a different language, sync app language
@@ -174,7 +256,7 @@ export default function CustomDataModal({
         id: data.person.id,
         consentId: data.consent.id,
         pseudonym: data.person.pseudonym,
-        label: `${data.person.pseudonym} (Custom User Data — ${data.s3Standing} pts S3)`,
+        label: `${data.person.pseudonym} (Self-Directed Check-in)`,
         language: data.person.language,
         isMinor: data.person.is_minor_flag,
         s3Standing: data.s3Standing,
@@ -210,7 +292,7 @@ export default function CustomDataModal({
               <p className="text-xs text-slate-500">
                 {t(
                   "customModal.subtitle",
-                  "Fill in your own details and case context. No pre-set persona required."
+                  "Share your situation confidentially at your own pace. No pre-set persona required."
                 )}
               </p>
             </div>
@@ -251,24 +333,48 @@ export default function CustomDataModal({
                     type="text"
                     value={pseudonym}
                     onChange={(e) => setPseudonym(e.target.value)}
-                    placeholder="e.g. A-4471 or User-1"
+                    placeholder="e.g. A-1911 or A-4471"
                     maxLength={20}
-                    className="flex-1 px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 focus:outline-none focus:border-primary text-xs font-mono"
+                    className="flex-1 px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 focus:outline-none focus:border-primary text-xs font-mono font-medium"
                     required
                   />
                   <button
                     type="button"
                     onClick={handleGenerateRandomId}
-                    title="Generate Random ID"
-                    className="px-2.5 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-600 text-xs flex items-center gap-1 cursor-pointer"
+                    title="Generate New Random ID"
+                    className="px-2.5 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-600 text-xs flex items-center gap-1 cursor-pointer transition-colors"
                   >
                     <RefreshCw className="w-3.5 h-3.5" />
                     <span>Auto</span>
                   </button>
                 </div>
-                <p className="text-[10px] text-slate-400 mt-1">
-                  {t("customModal.zeroPiiNotice", "Strict Zero PII policy: Do not enter real names or contact details.")}
-                </p>
+
+                {/* Dynamic user match feedback */}
+                {lookupLoading ? (
+                  <p className="text-[11px] text-slate-400 mt-1.5 flex items-center gap-1">
+                    <Search className="w-3 h-3 animate-spin" />
+                    <span>Checking record...</span>
+                  </p>
+                ) : matchedUser ? (
+                  <div className="mt-2 p-2 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] flex items-start gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-semibold block">
+                        Welcome back! Matched existing record for {matchedUser.pseudonym}.
+                      </span>
+                      <span className="text-slate-600 block mt-0.5">
+                        Your case details and check-in timeline have been automatically connected.
+                      </span>
+                    </div>
+                  </div>
+                ) : (
+                  <p className="text-[10px] text-slate-500 mt-1">
+                    {t(
+                      "customModal.zeroPiiNotice",
+                      "Strict Zero PII: Enter your anonymous code or generate a random one. Never enter your real name."
+                    )}
+                  </p>
+                )}
               </div>
 
               {/* Language Selection */}
@@ -319,7 +425,7 @@ export default function CustomDataModal({
                   <span className="text-[11px] text-slate-500 leading-relaxed block mt-0.5">
                     {t(
                       "customModal.isMinorDesc",
-                      "Project SAHARA safeguards minors by diverting directly to an accredited human caseworker without automated scoring."
+                      "Safe diversion: Minors are connected directly with accredited human caseworkers."
                     )}
                   </span>
                 </div>
@@ -327,15 +433,15 @@ export default function CustomDataModal({
             </div>
           </div>
 
-          {/* Section 2: Court & Legal Case Context (S3 Score) */}
+          {/* Section 2: Court & Legal Case Context */}
           <div className="space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <div className="flex items-center gap-2 font-bold text-slate-900">
-                <Scale className="w-4 h-4 text-amber-700" />
-                <span>{t("customModal.caseHeader", "2. Legal Case Context (S3 Score Drivers)")}</span>
+                <Scale className="w-4 h-4 text-emerald-700" />
+                <span>{t("customModal.caseHeader", "2. Legal Case & Current Situation")}</span>
               </div>
               <label className="inline-flex items-center gap-2 cursor-pointer text-xs">
-                <span className="text-slate-600 font-medium">Has Active Case?</span>
+                <span className="text-slate-600 font-medium">Has Active Legal Case?</span>
                 <input
                   type="checkbox"
                   checked={hasCase}
@@ -350,225 +456,220 @@ export default function CustomDataModal({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Case / Atrocity Category:
+                      Case / Issue Category:
                     </label>
                     <select
                       value={atrocityCategory}
                       onChange={(e) => setAtrocityCategory(e.target.value)}
                       className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-xs focus:outline-none focus:border-primary"
                     >
-                      <option value="land_dispossession">Land Dispossession / Encroachment</option>
-                      <option value="physical_assault">Physical Assault / Violence</option>
-                      <option value="caste_discrimination">Caste Discrimination / Insult</option>
-                      <option value="verbal_abuse">Verbal Abuse / Harassment</option>
-                      <option value="social_boycott">Social Boycott / Ostracism</option>
-                      <option value="general_distress">General Legal Dispute</option>
+                      <option value="land_dispossession">Land Dispossession / Encroachment / Property Grab</option>
+                      <option value="physical_assault">Physical Assault / Bodily Harm / Violence</option>
+                      <option value="caste_discrimination">Caste Discrimination / Atrocities Act / Public Humiliation</option>
+                      <option value="verbal_abuse">Verbal Abuse / Threats / Criminal Intimidation</option>
+                      <option value="social_boycott">Social Boycott / Community Ostracism / Economic Blockade</option>
+                      <option value="sexual_harassment">Sexual Harassment / Gender-based Violence</option>
+                      <option value="witness_intimidation">Witness Tampering / Pressure to Compromise or Withdraw</option>
+                      <option value="police_inaction">Police Inaction / Refusal or Delay in Registering FIR</option>
+                      <option value="retaliatory_case">False / Retaliatory Counter-Complaint Filed by Accused</option>
+                      <option value="property_destruction">Destruction of Home, Crops, Livestock, or Livelihood</option>
+                      <option value="denial_of_rights">Denial of Access to Public Water, Roads, or Common Land</option>
+                      <option value="general_distress">General Legal Dispute / Court Litigation</option>
+                      <option value="other_custom">Other (Fill in as per your situation)</option>
                     </select>
                   </div>
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1">
-                      Case Stage:
+                      Current Case Stage:
                     </label>
                     <select
                       value={stage}
                       onChange={(e) => setStage(e.target.value as any)}
                       className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-xs focus:outline-none focus:border-primary"
                     >
-                      <option value="investigation">Investigation (Police FIR)</option>
-                      <option value="trial">Trial (Court Hearings)</option>
-                      <option value="rehabilitation">Rehabilitation</option>
-                      <option value="compensation">Compensation / Relief Claim</option>
+                      <option value="investigation">Investigation (Police FIR / Preliminary Stage)</option>
+                      <option value="trial">Trial (Court Hearings / Witness Examination)</option>
+                      <option value="rehabilitation">Rehabilitation (Protective Custody / Resettlement)</option>
+                      <option value="compensation">Compensation (Relief Claim / Victim Support Pending)</option>
                     </select>
                   </div>
                 </div>
 
-                {/* S3 Structural Stress Factors */}
-                <div className="p-3.5 rounded-xl bg-amber-50/50 border border-amber-200/80 space-y-2.5">
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold text-xs text-amber-900">
-                      Select Applicable Risk & Pressure Factors:
-                    </span>
-                    <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200">
-                      Calculated S3: {previewS3} / 100 pts
-                    </span>
+                {/* Option to specify custom category if "other_custom" is selected */}
+                {atrocityCategory === "other_custom" && (
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      Specify Your Situation / Case Type:
+                    </label>
+                    <input
+                      type="text"
+                      value={customCategory}
+                      onChange={(e) => setCustomCategory(e.target.value)}
+                      placeholder="e.g. Unlawful workplace dismissal, illegal eviction by landlord, etc."
+                      className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-xs focus:outline-none focus:border-primary"
+                    />
                   </div>
+                )}
+
+                {/* Dedicated Option to Fill In as per the User */}
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1 flex items-center gap-1.5">
+                    <FileText className="w-3.5 h-3.5 text-primary" />
+                    <span>Describe your legal situation or case in your own words (Optional):</span>
+                  </label>
+                  <textarea
+                    value={customCaseDetails}
+                    onChange={(e) => setCustomCaseDetails(e.target.value)}
+                    placeholder="Share any specific details about what happened, upcoming hearings, threats, or what kind of legal assistance you need..."
+                    rows={3}
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 text-xs focus:outline-none focus:border-primary leading-relaxed resize-y"
+                  />
+                  <p className="text-[10px] text-slate-400 mt-1">
+                    This provides context to help our counselors understand your legal background and pressures.
+                  </p>
+                </div>
+
+                {/* Structural Stress Circumstances (NO Points Displayed) */}
+                <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2.5">
+                  <span className="font-semibold text-xs text-slate-900 block">
+                    Select any circumstances that apply to your current situation:
+                  </span>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                     {/* Bail Status */}
-                    <label className="flex items-center gap-2 p-2 rounded-lg bg-white border border-slate-200 hover:border-amber-300 cursor-pointer transition-colors">
+                    <label className="flex items-center gap-2 p-2 rounded-lg bg-white border border-slate-200 hover:border-slate-300 cursor-pointer transition-colors">
                       <input
                         type="checkbox"
                         checked={bailStatus === "accused_on_bail"}
                         onChange={(e) =>
                           setBailStatus(e.target.checked ? "accused_on_bail" : "in_custody")
                         }
-                        className="rounded text-amber-700 focus:ring-amber-500 w-3.5 h-3.5 cursor-pointer"
+                        className="rounded text-primary focus:ring-primary w-3.5 h-3.5 cursor-pointer"
                       />
-                      <div>
-                        <span className="font-semibold text-slate-900">Accused on Bail</span>
-                        <span className="text-amber-700 font-bold ml-1.5">(+20 pts)</span>
-                      </div>
+                      <span className="font-medium text-slate-800">
+                        Accused person is currently on bail or residing nearby
+                      </span>
                     </label>
 
                     {/* Next Hearing within 7 days */}
-                    <label className="flex items-center gap-2 p-2 rounded-lg bg-white border border-slate-200 hover:border-amber-300 cursor-pointer transition-colors">
+                    <label className="flex items-center gap-2 p-2 rounded-lg bg-white border border-slate-200 hover:border-slate-300 cursor-pointer transition-colors">
                       <input
                         type="checkbox"
                         checked={nextHearingWithin7d}
                         onChange={(e) => setNextHearingWithin7d(e.target.checked)}
-                        className="rounded text-amber-700 focus:ring-amber-500 w-3.5 h-3.5 cursor-pointer"
+                        className="rounded text-primary focus:ring-primary w-3.5 h-3.5 cursor-pointer"
                       />
-                      <div>
-                        <span className="font-semibold text-slate-900">Hearing in ≤ 7 Days</span>
-                        <span className="text-amber-700 font-bold ml-1.5">(+15 pts)</span>
-                      </div>
+                      <span className="font-medium text-slate-800">
+                        Court hearing scheduled in the coming days (within 7 days)
+                      </span>
                     </label>
 
                     {/* Intimidation report within last 14 days */}
-                    <label className="flex items-center gap-2 p-2 rounded-lg bg-white border border-slate-200 hover:border-amber-300 cursor-pointer transition-colors">
+                    <label className="flex items-center gap-2 p-2 rounded-lg bg-white border border-slate-200 hover:border-slate-300 cursor-pointer transition-colors">
                       <input
                         type="checkbox"
                         checked={intimidationWithin14d}
                         onChange={(e) => setIntimidationWithin14d(e.target.checked)}
-                        className="rounded text-amber-700 focus:ring-amber-500 w-3.5 h-3.5 cursor-pointer"
+                        className="rounded text-primary focus:ring-primary w-3.5 h-3.5 cursor-pointer"
                       />
-                      <div>
-                        <span className="font-semibold text-slate-900">Threat / Intimidation ≤ 14d</span>
-                        <span className="text-amber-700 font-bold ml-1.5">(+25 pts)</span>
-                      </div>
+                      <span className="font-medium text-slate-800">
+                        Received threats, coercion, or intimidation within the last 14 days
+                      </span>
                     </label>
 
                     {/* Relief overdue > 30 days */}
-                    <label className="flex items-center gap-2 p-2 rounded-lg bg-white border border-slate-200 hover:border-amber-300 cursor-pointer transition-colors">
+                    <label className="flex items-center gap-2 p-2 rounded-lg bg-white border border-slate-200 hover:border-slate-300 cursor-pointer transition-colors">
                       <input
                         type="checkbox"
                         checked={reliefOverdue30d}
                         onChange={(e) => setReliefOverdue30d(e.target.checked)}
-                        className="rounded text-amber-700 focus:ring-amber-500 w-3.5 h-3.5 cursor-pointer"
+                        className="rounded text-primary focus:ring-primary w-3.5 h-3.5 cursor-pointer"
                       />
-                      <div>
-                        <span className="font-semibold text-slate-900">Relief Overdue &gt; 30 Days</span>
-                        <span className="text-amber-700 font-bold ml-1.5">(+15 pts)</span>
-                      </div>
+                      <span className="font-medium text-slate-800">
+                        Relief compensation under SC/ST Act is delayed or overdue
+                      </span>
                     </label>
 
                     {/* High Adjournments */}
-                    <label className="flex items-center gap-2 p-2 rounded-lg bg-white border border-slate-200 hover:border-amber-300 cursor-pointer transition-colors">
+                    <label className="flex items-center gap-2 p-2 rounded-lg bg-white border border-slate-200 hover:border-slate-300 cursor-pointer transition-colors">
                       <input
                         type="checkbox"
                         checked={adjournmentsGte3}
                         onChange={(e) => setAdjournmentsGte3(e.target.checked)}
-                        className="rounded text-amber-700 focus:ring-amber-500 w-3.5 h-3.5 cursor-pointer"
+                        className="rounded text-primary focus:ring-primary w-3.5 h-3.5 cursor-pointer"
                       />
-                      <div>
-                        <span className="font-semibold text-slate-900">≥ 3 Adjournments</span>
-                        <span className="text-amber-700 font-bold ml-1.5">(+10 pts)</span>
-                      </div>
+                      <span className="font-medium text-slate-800">
+                        Case has faced multiple adjournments or prolonged delays
+                      </span>
                     </label>
 
                     {/* Social Boycott */}
-                    <label className="flex items-center gap-2 p-2 rounded-lg bg-white border border-slate-200 hover:border-amber-300 cursor-pointer transition-colors">
+                    <label className="flex items-center gap-2 p-2 rounded-lg bg-white border border-slate-200 hover:border-slate-300 cursor-pointer transition-colors">
                       <input
                         type="checkbox"
                         checked={socialBoycott}
                         onChange={(e) => setSocialBoycott(e.target.checked)}
-                        className="rounded text-amber-700 focus:ring-amber-500 w-3.5 h-3.5 cursor-pointer"
+                        className="rounded text-primary focus:ring-primary w-3.5 h-3.5 cursor-pointer"
                       />
-                      <div>
-                        <span className="font-semibold text-slate-900">Village Social Boycott</span>
-                        <span className="text-amber-700 font-bold ml-1.5">(+10 pts)</span>
-                      </div>
+                      <span className="font-medium text-slate-800">
+                        Facing village social boycott, isolation, or community pressure
+                      </span>
                     </label>
 
                     {/* Case open > 365 days */}
-                    <label className="flex items-center gap-2 p-2 rounded-lg bg-white border border-slate-200 hover:border-amber-300 cursor-pointer transition-colors sm:col-span-2">
+                    <label className="flex items-center gap-2 p-2 rounded-lg bg-white border border-slate-200 hover:border-slate-300 cursor-pointer transition-colors">
                       <input
                         type="checkbox"
                         checked={caseOpenGt365d}
                         onChange={(e) => setCaseOpenGt365d(e.target.checked)}
-                        className="rounded text-amber-700 focus:ring-amber-500 w-3.5 h-3.5 cursor-pointer"
+                        className="rounded text-primary focus:ring-primary w-3.5 h-3.5 cursor-pointer"
                       />
-                      <div>
-                        <span className="font-semibold text-slate-900">Protracted Case (Open &gt; 1 Year)</span>
-                        <span className="text-amber-700 font-bold ml-1.5">(+5 pts)</span>
-                      </div>
+                      <span className="font-medium text-slate-800">
+                        Case has been ongoing for more than 1 year
+                      </span>
                     </label>
+
+                    {/* Legal Aid Needed */}
+                    <label className="flex items-center gap-2 p-2 rounded-lg bg-white border border-slate-200 hover:border-slate-300 cursor-pointer transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={legalAidNeeded}
+                        onChange={(e) => setLegalAidNeeded(e.target.checked)}
+                        className="rounded text-primary focus:ring-primary w-3.5 h-3.5 cursor-pointer"
+                      />
+                      <span className="font-medium text-slate-800">
+                        Need assistance finding free legal aid or connecting with a lawyer
+                      </span>
+                    </label>
+                  </div>
+
+                  {/* Option to fill in other pressures */}
+                  <div className="pt-2">
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      Other specific safety concerns or pressures you are facing (Optional):
+                    </label>
+                    <input
+                      type="text"
+                      value={otherPressureDetails}
+                      onChange={(e) => setOtherPressureDetails(e.target.value)}
+                      placeholder="e.g. Hostile neighbors, lack of transportation to court, harassment of family members..."
+                      className="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-slate-900 text-xs focus:outline-none focus:border-primary"
+                    />
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 text-xs">
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 text-xs leading-relaxed">
                 {t(
                   "customModal.noCaseNotice",
-                  "No active legal case reported. S3 case distress score will be 0 points, focusing analysis on emotional dialogue (S2) and self-report (S1)."
+                  "No active court case or legal dispute selected. Your check-in will focus purely on your personal emotional wellbeing and peace of mind."
                 )}
               </div>
             )}
           </div>
 
-          {/* Section 3: Check-in History & Baseline (Optional) */}
-          <div className="space-y-3">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-              <div className="flex items-center gap-2 font-bold text-slate-900">
-                <History className="w-4 h-4 text-primary" />
-                <span>{t("customModal.historyHeader", "3. Prior History & Baseline")}</span>
-              </div>
-              <label className="inline-flex items-center gap-2 cursor-pointer text-xs">
-                <span className="text-slate-600 font-medium">Prior History?</span>
-                <input
-                  type="checkbox"
-                  checked={hasBaselineHistory}
-                  onChange={(e) => setHasBaselineHistory(e.target.checked)}
-                  className="rounded text-primary focus:ring-primary w-4 h-4 cursor-pointer"
-                />
-              </label>
-            </div>
-
-            {hasBaselineHistory ? (
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">
-                    Prior Baseline Distress (μ):
-                  </label>
-                  <select
-                    value={baselineMean}
-                    onChange={(e) => setBaselineMean(Number(e.target.value))}
-                    className="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-900 text-xs"
-                  >
-                    <option value={20}>Low Distress (μ = 20)</option>
-                    <option value={28}>Moderate Distress (μ = 28)</option>
-                    <option value={40}>Elevated Distress (μ = 40)</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block font-semibold text-slate-700 mb-1">
-                    Missed Check-ins (S4 Driver):
-                  </label>
-                  <select
-                    value={missedCount}
-                    onChange={(e) => setMissedCount(Number(e.target.value))}
-                    className="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-900 text-xs"
-                  >
-                    <option value={0}>0 Missed (On track)</option>
-                    <option value={1}>1 Missed (+25 S4 pts)</option>
-                    <option value={2}>2 Missed (+50 S4 pts)</option>
-                    <option value={3}>3 Missed (Amber Floor)</option>
-                  </select>
-                </div>
-              </div>
-            ) : (
-              <p className="text-xs text-slate-500">
-                {t(
-                  "customModal.firstTimeNotice",
-                  "First-time check-in: Baseline will be established upon first contact."
-                )}
-              </p>
-            )}
-          </div>
-
-          {/* Section 4: Voluntary Consent */}
+          {/* Section 3: Voluntary Consent */}
           <div className="p-3.5 rounded-xl bg-emerald-50/60 border border-emerald-200">
             <label className="flex items-start gap-2.5 cursor-pointer">
               <input
@@ -584,7 +685,7 @@ export default function CustomDataModal({
                 <span className="text-[11px] text-slate-600 leading-relaxed block mt-0.5">
                   {t(
                     "customModal.consentCheckDesc",
-                    "I voluntarily consent to confidential distress monitoring. Answers will never affect legal outcomes or compensation claims."
+                    "I voluntarily consent to confidential check-in support. My responses will never affect legal outcomes or compensation claims."
                   )}
                 </span>
               </div>

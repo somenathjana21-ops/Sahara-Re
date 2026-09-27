@@ -62,4 +62,13 @@ export const PRESET_PERSONAS: PresetPersona[] = [
     isMinor: false,
     s3Standing: 25,
   },
+  {
+    id: "55555555-1111-5555-5555-555555555555",
+    consentId: "55555555-3333-5555-5555-555555555555",
+    pseudonym: "A-1911",
+    label: "A-1911 (Returning Persona — 1 prior check-in, 1 missed check-in)",
+    language: "en",
+    isMinor: false,
+    s3Standing: 45,
+  },
 ];

@@ -13,6 +13,7 @@ export interface LLMRequestOptions {
   language?: "en" | "hi";
   mockScore?: number; // Override for deterministic testing
   timeoutMs?: number;
+  history?: Array<{ role: "user" | "assistant" | "system"; content: string }>;
 }
 
 export interface LLMAnalysisResult {
@@ -70,9 +71,10 @@ function cleanJsonText(raw: string): string {
 function generateDeterministicMock(
   transcript: string,
   preferredLanguage: "en" | "hi" = "hi",
-  mockScore?: number
+  mockScore?: number,
+  history?: Array<{ role: string; content: string }>
 ): LLMOutput {
-  const text = transcript.toLowerCase();
+  const text = transcript.toLowerCase().trim();
 
   // If explicit mock score requested, honour it
   if (typeof mockScore === "number") {
@@ -83,6 +85,30 @@ function generateDeterministicMock(
           : "I hear what you are saying. Do you feel safe right now?",
       s2_score: mockScore,
       markers: mockScore >= 50 ? ["fear", "exhaustion"] : ["exhaustion"],
+      evidence: [transcript.slice(0, 30)],
+      language: preferredLanguage,
+      next_question_id: "q3",
+    };
+  }
+
+  // Golden Path Day 0 transcript detection:
+  // "neend bilkul nahi aa rahi hai, dar lag raha hai" / intimidation / hearing distress
+  if (
+    text.includes("dar") ||
+    text.includes("darr") ||
+    text.includes("fear") ||
+    text.includes("neend") ||
+    text.includes("threat") ||
+    text.includes("intimidation") ||
+    text.includes("hearing")
+  ) {
+    return {
+      reply:
+        preferredLanguage === "hi"
+          ? "मैं समझ सकता हूँ कि यह समय कठिन है। क्या आप इस समय सुरक्षित महसूस कर रहे हैं?"
+          : "I hear that this time is challenging. Do you feel safe right now?",
+      s2_score: 55, // Day 0 Golden Path expectation: S2 = 55
+      markers: ["fear", "exhaustion"],
       evidence: [transcript.slice(0, 30)],
       language: preferredLanguage,
       next_question_id: "q3",
@@ -112,24 +138,80 @@ function generateDeterministicMock(
     };
   }
 
-  // Golden Path Day 0 transcript detection:
-  // "neend bilkul nahi aa rahi hai, dar lag raha hai" / intimidation / hearing distress
+  // Greetings
+  if (text === "hi" || text === "hello" || text === "hey" || text === "namaste") {
+    return {
+      reply:
+        preferredLanguage === "hi"
+          ? "नमस्ते। आप आज कैसा महसूस कर रहे हैं? जब भी आप बात करना चाहें, हम सुनने के लिए उपस्थित हैं।"
+          : "Hello. How are you doing today? We are here to listen whenever you feel ready to share.",
+      s2_score: 10,
+      markers: [],
+      evidence: [],
+      language: preferredLanguage,
+      next_question_id: "q1",
+    };
+  }
+
+  // Positive progression / feeling better
+  if (text.includes("better") || text.includes("sudhar") || text.includes("achha")) {
+    return {
+      reply:
+        preferredLanguage === "hi"
+          ? "यह जानकर अच्छा लगा कि आप कुछ बेहतर महसूस कर रहे हैं। क्या आपकी नींद और दिनचर्या पर भी कोई सकारात्मक प्रभाव पड़ा है?"
+          : "I'm glad to hear you are feeling a bit better. Has that helped your sleep and rest recently?",
+      s2_score: 15,
+      markers: [],
+      evidence: [transcript.slice(0, 30)],
+      language: preferredLanguage,
+      next_question_id: "q2",
+    };
+  }
+
+  // Brief nuance response: "a bit" / "little" / "thoda"
+  if (text.includes("a bit") || text.includes("little") || text.includes("thoda")) {
+    return {
+      reply:
+        preferredLanguage === "hi"
+          ? "अपनी बात साझा करने के लिए धन्यवाद। थोड़ी सी भी परेशानी थकान ला सकती है। क्या आप इस समय अपने परिवेश में सुरक्षित महसूस कर रहे हैं?"
+          : "Thank you for letting me know. Even slight disruptions can be wearing. Do you feel safe in your environment right now?",
+      s2_score: 25,
+      markers: ["exhaustion"],
+      evidence: [transcript.slice(0, 30)],
+      language: preferredLanguage,
+      next_question_id: "q3",
+    };
+  }
+
+  // High distress indicators / "very bad"
   if (
-    text.includes("dar") ||
-    text.includes("darr") ||
-    text.includes("fear") ||
-    text.includes("neend") ||
-    text.includes("threat") ||
-    text.includes("intimidation") ||
-    text.includes("hearing")
+    text.includes("very bad") ||
+    text.includes("bahut bura") ||
+    text.includes("terrible") ||
+    text.includes("horrible")
   ) {
     return {
       reply:
         preferredLanguage === "hi"
-          ? "मैं समझ सकता हूँ कि यह समय कठिन है। क्या आप इस समय सुरक्षित महसूस कर रहे हैं?"
-          : "I hear that this time is challenging. Do you feel safe right now?",
-      s2_score: 55, // Day 0 Golden Path expectation: S2 = 55
-      markers: ["fear", "exhaustion"],
+          ? "मुझे खेद है कि आज आपको बहुत बुरा महसूस हो रहा है। क्या आप इस समय किसी सुरक्षित स्थान पर हैं?"
+          : "I am really sorry that things feel so heavy today. Are you in a safe place at this moment?",
+      s2_score: 65,
+      markers: ["hopelessness", "fear"],
+      evidence: [transcript.slice(0, 30)],
+      language: preferredLanguage,
+      next_question_id: "q3",
+    };
+  }
+
+  // Mention of death / acute distress
+  if (text.includes("death") || text.includes("maut") || text.includes("mar")) {
+    return {
+      reply:
+        preferredLanguage === "hi"
+          ? "आपकी बात से आपकी गहरी पीड़ा महसूस हो रही है। आपकी सुरक्षा सबसे महत्वपूर्ण है, क्या आप अभी सुरक्षित हैं?"
+          : "I hear how much pain you are experiencing right now. Your safety matters most—do you feel safe right now?",
+      s2_score: 85,
+      markers: ["hopelessness", "fear"],
       evidence: [transcript.slice(0, 30)],
       language: preferredLanguage,
       next_question_id: "q3",
@@ -151,13 +233,18 @@ function generateDeterministicMock(
     };
   }
 
-  // Neutral / calm
+  // Context-aware default: vary by history length if available
+  const hasHistory = history && history.length > 0;
   return {
     reply:
       preferredLanguage === "hi"
-        ? "बात करने के लिए धन्यवाद। पिछली बार से आप कैसा महसूस कर रहे हैं?"
+        ? hasHistory
+          ? "अपनी बात साझा करने के लिए धन्यवाद। क्या आप इसके बारे में थोड़ा और बताना चाहेंगे?"
+          : "बात करने के लिए धन्यवाद। पिछली बार से आप कैसा महसूस कर रहे हैं?"
+        : hasHistory
+        ? "Thank you for sharing that with me. Is there anything specific on your mind today?"
         : "Thank you for checking in. How have you been feeling since we last spoke?",
-    s2_score: 15,
+    s2_score: 20,
     markers: [],
     evidence: [],
     language: preferredLanguage,
@@ -187,7 +274,8 @@ export async function analyzeTranscript(
       const mockResult = generateDeterministicMock(
         options.transcript,
         lang,
-        options.mockScore
+        options.mockScore,
+        options.history
       );
       const validated = LLMOutputSchema.parse(mockResult);
       return {
@@ -231,9 +319,12 @@ export async function analyzeTranscript(
   const model = process.env.LLM_MODEL || cfg.defaultModel;
   const apiKey = process.env.LLM_API_KEY || "";
   const modelVersion = `${provider}:${model}+prompt-${PROMPT_VERSION}`;
+  const temperature = process.env.LLM_TEMPERATURE
+    ? parseFloat(process.env.LLM_TEMPERATURE)
+    : 0.6;
 
   try {
-    const userPrompt = buildUserPrompt(options.transcript, lang);
+    const userPrompt = buildUserPrompt(options.transcript, lang, options.history);
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -249,7 +340,7 @@ export async function analyzeTranscript(
           { role: "system", content: SYSTEM_PROMPT },
           { role: "user", content: userPrompt },
         ],
-        temperature: 0.1,
+        temperature,
         max_tokens: 1500,
         response_format: { type: "json_object" },
       }),

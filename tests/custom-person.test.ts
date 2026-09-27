@@ -267,4 +267,156 @@ describe("Custom User Check-in Suite (Without Persona)", () => {
     assert.strictEqual(getJson.person.pseudonym, "U-QueryGet");
     assert.strictEqual(getJson.s3Standing, 20);
   });
+
+  it("should support extended legal case options and custom user fill-in details", async () => {
+    const createReq = new NextRequest("http://localhost:3000/api/persons", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        pseudonym: "A-CaseDetailTest",
+        language: "hi",
+        hasCase: true,
+        caseData: {
+          atrocityCategory: "sexual_harassment",
+          customCaseDetails: "FIR filed against village landlord; receiving threats to withdraw statement.",
+          otherPressureDetails: "Advocate requested police escort during hearings; family faced social pressure.",
+          stage: "investigation",
+          bailStatus: "accused_on_bail", // +20
+          intimidationReportDaysAgo: 5, // +25
+        },
+        consentGranted: true,
+      }),
+    });
+
+    const createRes = await personPostHandler(createReq);
+    assert.strictEqual(createRes.status, 201);
+    const data = await createRes.json();
+
+    assert.strictEqual(data.case.atrocity_category, "sexual_harassment");
+    assert.strictEqual(
+      data.case.custom_case_details,
+      "FIR filed against village landlord; receiving threats to withdraw statement."
+    );
+    assert.strictEqual(
+      data.case.other_pressure_details,
+      "Advocate requested police escort during hearings; family faced social pressure."
+    );
+    assert.strictEqual(data.s3Standing, 45); // 20 + 25
+  });
+
+  it("should match Persona A-1911 by pseudonym, link prior check-in history & baseline, and evaluate second check-in", async () => {
+    // 1. Look up A-1911 by pseudonym
+    const getReq = new NextRequest("http://localhost:3000/api/persons?pseudonym=A-1911");
+    const getRes = await personGetHandler(getReq);
+    assert.strictEqual(getRes.status, 200);
+
+    const data = await getRes.json();
+    assert.strictEqual(data.person.pseudonym, "A-1911");
+    assert.strictEqual(data.person.baseline_mean, 32.5);
+    assert.strictEqual(data.person.checkin_count, 1);
+    assert.strictEqual(data.person.missed_count, 1); // Checked in, then didn't (1 missed)
+    assert.ok(data.checkins && data.checkins.length === 1);
+    assert.strictEqual(
+      data.checkins[0].transcript,
+      "Feeling tense about the investigation, hoping things stay peaceful."
+    );
+
+    // 2. A-1911 performs next check-in
+    const checkinReq = new NextRequest("http://localhost:3000/api/checkin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        personId: data.person.id,
+        consentId: data.consent.id,
+        channel: "chat",
+        transcript: "Hearing date is approaching and pressure is increasing",
+        structured: { q1: 3, q2: 3, q3: 1 },
+      }),
+    });
+
+    const checkinRes = await checkinHandler(checkinReq);
+    assert.strictEqual(checkinRes.status, 200);
+
+    const checkinJson = await checkinRes.json();
+    assert.strictEqual(checkinJson.status, "ok");
+
+    // Check that baseline was updated in repo
+    const repo = getRepository();
+    const updatedPerson = await repo.getPerson(data.person.id);
+    assert.ok(updatedPerson);
+    assert.strictEqual(updatedPerson.checkin_count, 2, "Checkin count must increment from 1 to 2");
+    assert.ok(updatedPerson.baseline_mean !== null);
+  });
+
+  it("should record prior history and baseline when user checks in, and match them on next visit without exposing points", async () => {
+    // 1. First visit: Register user A-5521
+    const createReq = new NextRequest("http://localhost:3000/api/persons", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        pseudonym: "A-5521",
+        language: "en",
+        hasCase: true,
+        caseData: {
+          atrocityCategory: "denial_of_rights",
+          customCaseDetails: "Barred from using the public community well",
+          stage: "trial",
+          bailStatus: "in_custody",
+        },
+        consentGranted: true,
+      }),
+    });
+
+    const createRes = await personPostHandler(createReq);
+    const { person, consent } = await createRes.json();
+    assert.strictEqual(person.checkin_count, 0);
+
+    // 2. A-5521 submits first check-in (establishing baseline)
+    const checkin1Req = new NextRequest("http://localhost:3000/api/checkin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        personId: person.id,
+        consentId: consent.id,
+        channel: "chat",
+        transcript: "Things are somewhat difficult today",
+        structured: { q1: 2, q2: 2, q3: 1 },
+      }),
+    });
+
+    const checkin1Res = await checkinHandler(checkin1Req);
+    assert.strictEqual(checkin1Res.status, 200);
+
+    // 3. User leaves, then returns next day: looked up by pseudonym
+    const lookupReq = new NextRequest("http://localhost:3000/api/persons?pseudonym=A-5521");
+    const lookupRes = await personGetHandler(lookupReq);
+    assert.strictEqual(lookupRes.status, 200);
+
+    const lookupData = await lookupRes.json();
+    assert.strictEqual(lookupData.person.pseudonym, "A-5521");
+    assert.strictEqual(lookupData.person.checkin_count, 1);
+    assert.ok(lookupData.person.baseline_mean !== null, "Prior baseline must be recorded");
+    assert.strictEqual(lookupData.checkins.length, 1);
+    assert.strictEqual(lookupData.checkins[0].transcript, "Things are somewhat difficult today");
+
+    // 4. They submit another check-in (matched with previous session)
+    const checkin2Req = new NextRequest("http://localhost:3000/api/checkin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        personId: lookupData.person.id,
+        consentId: lookupData.consent.id,
+        channel: "chat",
+        transcript: "Feeling more anxious today",
+        structured: { q1: 3, q2: 3, q3: 1 },
+      }),
+    });
+
+    const checkin2Res = await checkinHandler(checkin2Req);
+    assert.strictEqual(checkin2Res.status, 200);
+
+    const repo = getRepository();
+    const finalPerson = await repo.getPerson(lookupData.person.id);
+    assert.strictEqual(finalPerson?.checkin_count, 2);
+  });
 });

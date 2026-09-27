@@ -170,9 +170,28 @@ export async function POST(request: NextRequest) {
         modelVersion: "bypassed:deterministic_trigger",
       };
     } else if (req.transcript && req.transcript.trim()) {
+      let conversationHistory = req.history;
+      if (!conversationHistory || conversationHistory.length === 0) {
+        try {
+          const priorCheckins = await repo.getCheckinsByPersonId(person.id);
+          const recentCheckins = priorCheckins
+            .filter((c) => c.transcript && c.transcript.trim())
+            .slice(-4);
+          if (recentCheckins.length > 0) {
+            conversationHistory = recentCheckins.map((c) => ({
+              role: "user" as const,
+              content: c.transcript as string,
+            }));
+          }
+        } catch {
+          // Graceful fallback to undefined
+        }
+      }
+
       llmResult = await analyzeTranscript({
         transcript: req.transcript,
         language: person.language,
+        history: conversationHistory,
       });
     } else {
       llmResult = {
@@ -197,7 +216,14 @@ export async function POST(request: NextRequest) {
     } else if (req.abandoned) {
       sanitizedReply = getStaticReply("closing_low", person.language);
     } else if (!req.transcript) {
-      sanitizedReply = getStaticReply("llm_unavailable", person.language);
+      if (req.structured && Object.keys(req.structured).length > 0) {
+        sanitizedReply =
+          person.language === "hi"
+            ? "आपकी रेटिंग सुरक्षित रूप से दर्ज कर ली गई है। सहारा में आपका स्वागत है, यदि आप कुछ साझा करना चाहते हैं तो हम सुनने के लिए उपस्थित हैं।"
+            : "Thank you for completing your wellbeing ratings. Your check-in has been securely recorded. How are you feeling today?";
+      } else {
+        sanitizedReply = getStaticReply("llm_unavailable", person.language);
+      }
     } else {
       sanitizedReply = getStaticReply("fallback_reply", person.language);
     }

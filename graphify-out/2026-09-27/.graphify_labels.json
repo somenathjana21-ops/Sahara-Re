@@ -1,6 +1,6 @@
 {
   "0": "InMemoryRepository",
-  "1": "checkin/route.ts",
+  "1": "interlock.ts",
   "2": "AGENTS.md - Project SAHARA Agent Instructions",
   "3": "fixtures.ts",
   "4": "useLanguage",
@@ -20,5 +20,9 @@
   "18": "CLAUDE.md - Graphify Integration Rules",
   "19": "next.config.ts",
   "20": "postcss.config.mjs",
-  "21": "tailwind.config.ts"
+  "21": "tailwind.config.ts",
+  "22": "policy/index.ts",
+  "23": "replies.ts",
+  "24": "checkin/route.ts",
+  "25": "scoring/index.ts"
 }

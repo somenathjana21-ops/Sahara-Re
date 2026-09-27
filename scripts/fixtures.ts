@@ -239,12 +239,86 @@ export const CONSENT_A7892: ConsentRecord = {
   withdrawn_at: null,
 };
 
+// =====================================================================
+// Persona A-1911 (Returning Persona — Checked in, then missed check-in)
+// =====================================================================
+
+export const PERSON_A1911: PersonRecord = {
+  id: "55555555-1111-5555-5555-555555555555",
+  pseudonym: "A-1911",
+  language: "en",
+  is_minor_flag: false,
+  baseline_mean: 32.5,
+  baseline_var: 2.0,
+  checkin_count: 1,
+  missed_count: 1, // Checked in, then didn't (1 missed)
+  created_at: daysAgo(5),
+};
+
+export const CASE_A1911: CaseRecord = {
+  id: "55555555-2222-5555-5555-555555555555",
+  person_id: PERSON_A1911.id,
+  atrocity_category: "caste_discrimination",
+  stage: "investigation",
+  next_hearing_date: daysAhead(14).split("T")[0]!,
+  adjournment_count: 1,
+  bail_status: "accused_on_bail", // +20
+  relief_due_date: null,
+  relief_paid: true,
+  social_boycott_flag: false,
+  last_intimidation_report: daysAgo(10).split("T")[0]!, // +25 within 14d
+  opened_at: daysAgo(60).split("T")[0]!,
+  custom_case_details: "Pressure from opposing parties after filing FIR; lawyer requested police protection.",
+};
+
+export const CONSENT_A1911: ConsentRecord = {
+  id: "55555555-3333-5555-5555-555555555555",
+  person_id: PERSON_A1911.id,
+  purpose: "distress_monitoring",
+  capture_method: "tap",
+  granted_at: daysAgo(5),
+  withdrawn_at: null,
+};
+
+export const CHECKINS_A1911: CheckinRecord[] = [
+  {
+    id: "55555555-4444-5555-5555-555555555501",
+    person_id: PERSON_A1911.id,
+    consent_id: CONSENT_A1911.id,
+    channel: "chat",
+    transcript: "Feeling tense about the investigation, hoping things stay peaceful.",
+    structured: { q1: 1, q2: 2, q3: 1 },
+    abandoned: false,
+    created_at: daysAgo(4),
+  },
+];
+
+export const ASSESSMENTS_A1911: AssessmentRecord[] = [
+  {
+    id: "55555555-5555-5555-5555-555555555501",
+    checkin_id: CHECKINS_A1911[0]!.id,
+    person_id: PERSON_A1911.id,
+    components: { s1: 33.33, s2: 30, s3: 45, s4: 0, s5: null },
+    contributions: { s1: 11.67, s2: 7.5, s3: 11.25, s4: 0.0, s5: 0 },
+    composite: 32.5,
+    z_score: null,
+    change_point: false,
+    tier: "GREEN",
+    trigger_source: "policy",
+    explanation: ["Baseline established on Day -4 at 32.50"],
+    policy_version: "v1.1.0",
+    model_version: "mock:default+prompt-1.0.0",
+    created_at: daysAgo(4),
+  },
+];
+
 // Aggregated Seed Fixtures
 export const SEED_PERSONS: PersonRecord[] = [
   PERSON_A4471,
   PERSON_A6218,
   PERSON_A2301,
   PERSON_A7892,
+  PERSON_A1911,
 ];
 
 export const SEED_CASES: CaseRecord[] = [
@@ -252,6 +326,7 @@ export const SEED_CASES: CaseRecord[] = [
   CASE_A6218,
   CASE_A2301,
   CASE_A7892,
+  CASE_A1911,
 ];
 
 export const SEED_CONSENTS: ConsentRecord[] = [
@@ -259,8 +334,10 @@ export const SEED_CONSENTS: ConsentRecord[] = [
   CONSENT_A6218,
   CONSENT_A2301,
   CONSENT_A7892,
+  CONSENT_A1911,
 ];
 
-export const SEED_CHECKINS: CheckinRecord[] = [...CHECKINS_A4471];
+export const SEED_CHECKINS: CheckinRecord[] = [...CHECKINS_A4471, ...CHECKINS_A1911];
 
-export const SEED_ASSESSMENTS: AssessmentRecord[] = [...ASSESSMENTS_A4471];
+export const SEED_ASSESSMENTS: AssessmentRecord[] = [...ASSESSMENTS_A4471, ...ASSESSMENTS_A1911];
+

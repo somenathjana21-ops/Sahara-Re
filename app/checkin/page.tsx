@@ -46,12 +46,12 @@ export default function CheckinPage() {
   const { t, language } = useLanguage();
 
   // Active persona state
+  const [personas, setPersonas] = useState<PresetPersona[]>(PRESET_PERSONAS);
   const [selectedPersona, setSelectedPersona] = useState<PresetPersona>(PRESET_PERSONAS[0]!);
   const [customPersona, setCustomPersona] = useState<PresetPersona | null>(null);
   const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
   const [hasConsent, setHasConsent] = useState(true);
   const [consentLoading, setConsentLoading] = useState(false);
-
 
   // Self-report structured answers (S1)
   const [q1, setQ1] = useState<number | undefined>(undefined);
@@ -79,20 +79,152 @@ export default function CheckinPage() {
     scrollToBottom();
   }, [messages]);
 
-  // Initial welcome message
+  // Sync available persons from backend repository on mount
   useEffect(() => {
-    setMessages([
-      {
-        id: "msg-welcome",
-        sender: "sahara",
-        text: t(
-          "checkin.systemWelcome",
-          "Hello. Thank you for connecting today. Please take your time, and share only what you feel comfortable sharing. We are here to support you."
-        ),
-        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-      },
-    ]);
-  }, [selectedPersona, language]);
+    async function loadPersons() {
+      try {
+        const res = await fetch("/api/persons");
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data.persons)) {
+            setPersonas((prev) => {
+              const existingIds = new Set(prev.map((p) => p.id));
+              const existingPseudos = new Set(prev.map((p) => p.pseudonym));
+              const extras: PresetPersona[] = [];
+              for (const p of data.persons) {
+                if (!existingIds.has(p.id) && !existingPseudos.has(p.pseudonym)) {
+                  extras.push({
+                    id: p.id,
+                    consentId: p.id,
+                    pseudonym: p.pseudonym,
+                    label: `${p.pseudonym} — Self-Directed Profile`,
+                    language: p.language,
+                    isMinor: p.is_minor_flag,
+                    s3Standing: 0,
+                    isCustom: true,
+                  });
+                }
+              }
+              return [...prev, ...extras];
+            });
+          }
+        }
+      } catch {
+        // Fallback to presets
+      }
+    }
+    loadPersons();
+  }, []);
+
+  // Match Persona history & check-in timeline when selectedPersona changes
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadPersonaHistory() {
+      try {
+        const res = await fetch(`/api/persons?personId=${encodeURIComponent(selectedPersona.id)}`);
+        if (!res.ok) {
+          if (isMounted) {
+            setMessages([
+              {
+                id: "msg-welcome",
+                sender: "sahara",
+                text: t(
+                  "checkin.systemWelcome",
+                  "Hello. Thank you for connecting today. Please take your time, and share only what you feel comfortable sharing. We are here to support you."
+                ),
+                timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+              },
+            ]);
+          }
+          return;
+        }
+
+        const data = await res.json();
+        if (!isMounted) return;
+
+        const checkins = data.checkins || [];
+
+        if (checkins.length > 0) {
+          // User has previous check-ins! Match with that day & history
+          const msgs: ChatMessage[] = [];
+
+          checkins.forEach((c: any, index: number) => {
+            const dateStr = c.created_at
+              ? new Date(c.created_at).toLocaleDateString([], { month: "short", day: "numeric" })
+              : `Day -${checkins.length - index}`;
+
+            if (c.transcript) {
+              msgs.push({
+                id: `msg-prior-${c.id || index}`,
+                sender: "user",
+                text: c.transcript,
+                timestamp: `${dateStr} • Prior Check-in`,
+              });
+            }
+          });
+
+          // Greeting matching return after missed check-in or regular interval
+          const missedCount = data.person?.missed_count || 0;
+          let returningText = "";
+
+          if (missedCount > 0) {
+            returningText =
+              language === "hi"
+                ? `नमस्ते ${selectedPersona.pseudonym}। हमें खुशी है कि आप पुनः जुड़े हैं। कृपया आराम से बताएं कि आज आप कैसा महसूस कर रहे हैं, हम सुनने के लिए उपस्थित हैं।`
+                : `Welcome back, ${selectedPersona.pseudonym}. We noticed you were unable to check in recently. Please take your time, and share how you are doing today.`;
+          } else {
+            returningText =
+              language === "hi"
+                ? `नमस्ते ${selectedPersona.pseudonym}। सहारा में आपका पुनः स्वागत है। कृपया बताएं कि आज आपका दिन कैसा बीत रहा है।`
+                : `Welcome back, ${selectedPersona.pseudonym}. Thank you for connecting again. How have you been feeling since we last connected?`;
+          }
+
+          msgs.push({
+            id: `msg-welcome-returning-${Date.now()}`,
+            sender: "sahara",
+            text: returningText,
+            timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+          });
+
+          setMessages(msgs);
+        } else {
+          // First check-in
+          setMessages([
+            {
+              id: "msg-welcome",
+              sender: "sahara",
+              text: t(
+                "checkin.systemWelcome",
+                "Hello. Thank you for connecting today. Please take your time, and share only what you feel comfortable sharing. We are here to support you."
+              ),
+              timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+            },
+          ]);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setMessages([
+            {
+              id: "msg-welcome",
+              sender: "sahara",
+              text: t(
+                "checkin.systemWelcome",
+                "Hello. Thank you for connecting today. Please take your time, and share only what you feel comfortable sharing. We are here to support you."
+              ),
+              timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+            },
+          ]);
+        }
+      }
+    }
+
+    loadPersonaHistory();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [selectedPersona.id, language]);
 
   // Handle Talk to a Person (Emergency Helpline)
   // Acceptance Criterion 3: Immediately renders crisis helplines locally without network delay
@@ -297,6 +429,15 @@ export default function CheckinPage() {
       if (q2 !== undefined) structured.q2 = q2;
       if (q3 !== undefined) structured.q3 = q3;
 
+      // Extract recent dialogue history (both user and Havenline messages) so LLM has full context
+      const chatHistory = messages
+        .filter((m) => (m.sender === "user" || m.sender === "sahara") && m.text && m.text.trim().length > 0)
+        .slice(-10)
+        .map((m) => ({
+          role: (m.sender === "user" ? "user" : "assistant") as "user" | "assistant",
+          content: m.text,
+        }));
+
       const payload: CheckInRequest = {
         personId: selectedPersona.id,
         consentId: selectedPersona.consentId,
@@ -304,6 +445,7 @@ export default function CheckinPage() {
         transcript: currentText,
         structured: Object.keys(structured).length > 0 ? structured : undefined,
         abandoned: false,
+        history: chatHistory,
       };
 
       const res = await fetch("/api/checkin", {
@@ -469,24 +611,23 @@ export default function CheckinPage() {
               }`}
             >
               <User className="w-3.5 h-3.5" />
-              <span>{t("checkin.tabWithoutPersona", "Without Persona (Fill in Data)")}</span>
+              <span>{t("checkin.tabWithoutPersona", "Without Persona (Self-Directed)")}</span>
             </button>
           </div>
 
-          {/* Docket Pressure Badge */}
+          {/* Legal Case Context Indicator (Zero Points Exposed) */}
           <div className="flex items-center gap-2 flex-wrap">
             {selectedPersona.s3Standing > 0 ? (
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 font-medium">
-                <Scale className="w-3.5 h-3.5 text-amber-700" />
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-medium">
+                <Scale className="w-3.5 h-3.5 text-emerald-700" />
                 <span>
-                  {t("checkin.caseContextBanner", "Case Docket Context (S3 Standing Score)")}:{" "}
-                  <strong>{selectedPersona.s3Standing} pts</strong>
+                  {t("checkin.caseContextLinked", "Legal Case Context Linked")}
                 </span>
               </div>
             ) : (
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200 font-medium">
-                <ShieldAlert className="w-3.5 h-3.5 text-slate-500" />
-                <span>No active legal case (S3: 0 pts)</span>
+                <HeartHandshake className="w-3.5 h-3.5 text-slate-500" />
+                <span>{t("checkin.generalCheckin", "General Wellbeing Check-in")}</span>
               </div>
             )}
           </div>
@@ -501,7 +642,7 @@ export default function CheckinPage() {
             <select
               value={selectedPersona.id}
               onChange={(e) => {
-                const p = PRESET_PERSONAS.find((item) => item.id === e.target.value);
+                const p = personas.find((item) => item.id === e.target.value);
                 if (p) {
                   setSelectedPersona(p);
                   setHasConsent(true);
@@ -509,7 +650,7 @@ export default function CheckinPage() {
               }}
               className="flex-1 max-w-md px-2.5 py-1.5 rounded-lg bg-slate-50 border border-slate-300 text-slate-900 font-medium focus:outline-none focus:border-primary text-xs"
             >
-              {PRESET_PERSONAS.map((p) => (
+              {personas.map((p) => (
                 <option key={p.id} value={p.id}>
                   {p.label}
                 </option>
@@ -814,19 +955,6 @@ export default function CheckinPage() {
                     {/* Header tag */}
                     <div className="flex items-center gap-2 mb-1.5">
                       <span className="font-bold text-xs text-primary">Havenline</span>
-                      {msg.tier && (
-                        <span
-                          className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                            msg.tier === "CRITICAL" || msg.tier === "RED"
-                              ? "bg-rose-100 text-rose-800"
-                              : msg.tier === "AMBER"
-                              ? "bg-amber-100 text-amber-800"
-                              : "bg-emerald-100 text-emerald-800"
-                          }`}
-                        >
-                          Tier: {msg.tier}
-                        </span>
-                      )}
                     </div>
 
                     <p className="whitespace-pre-line">{msg.text}</p>
@@ -916,8 +1044,18 @@ export default function CheckinPage() {
         onSave={(persona) => {
           setCustomPersona(persona);
           setSelectedPersona(persona);
+          setPersonas((prev) => {
+            const idx = prev.findIndex(
+              (p) => p.id === persona.id || p.pseudonym === persona.pseudonym
+            );
+            if (idx >= 0) {
+              const updated = [...prev];
+              updated[idx] = persona;
+              return updated;
+            }
+            return [...prev, persona];
+          });
           setHasConsent(true);
-          clearChat();
         }}
       />
     </div>
