@@ -251,6 +251,19 @@ export default function CheckinPage() {
         : "Direct request via 'Talk to a Person' panic button"
     );
     setIsHelplineModalOpen(true);
+
+    // Also notify counsellor queue in background via deterministic panic trigger
+    fetch("/api/checkin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        personId: selectedPersona.id,
+        consentId: selectedPersona.consentId,
+        channel: "chat",
+        transcript: "Direct request: Talk to a person (Emergency Helpline)",
+        keypadDigit: "0",
+      }),
+    }).catch(() => {});
   };
 
   // Toggle consent for testing 403 Forbidden branch
@@ -396,6 +409,7 @@ export default function CheckinPage() {
             text: data.reply,
             timestamp: nowTime,
             tier: data.tier,
+            resources: data.resources,
           },
         ]);
       }
@@ -535,6 +549,7 @@ export default function CheckinPage() {
             text: data.reply,
             timestamp: nowTime,
             tier: data.tier,
+            resources: data.resources,
           },
         ]);
       }
@@ -1042,29 +1057,43 @@ export default function CheckinPage() {
                     className={`max-w-[85%] rounded-2xl rounded-tl-xs px-4 py-3 text-xs sm:text-sm leading-relaxed border shadow-2xs ${
                       msg.isCritical
                         ? "bg-rose-50 border-rose-200 text-slate-900"
+                        : msg.tier === "RED"
+                        ? "bg-amber-50/70 border-amber-200 text-slate-900"
                         : msg.isMinor
                         ? "bg-blue-50 border-blue-200 text-slate-900"
                         : "bg-slate-50 border-slate-200 text-slate-800"
                     }`}
                   >
                     {/* Header tag */}
-                    <div className="flex items-center gap-2 mb-1.5">
+                    <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                       <span className="font-bold text-xs text-primary">Havenline</span>
+                      {msg.tier === "RED" && !msg.isCritical && (
+                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-amber-100 text-amber-800 border border-amber-300">
+                          <AlertTriangle className="w-3 h-3 text-amber-600" />
+                          {t("checkin.counsellorAlerted", "Counsellor Alerted — High Priority Review")}
+                        </span>
+                      )}
+                      {msg.isCritical && (
+                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-rose-100 text-rose-800 border border-rose-300">
+                          <ShieldAlert className="w-3 h-3 text-rose-600" />
+                          {t("checkin.crisisPriority", "Crisis Priority")}
+                        </span>
+                      )}
                     </div>
 
                     <p className="whitespace-pre-line">{msg.text}</p>
 
-                    {/* Resources list if crisis triggered */}
+                    {/* Resources list if crisis or distress triggered */}
                     {msg.resources && msg.resources.length > 0 && (
-                      <div className="mt-3 pt-3 border-t border-rose-200/80 space-y-2">
-                        <span className="block font-bold text-xs text-rose-800">
+                      <div className={`mt-3 pt-3 border-t ${msg.isCritical ? "border-rose-200/80" : "border-amber-200/80"} space-y-2`}>
+                        <span className={`block font-bold text-xs ${msg.isCritical ? "text-rose-800" : "text-amber-900"}`}>
                           {t("checkin.resourcesTitle", "Immediate Emergency Helplines (24/7 Toll-Free)")}:
                         </span>
                         <div className="space-y-1.5">
                           {msg.resources.map((r, i) => (
                             <div
                               key={i}
-                              className="p-2 rounded-lg bg-white border border-rose-200 flex items-center justify-between text-xs"
+                              className={`p-2 rounded-lg bg-white border ${msg.isCritical ? "border-rose-200" : "border-amber-200"} flex items-center justify-between text-xs`}
                             >
                               <div>
                                 <span className="font-bold text-slate-900 block">{r.name}</span>
@@ -1072,7 +1101,7 @@ export default function CheckinPage() {
                               </div>
                               <a
                                 href={`tel:${r.number}`}
-                                className="px-2.5 py-1 rounded-lg bg-rose-700 hover:bg-rose-800 text-white font-bold text-xs shrink-0 ml-2"
+                                className={`px-2.5 py-1 rounded-lg ${msg.isCritical ? "bg-rose-700 hover:bg-rose-800" : "bg-amber-700 hover:bg-amber-800"} text-white font-bold text-xs shrink-0 ml-2`}
                               >
                                 {r.number}
                               </a>

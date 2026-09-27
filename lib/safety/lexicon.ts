@@ -311,6 +311,13 @@ export const LEXICON_RULES: readonly LexiconRule[] = Object.freeze([
     pattern: /\b(my\s+final\s+note|goodbye\s+everyone|ready\s+to\s+end\s+it)\b/i,
     description: "English: final note / goodbye everyone",
   },
+  {
+    id: "hl_en_09",
+    category: "hopelessness",
+    language: "en",
+    pattern: /\b((cant|cannot|can\s+not)\s+live\s+(like\s+this|like\s+that|this\s+way|anymore|any\s*longer)|(cant|cannot|can\s+not)\s+survive\s+(like\s+this|this\s+way|anymore)|unable\s+to\s+live\s+like\s+this)\b/i,
+    description: "English: cannot live like this / anymore",
+  },
 
   // Hindi (Devanagari)
   {
@@ -362,6 +369,13 @@ export const LEXICON_RULES: readonly LexiconRule[] = Object.freeze([
     pattern: /(अलविदा\s*सबको|थक\s*चुका\s*हूँ|थक\s*चुकी\s*हूँ)/i,
     description: "Devanagari: अलविदा सबको / थक चुका हूँ",
   },
+  {
+    id: "hl_dev_08",
+    category: "hopelessness",
+    language: "hi_dev",
+    pattern: /(ऐसे|इस\s*तरह)\s*(नहीं|नही)\s*(जी\s*सकता|जी\s*सकती|रह\s*सकता|रह\s*सकती|जीना|रहना)|अब\s*(नहीं|नही)\s*जी\s*(सकता|सकती)|अब\s*(नहीं|नही)\s*जिया\s*जाता/i,
+    description: "Devanagari: ऐसे नहीं जी सकता/सकती",
+  },
 
   // Hindi (Romanised)
   {
@@ -412,6 +426,13 @@ export const LEXICON_RULES: readonly LexiconRule[] = Object.freeze([
     language: "hi_rom",
     pattern: /\b(alvida\s+sabko|thak\s+chuka\s+h(oon|un)?|thak\s+chuki\s+h(oon|un)?)\b/i,
     description: "Romanised: alvida sabko / thak chuka hoon",
+  },
+  {
+    id: "hl_rom_08",
+    category: "hopelessness",
+    language: "hi_rom",
+    pattern: /\b((aise|is\s+tarah)\s+nah?i\s+(jee\s+(sakt[aei]|sakunga|sakungi)|jiya\s+jata|rehna)|ab\s+nah?i\s+(jee\s+sakt[aei]|jiya\s+jata))\b/i,
+    description: "Romanised: aise nahi jee sakta/sakti",
   },
 
   // =========================================================================
@@ -613,8 +634,15 @@ export const LEXICON_RULES: readonly LexiconRule[] = Object.freeze([
     id: "dr_en_07",
     category: "direct_request",
     language: "en",
-    pattern: /\b((i\s+)?(want|need)\s+to\s+(talk|speak)\s+to\s+a\s+(human|person|counsellor|caseworker|doctor)|connect\s+me\s+to\s+a\s+(human|person|counsellor|caseworker)|transfer\s+(me\s+)?to\s+a\s+(human|person|counsellor|caseworker)|speak\s+with\s+a\s+real\s+person|human\s+help\s+please)\b/i,
+    pattern: /\b((i\s+)?(want|need|wish|would\s+like|id\s+like)\s+to\s+(talk|speak)\s+(to|with)\s+(a\s+)?(human|person|counsellor|counselor|caseworker|doctor)|(can|could|may)\s+i\s+(talk|speak)\s+(to|with)\s+(a\s+)?(human|person|counsellor|counselor|caseworker|doctor)|connect\s+me\s+to\s+(a\s+)?(human|person|counsellor|counselor|caseworker|doctor)|transfer\s+(me\s+)?to\s+(a\s+)?(human|person|counsellor|counselor|caseworker|doctor)|speak\s+with\s+(a\s+)?(real\s+person|human|counsellor|counselor|caseworker)|talk\s+to\s+(a\s+)?(counsellor|counselor|caseworker)|human\s+help\s+please)\b/i,
     description: "English: request to talk/speak to a human, person, or counsellor",
+  },
+  {
+    id: "dr_en_08",
+    category: "direct_request",
+    language: "en",
+    pattern: /\b((i\s+)?(want|need|wish|would\s+like|id\s+like)\s+to\s+(talk|speak)\s+(to|with)\s+(someone|somebody|anyone|anybody)|(can|could|may)\s+i\s+(talk|speak)\s+(to|with)\s+(someone|somebody|anyone|anybody)|(want|need)\s+(someone|somebody)\s+to\s+(talk|speak)\s+(to|with)|(talk|speak)\s+(to|with)\s+(someone|somebody)|connect\s+me\s+to\s+(someone|somebody)|transfer\s+(me\s+)?to\s+(someone|somebody))\b/i,
+    description: "English: request to talk/speak to someone or somebody",
   },
 
   // Hindi (Devanagari)
@@ -643,8 +671,8 @@ export const LEXICON_RULES: readonly LexiconRule[] = Object.freeze([
     id: "dr_dev_04",
     category: "direct_request",
     language: "hi_dev",
-    pattern: /((किसी\s*)?(इंसान|व्यक्ति|काउंसलर)\s*से\s*बात(\s*करनी\s*है)?|किसी\s*(इंसान|व्यक्ति|काउंसलर)\s*से\s*जोड़ो|इंसान\s*से\s*कनेक्ट)/i,
-    description: "Devanagari: इंसान/व्यक्ति/काउंसलर से बात करने का अनुरोध",
+    pattern: /((किसी(\s*(इंसान|व्यक्ति|काउंसलर))?|(इंसान|व्यक्ति|काउंसलर))\s*से\s*बात(\s*(करनी\s*है|करना\s*चाहता|करना\s*चाहती|कराओ|करवा\s*दो|कहो))?|किसी(\s*(इंसान|व्यक्ति|काउंसलर))?\s*से\s*(जोड़ो|कनेक्ट)|(इंसान|काउंसलर)\s*से\s*कनेक्ट)/i,
+    description: "Devanagari: इंसान/व्यक्ति/काउंसलर/किसी से बात करने का अनुरोध",
   },
 
   // Hindi (Romanised)
@@ -673,7 +701,7 @@ export const LEXICON_RULES: readonly LexiconRule[] = Object.freeze([
     id: "dr_rom_04",
     category: "direct_request",
     language: "hi_rom",
-    pattern: /\b((kisi\s+)?(insan|human|person|counsellor|caseworker|real\s+person)\s+se\s+baat(\s+karni\s+hai)?|kisi\s+(human|person)\s+se\s+connect(\s+karo)?)\b/i,
-    description: "Romanised: insan/person/counsellor se baat karni hai",
+    pattern: /\b((kisi(\s+(insan|human|person|counsellor|counselor|caseworker|real\s+person))?|(insan|human|person|counsellor|counselor|caseworker|real\s+person))\s+se\s+baat(\s+(karni\s+hai|karni\s+h|karna\s+chah?ta|karna\s+chah?ti|karao|karwa\s+do|karo))?|kisi(\s+(human|person|counsellor|counselor))?\s*se\s*connect(\s+karo)?)\b/i,
+    description: "Romanised: kisi/insan/person/counsellor se baat karni hai",
   },
 ]);

@@ -298,6 +298,8 @@ export async function POST(request: NextRequest) {
       zScore: baselineResult.zScore,
       changePoint: baselineResult.changePoint,
       s3Score: s3Result.score,
+      s2Score: s2Result.score,
+      distressDetected: llmResult.distressDetected,
       isFirstContact: baselineResult.isFirstContact,
       missedCount: person.missed_count,
       deterministicTrigger,
@@ -366,7 +368,7 @@ export async function POST(request: NextRequest) {
       : sanitizedReply;
 
     const resources =
-      isCritical || policyResult.immediateResources
+      isCritical || policyResult.immediateResources || policyResult.tier === "RED"
         ? CRISIS_RESOURCES[person.language]
         : undefined;
 

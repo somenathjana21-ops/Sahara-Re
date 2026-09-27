@@ -23,6 +23,8 @@ export interface LLMAnalysisResult {
   evidence: string[];
   language: "en" | "hi";
   nextQuestionId?: string;
+  sentiment?: "positive" | "neutral" | "negative";
+  distressDetected?: boolean;
   modelVersion: string;
   rawOutput?: string;
   error?: string;
@@ -224,23 +226,42 @@ function generateDeterministicMock(
     };
   }
 
-  // High distress indicators / "very bad"
+  // High distress indicators / negative replies / inability to go on / human requests
   if (
     text.includes("very bad") ||
     text.includes("bahut bura") ||
     text.includes("terrible") ||
-    text.includes("horrible")
+    text.includes("horrible") ||
+    text.includes("cannot live") ||
+    text.includes("cant live") ||
+    text.includes("talk to someone") ||
+    text.includes("speak to someone") ||
+    text.includes("hopeless") ||
+    text.includes("depressed") ||
+    text.includes("crying") ||
+    text.includes("miserable") ||
+    text.includes("scared") ||
+    text.includes("overwhelmed") ||
+    text.includes("cannot cope") ||
+    text.includes("cant cope") ||
+    text.includes("unbearable")
   ) {
+    const isAcute =
+      text.includes("cannot live") ||
+      text.includes("cant live") ||
+      text.includes("unbearable");
     return {
       reply:
         preferredLanguage === "hi"
-          ? "मुझे खेद है कि आज आपको बहुत बुरा महसूस हो रहा है। क्या आप इस समय किसी सुरक्षित स्थान पर हैं?"
-          : "I am really sorry that things feel so heavy today. Are you in a safe place at this moment?",
-      s2_score: 65,
+          ? "मुझे खेद है कि आज आपको बहुत बुरा महसूस हो रहा है। आपकी सुरक्षा और सहायता सबसे पहले है। हम आपकी बात सुन रहे हैं।"
+          : "I hear how heavy and difficult things feel right now. Support coordinators have been alerted to review this immediately. We are here to support you.",
+      s2_score: isAcute ? 85 : 65,
       markers: ["hopelessness", "fear"],
       evidence: [transcript.slice(0, 30)],
       language: preferredLanguage,
       next_question_id: "q3",
+      sentiment: "negative",
+      distress_detected: true,
     };
   }
 
@@ -319,6 +340,12 @@ export async function analyzeTranscript(
         options.history
       );
       const validated = LLMOutputSchema.parse(mockResult);
+      const isDistress = Boolean(
+        validated.distress_detected ||
+        validated.s2_score >= 65 ||
+        validated.markers.includes("hopelessness") ||
+        (validated.sentiment === "negative" && validated.s2_score >= 45)
+      );
       return {
         reply: validated.reply,
         s2Score: validated.s2_score,
@@ -326,6 +353,8 @@ export async function analyzeTranscript(
         evidence: validated.evidence,
         language: validated.language,
         nextQuestionId: validated.next_question_id,
+        sentiment: validated.sentiment,
+        distressDetected: isDistress,
         modelVersion: `mock:default+prompt-${PROMPT_VERSION}`,
         rawOutput: JSON.stringify(validated),
       };
@@ -410,6 +439,12 @@ export async function analyzeTranscript(
     const cleaned = cleanJsonText(rawContent);
     const parsed = JSON.parse(cleaned);
     const validated = LLMOutputSchema.parse(parsed);
+    const isDistress = Boolean(
+      validated.distress_detected ||
+      validated.s2_score >= 65 ||
+      validated.markers.includes("hopelessness") ||
+      (validated.sentiment === "negative" && validated.s2_score >= 45)
+    );
 
     return {
       reply: validated.reply,
@@ -418,6 +453,8 @@ export async function analyzeTranscript(
       evidence: validated.evidence,
       language: validated.language,
       nextQuestionId: validated.next_question_id,
+      sentiment: validated.sentiment,
+      distressDetected: isDistress,
       modelVersion,
       rawOutput: rawContent,
     };

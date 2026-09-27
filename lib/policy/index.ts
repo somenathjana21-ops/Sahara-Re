@@ -18,6 +18,8 @@ export const ConditionSchema = z.object({
   change_point: z.boolean().optional(),
   composite_gte: z.number().min(0).max(100).optional(),
   s3_gte: z.number().min(0).max(100).optional(),
+  s2_gte: z.number().min(0).max(100).optional(),
+  distress_detected: z.boolean().optional(),
   z_gte: z.number().optional(),
   first_contact_composite_gte: z.number().min(0).max(100).optional(),
   missed_checkins_gte: z.number().int().min(0).optional(),
@@ -107,12 +109,15 @@ tiers:
       - change_point: true
       - composite_gte: 70
       - s3_gte: 60
+      - s2_gte: 65
+      - distress_detected: true
   - tier: AMBER
     any_of:
       - composite_gte: 45
       - z_gte: 1.2
       - first_contact_composite_gte: 60
       - missed_checkins_gte: 3
+      - s2_gte: 45
   - tier: GREEN
     default: true
 floors:
@@ -170,6 +175,8 @@ export interface EvaluatePolicyInput {
   zScore: number | null;
   changePoint: boolean;
   s3Score: number;
+  s2Score?: number | null;
+  distressDetected?: boolean;
   isFirstContact: boolean;
   missedCount: number;
   deterministicTrigger?: DeterministicTriggerInput | null;
@@ -239,6 +246,28 @@ export function evaluatePolicy(
           matchedRules.push(`s3_gte_${cond.s3_gte}`);
           explanation.push(
             `Matched rule: External case context pressure (${input.s3Score}) >= threshold (${cond.s3_gte})`
+          );
+          break tierLoop;
+        }
+
+        if (
+          typeof cond.s2_gte === "number" &&
+          typeof input.s2Score === "number" &&
+          input.s2Score >= cond.s2_gte
+        ) {
+          policyTier = rule.tier;
+          matchedRules.push(`s2_gte_${cond.s2_gte}`);
+          explanation.push(
+            `Matched rule: Negative distress analysis / linguistic distress (${input.s2Score}) >= threshold (${cond.s2_gte}) -> elevated for counsellor review`
+          );
+          break tierLoop;
+        }
+
+        if (cond.distress_detected && input.distressDetected) {
+          policyTier = rule.tier;
+          matchedRules.push("distress_detected");
+          explanation.push(
+            "Matched rule: Explicit negative distress detected from user response analysis -> forwarded to counsellor"
           );
           break tierLoop;
         }

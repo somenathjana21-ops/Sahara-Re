@@ -121,10 +121,21 @@ describe("Phase 2: Direct Request Human Handoff Intent Triggers", () => {
       "please connect me to a counsellor",
       "transfer me to a caseworker",
       "human help please",
+      "am feeling very bad i want to talk to someone",
+      "i want to talk to someone",
+      "need to talk to someone",
+      "can i speak to someone",
+      "talk to someone",
+      "talk to a counselor",
+      "connect me to a counselor",
       "मुझे किसी इंसान से बात करनी है",
       "कृपया किसी काउंसलर से बात करनी है",
+      "मुझे किसी से बात करनी है",
+      "किसी से बात कराओ",
       "mujhe kisi person se baat karni hai",
       "human se baat karni hai please",
+      "kisi se baat karni hai",
+      "kisi se baat karna chahta hoon",
     ];
 
     for (const text of humanRequests) {
@@ -135,6 +146,31 @@ describe("Phase 2: Direct Request Human Handoff Intent Triggers", () => {
         `Expected human request to trigger Pass 1: "${text}"`
       );
       assert.strictEqual(res.category, "direct_request");
+    }
+  });
+
+  it("should trigger Pass 1 CRITICAL when user expresses inability to go on or live like this", () => {
+    const hopelessnessCases = [
+      "i cannot live like this",
+      "am feeling bad i cannot live like this",
+      "i cant live like this",
+      "cannot live this way",
+      "cannot live anymore",
+      "unable to live like this",
+      "ऐसे नहीं जी सकता",
+      "इस तरह नहीं जी सकती",
+      "aise nahi jee sakta",
+      "is tarah nahi jee sakti",
+    ];
+
+    for (const text of hopelessnessCases) {
+      const res = checkInput(text);
+      assert.strictEqual(
+        res.hit,
+        true,
+        `Expected phrase to trigger Pass 1 hopelessness: "${text}"`
+      );
+      assert.strictEqual(res.category, "hopelessness");
     }
   });
 });

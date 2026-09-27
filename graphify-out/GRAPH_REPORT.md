@@ -1,7 +1,7 @@
-# Graph Report - sahara-re  (2026-09-27)
+# Graph Report - Sahara-Re  (2026-09-27)
 
 ## Corpus Check
-- 79 files · ~83,387 words
+- 79 files · ~84,597 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7f5b7ff5`
+- Built from commit: `47f13df2`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 

@@ -20,12 +20,15 @@ tiers: # evaluated top to bottom, first match wins
       - change_point: true
       - composite_gte: 70
       - s3_gte: 60 # load-bearing: case file alone can escalate
+      - s2_gte: 65 # load-bearing: negative linguistic distress alone escalates to counsellor triage
+      - distress_detected: true # architectural: negative reply indicating distress forwards to counsellor
   - tier: AMBER
     any_of:
       - composite_gte: 45
       - z_gte: 1.2
       - first_contact_composite_gte: 60
       - missed_checkins_gte: 3
+      - s2_gte: 45
   - tier: GREEN
     default: true
 

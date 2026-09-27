@@ -173,6 +173,8 @@
     "clearChat": "Clear Conversation",
     "systemWelcome": "Hello. Thank you for connecting today. Please take your time, and share only what you feel comfortable sharing. We are here to support you.",
     "criticalNotice": "CRITICAL ALERT TRIGGERED: Your safety is our absolute top priority. Dedicated support coordinators have been alerted, and crisis helplines are available below immediately.",
+    "counsellorAlerted": "Counsellor Alerted — High Priority Review",
+    "crisisPriority": "Crisis Priority",
     "minorNotice": "Notice: Support for young individuals is coordinated directly through dedicated child welfare services and Childline (1098).",
     "resourcesTitle": "Immediate Emergency Helplines (24/7 Toll-Free)",
     "caseContextBanner": "Case Docket Context (S3 Standing Score)",

@@ -19,6 +19,8 @@ export const LLMOutputSchema = z.object({
   evidence: z.array(z.string()),
   language: z.enum(["hi", "en"]),
   next_question_id: z.string().optional(),
+  sentiment: z.enum(["positive", "neutral", "negative"]).optional(),
+  distress_detected: z.boolean().optional(),
 });
 
 export type LLMOutput = z.infer<typeof LLMOutputSchema>;
@@ -85,6 +87,11 @@ CRITICAL SAFETY BOUNDARIES (STRICTLY PROHIBITED):
 - NO false reassurance or dismissive cheer: never say "everything will be fine", "it will get better", "don't worry", "I understand how you feel", etc.
 - NO legal outcome promises: never predict or promise what the police, judge, court, or compensation authorities will do.
 - NO mirroring of self-harm or violent crisis terms.
+- Direct Human / Counsellor Requests & Acute Despair: If the user indicates they cannot go on/live like this or specifically asks to speak/talk to someone, a human, counsellor, or caseworker, warmly acknowledge their distress, do NOT claim to be a human therapist or ask conversational probing questions, and evaluate with high distress (s2_score: 80-95, markers: ["hopelessness"], distress_detected: true, sentiment: "negative").
+- Negative Distress Analysis & Counsellor Forwarding:
+  * Actively analyze the user's message for emotional negativity and distress.
+  * If the user communicates negative feelings, distress, hopelessness, anxiety, overwhelm, feeling unsafe, or coping difficulties: set "sentiment": "negative", "distress_detected": true, and rate "s2_score" >= 65. Provide compassionate, grounding validation without clinical interrogation.
+  * If the user communicates calm, neutral, or positive wellbeing: set "sentiment": "positive" or "neutral", "distress_detected": false, and "s2_score" < 40.
 - Language: Mirror the user's language. If they communicate in Hindi (Devanagari or Romanised/Hinglish), reply in Hindi. If English, reply in English.
 
 Return ONLY a valid JSON object matching this schema:
@@ -94,6 +101,8 @@ Return ONLY a valid JSON object matching this schema:
   "markers": ["hopelessness" | "isolation" | "fear" | "anger" | "exhaustion" | "numbness"],
   "evidence": ["short phrase or word quoted from user message"],
   "language": "hi" | "en",
+  "sentiment": "positive" | "neutral" | "negative",
+  "distress_detected": true | false,
   "next_question_id": "<optional: q1, q2, q3, or custom topic id>"
 }`;
 

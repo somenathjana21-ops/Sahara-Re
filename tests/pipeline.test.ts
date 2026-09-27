@@ -189,6 +189,47 @@ describe("Phase 4: Core API Pipeline Integration Suite", () => {
       assert.strictEqual(latestAssessment.model_version, "bypassed:deterministic_trigger");
     });
 
+    it("should trigger CRITICAL and queue counsellor alert when user requests to talk to someone or expresses inability to go on", async () => {
+      const repo = getRepository();
+
+      const phrases = [
+        "am feeling very bad i want to talk to someone",
+        "i cannot live like this",
+        "i want to talk to someone",
+      ];
+
+      for (const phrase of phrases) {
+        const req = new NextRequest("http://localhost:3000/api/checkin", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            personId: PERSON_A4471.id,
+            consentId: CONSENT_A4471.id,
+            channel: "chat",
+            transcript: phrase,
+          }),
+        });
+
+        const res = await checkinHandler(req);
+        assert.strictEqual(res.status, 200);
+
+        const json: CheckInResponse = await res.json();
+        assert.strictEqual(json.status, "critical");
+        assert.strictEqual(json.tier, "CRITICAL");
+        assert.strictEqual(json.triggerSource, "lexicon");
+        assert.ok(json.resources && json.resources.length >= 2);
+
+        // Verify alert queued for counsellor
+        const alerts = await repo.listAlerts();
+        assert.ok(
+          alerts.some(
+            (a) => a.person_id === PERSON_A4471.id && a.tier === "CRITICAL" && a.acked_at === null
+          ),
+          `Counsellor alert must be active for phrase: "${phrase}"`
+        );
+      }
+    });
+
     it("should trigger CRITICAL on simulated IVRS panic keypad '0' press and bypass LLM", async () => {
       const repo = getRepository();
 
@@ -531,6 +572,78 @@ describe("Phase 4: Core API Pipeline Integration Suite", () => {
       assert.strictEqual(res.status, 403);
       const json = await res.json();
       assert.strictEqual(json.status, "forbidden");
+    });
+
+    it("should escalate negative distress reply to RED tier and create counsellor alert even when S3 is 0", async () => {
+      const repo = getRepository();
+      const alertsBefore = (await repo.listAlerts()).length;
+
+      // PERSON_A2301 has stable standing docket (S3 = 0, no calendar events, in custody)
+      const req = new NextRequest("http://localhost:3000/api/checkin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          personId: PERSON_A2301.id,
+          consentId: CONSENT_A2301.id,
+          channel: "chat",
+          transcript: "I am feeling very bad, everything is overwhelming and hopeless",
+        }),
+      });
+
+      const res = await checkinHandler(req);
+      assert.strictEqual(res.status, 200);
+
+      const json: CheckInResponse = await res.json();
+      assert.strictEqual(json.status, "ok");
+      assert.strictEqual(json.tier, "RED", "Distress reply must escalate to RED tier");
+      assert.ok(json.resources && json.resources.length > 0, "Crisis resources must be returned on RED tier");
+
+      // Verify active alert was created for counsellor triage queue
+      const alertsAfter = await repo.listAlerts();
+      assert.strictEqual(alertsAfter.length, alertsBefore + 1, "Alert must be created in alerts table");
+      const createdAlert = alertsAfter[alertsAfter.length - 1]!;
+      assert.strictEqual(createdAlert.tier, "RED");
+      assert.strictEqual(createdAlert.person_id, PERSON_A2301.id);
+      assert.strictEqual(createdAlert.sla_minutes, 30);
+      assert.strictEqual(createdAlert.acked_at, null);
+    });
+
+    it("should trigger Pass 1 CRITICAL when user says 'i want to talk to someone' or 'cannot live like this'", async () => {
+      const req1 = new NextRequest("http://localhost:3000/api/checkin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          personId: PERSON_A2301.id,
+          consentId: CONSENT_A2301.id,
+          channel: "chat",
+          transcript: "i want to talk to someone",
+        }),
+      });
+
+      const res1 = await checkinHandler(req1);
+      assert.strictEqual(res1.status, 200);
+      const json1: CheckInResponse = await res1.json();
+      assert.strictEqual(json1.status, "critical");
+      assert.strictEqual(json1.tier, "CRITICAL");
+      assert.strictEqual(json1.triggerSource, "lexicon");
+
+      const req2 = new NextRequest("http://localhost:3000/api/checkin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          personId: PERSON_A2301.id,
+          consentId: CONSENT_A2301.id,
+          channel: "chat",
+          transcript: "i cannot live like this",
+        }),
+      });
+
+      const res2 = await checkinHandler(req2);
+      assert.strictEqual(res2.status, 200);
+      const json2: CheckInResponse = await res2.json();
+      assert.strictEqual(json2.status, "critical");
+      assert.strictEqual(json2.tier, "CRITICAL");
+      assert.strictEqual(json2.triggerSource, "lexicon");
     });
   });
 });
