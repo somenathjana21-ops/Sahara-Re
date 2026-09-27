@@ -144,9 +144,18 @@ export const CustomPersonCaseDataSchema = z.object({
 });
 export type CustomPersonCaseData = z.infer<typeof CustomPersonCaseDataSchema>;
 
+export const PseudonymRegex = /^[AU]-[A-Za-z0-9_-]{2,28}$/;
+
 export const CustomPersonRequestSchema = z.object({
   id: z.string().uuid().optional(),
-  pseudonym: z.string().min(1).max(30).optional(),
+  pseudonym: z
+    .string()
+    .trim()
+    .regex(
+      PseudonymRegex,
+      "Pseudonym must start with 'A-' or 'U-' followed by 2 to 28 alphanumeric characters, dashes, or underscores (e.g. A-4471 or U-1001). Never enter a real name."
+    )
+    .optional(),
   language: LanguageEnum.default("en"),
   isMinor: z.boolean().default(false),
   baselineMean: z.number().nullable().optional(),

@@ -18,6 +18,7 @@ import {
   evaluateBaseline,
 } from "@/lib/scoring";
 import { evaluatePolicy, DeterministicTriggerInput } from "@/lib/policy";
+import { scrubPII } from "@/lib/safety/pii";
 
 /**
  * PROJECT SAHARA — Core API Ingestion Pipeline (POST /api/checkin)
@@ -53,6 +54,14 @@ export async function POST(request: NextRequest) {
     }
     const req = parsedRequest.data;
     const repo = getRepository();
+
+    // Server-side Zero-PII Enforcer: Scrub contact numbers, emails, Aadhaar, PAN, and court case numbers
+    const rawTranscript = req.transcript;
+    const scrubbedTranscript = rawTranscript ? scrubPII(rawTranscript).scrubbedText : rawTranscript;
+    const scrubbedHistory = req.history?.map((h) => ({
+      role: h.role,
+      content: scrubPII(h.content).scrubbedText,
+    }));
 
     // -------------------------------------------------------------
     // Step 2: Consent Gate
@@ -96,7 +105,7 @@ export async function POST(request: NextRequest) {
         person_id: person.id,
         consent_id: req.consentId,
         channel: req.channel,
-        transcript: req.transcript ?? null,
+        transcript: scrubbedTranscript ?? null,
         structured: req.structured ?? {},
         abandoned: req.abandoned ?? false,
       });
@@ -132,8 +141,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Trigger B: Deterministic Lexicon Regex (Pass 1)
-    if (!deterministicTrigger && req.transcript) {
-      const pass1 = checkInput(req.transcript);
+    if (!deterministicTrigger && scrubbedTranscript) {
+      const pass1 = checkInput(scrubbedTranscript);
       if (pass1.hit) {
         deterministicTrigger = {
           tier: "CRITICAL",
@@ -169,8 +178,8 @@ export async function POST(request: NextRequest) {
         language: person.language,
         modelVersion: "bypassed:deterministic_trigger",
       };
-    } else if (req.transcript && req.transcript.trim()) {
-      let conversationHistory = req.history;
+    } else if (scrubbedTranscript && scrubbedTranscript.trim()) {
+      let conversationHistory = scrubbedHistory;
       if (!conversationHistory || conversationHistory.length === 0) {
         try {
           const priorCheckins = await repo.getCheckinsByPersonId(person.id);
@@ -189,7 +198,7 @@ export async function POST(request: NextRequest) {
       }
 
       llmResult = await analyzeTranscript({
-        transcript: req.transcript,
+        transcript: scrubbedTranscript,
         language: person.language,
         history: conversationHistory,
       });
@@ -215,7 +224,7 @@ export async function POST(request: NextRequest) {
       sanitizedReply = pass2Result.sanitizedReply;
     } else if (req.abandoned) {
       sanitizedReply = getStaticReply("closing_low", person.language);
-    } else if (!req.transcript) {
+    } else if (!scrubbedTranscript) {
       if (req.structured && Object.keys(req.structured).length > 0) {
         sanitizedReply =
           person.language === "hi"
@@ -310,7 +319,7 @@ export async function POST(request: NextRequest) {
       person_id: person.id,
       consent_id: req.consentId,
       channel: req.channel,
-      transcript: req.transcript ?? null,
+      transcript: scrubbedTranscript ?? null,
       structured: req.structured ?? {},
       abandoned: req.abandoned ?? false,
     });

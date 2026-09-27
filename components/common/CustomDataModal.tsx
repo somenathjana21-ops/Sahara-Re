@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { PresetPersona } from "@/lib/constants/personas";
-import { CustomPersonRequest } from "@/types/contract";
+import { CustomPersonRequest, PseudonymRegex } from "@/types/contract";
 
 interface CustomDataModalProps {
   isOpen: boolean;
@@ -202,6 +202,14 @@ export default function CustomDataModal({
     setSaving(true);
     setErrorMsg(null);
 
+    const cleanPseudonym = pseudonym.trim() || `A-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    if (!PseudonymRegex.test(cleanPseudonym)) {
+      setErrorMsg("Anonymous ID must start with 'A-' or 'U-' followed by 2-28 alphanumeric characters (e.g. A-9051 or U-1001). Real names or phone numbers are prohibited to protect your privacy.");
+      setSaving(false);
+      return;
+    }
+
     try {
       const resolvedCategory =
         atrocityCategory === "other_custom"
@@ -210,7 +218,7 @@ export default function CustomDataModal({
 
       const payload: CustomPersonRequest = {
         id: matchedPersonId || (initialPersona?.isCustom ? initialPersona.id : undefined),
-        pseudonym: pseudonym.trim() || `A-${Math.floor(1000 + Math.random() * 9000)}`,
+        pseudonym: cleanPseudonym,
         language: selectedLanguage,
         isMinor,
         consentGranted,
@@ -350,6 +358,13 @@ export default function CustomDataModal({
                     <span>Auto</span>
                   </button>
                 </div>
+
+                {/* Inline pseudonym format validation */}
+                {pseudonym.trim().length > 0 && !PseudonymRegex.test(pseudonym.trim()) && (
+                  <p className="text-[10px] text-rose-600 font-semibold mt-1">
+                    Anonymous code must start with &apos;A-&apos; or &apos;U-&apos; (e.g. A-9051). Do not enter your real name.
+                  </p>
+                )}
 
                 {/* Dynamic user match feedback */}
                 {lookupLoading ? (

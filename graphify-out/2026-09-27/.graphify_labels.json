@@ -1,6 +1,6 @@
 {
   "0": "InMemoryRepository",
-  "1": "llm/index.ts",
+  "1": "interlock.ts",
   "2": "AGENTS.md - Project SAHARA Agent Instructions",
   "3": "fixtures.ts",
   "4": "useLanguage",
@@ -12,7 +12,7 @@
   "10": "middleware.ts",
   "11": "rules",
   "12": "schema.sql",
-  "13": "auth/route.ts",
+  "13": "session.ts",
   "14": "test-runner.ts",
   "15": "CI workflow",
   "16": "error.tsx",

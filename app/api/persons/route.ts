@@ -7,6 +7,7 @@ import {
 } from "@/types/contract";
 import { getRepository } from "@/lib/db/repository";
 import { computeS3 } from "@/lib/scoring/s3";
+import { scrubPII } from "@/lib/safety/pii";
 
 /**
  * Custom Persons API (/api/persons)
@@ -123,10 +124,20 @@ export async function POST(request: NextRequest) {
         openedAt = cd.openedAt;
       }
 
+      const scrubbedCaseDetails = cd.customCaseDetails
+        ? scrubPII(cd.customCaseDetails).scrubbedText
+        : null;
+      const scrubbedPressureDetails = cd.otherPressureDetails
+        ? scrubPII(cd.otherPressureDetails).scrubbedText
+        : null;
+      const scrubbedCategory = cd.atrocityCategory
+        ? scrubPII(cd.atrocityCategory).scrubbedText
+        : "general_distress";
+
       caseRecord = {
         id: existingCase?.id || crypto.randomUUID(),
         person_id: personId,
-        atrocity_category: cd.atrocityCategory || "general_distress",
+        atrocity_category: scrubbedCategory,
         stage: cd.stage || "trial",
         next_hearing_date: nextHearingDate,
         adjournment_count: cd.adjournmentCount ?? 0,
@@ -136,8 +147,8 @@ export async function POST(request: NextRequest) {
         social_boycott_flag: cd.socialBoycott ?? false,
         last_intimidation_report: lastIntimidationReport,
         opened_at: openedAt,
-        custom_case_details: cd.customCaseDetails || null,
-        other_pressure_details: cd.otherPressureDetails || null,
+        custom_case_details: scrubbedCaseDetails,
+        other_pressure_details: scrubbedPressureDetails,
       };
 
       await repo.saveCase(caseRecord);

@@ -467,4 +467,117 @@ describe("Custom User Check-in Suite (Without Persona)", () => {
     const checkinData = await checkinRes.json();
     assert.strictEqual(checkinData.status, "ok");
   });
+
+  it("should reject real names and non-synthetic identifiers as pseudonyms (HTTP 400)", async () => {
+    const invalidPseudonyms = [
+      "Ramesh Sharma",
+      "John Doe",
+      "victim@test.org",
+      "9876543210",
+      "A", // too short
+      "X-1001", // must start with A- or U-
+    ];
+
+    for (const name of invalidPseudonyms) {
+      const req = new NextRequest("http://localhost:3000/api/persons", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          pseudonym: name,
+          language: "en",
+          hasCase: false,
+          consentGranted: true,
+        }),
+      });
+
+      const res = await personPostHandler(req);
+      assert.strictEqual(res.status, 400, `Expected HTTP 400 for invalid pseudonym '${name}'`);
+      const body = await res.json();
+      assert.ok(body.error.includes("Invalid custom person payload"));
+      assert.ok(body.details.pseudonym);
+    }
+  });
+
+  it("should automatically redact phone numbers, emails, and case numbers in transcripts before persistence", async () => {
+    // 1. Create a valid person
+    const personReq = new NextRequest("http://localhost:3000/api/persons", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        pseudonym: "A-ScrubTest",
+        language: "en",
+        hasCase: false,
+        consentGranted: true,
+      }),
+    });
+    const personRes = await personPostHandler(personReq);
+    assert.strictEqual(personRes.status, 201);
+    const { person, consent } = await personRes.json();
+
+    // 2. Submit checkin containing multiple real PII elements
+    const checkinReq = new NextRequest("http://localhost:3000/api/checkin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        personId: person.id,
+        consentId: consent.id,
+        channel: "chat",
+        transcript:
+          "My mobile is 9876543210, reach me at victim@help.org regarding FIR No. 441/2024. I am feeling tense.",
+        structured: { q1: 2, q2: 2, q3: 1 },
+        abandoned: false,
+      }),
+    });
+    const checkinRes = await checkinHandler(checkinReq);
+    assert.strictEqual(checkinRes.status, 200);
+
+    // 3. Verify in repository that stored checkin transcript has 0 PII
+    const repo = getRepository();
+    const storedCheckins = await repo.getCheckinsByPersonId(person.id);
+    assert.strictEqual(storedCheckins.length, 1);
+    const stored = storedCheckins[0]!;
+
+    assert.ok(stored.transcript);
+    assert.ok(!stored.transcript.includes("9876543210"), "Phone number must NOT be persisted in DB");
+    assert.ok(!stored.transcript.includes("victim@help.org"), "Email must NOT be persisted in DB");
+    assert.ok(!stored.transcript.includes("441/2024"), "FIR number must NOT be persisted in DB");
+    assert.ok(stored.transcript.includes("[REDACTED_PHONE]"), "Must contain REDACTED_PHONE placeholder");
+    assert.ok(stored.transcript.includes("[REDACTED_EMAIL]"), "Must contain REDACTED_EMAIL placeholder");
+    assert.ok(stored.transcript.includes("[REDACTED_CASE_REF]"), "Must contain REDACTED_CASE_REF placeholder");
+    assert.ok(stored.transcript.includes("I am feeling tense"), "Emotional distress text must be preserved");
+  });
+
+  it("should scrub PII from custom case details before saving to repository", async () => {
+    const personReq = new NextRequest("http://localhost:3000/api/persons", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        pseudonym: "A-CaseScrub",
+        language: "hi",
+        hasCase: true,
+        caseData: {
+          atrocityCategory: "land_dispossession",
+          stage: "investigation",
+          customCaseDetails: "Call IO officer at 09876-543210 or email police@station.in about Case: 881/2023",
+          otherPressureDetails: "Threats received via phone +91 98765 43210",
+        },
+        consentGranted: true,
+      }),
+    });
+
+    const res = await personPostHandler(personReq);
+    assert.strictEqual(res.status, 201);
+    const data = await res.json();
+
+    assert.ok(!data.case.custom_case_details.includes("09876-543210"));
+    assert.ok(!data.case.custom_case_details.includes("police@station.in"));
+    assert.ok(!data.case.custom_case_details.includes("881/2023"));
+    assert.ok(data.case.custom_case_details.includes("[REDACTED_PHONE]"));
+    assert.ok(data.case.custom_case_details.includes("[REDACTED_EMAIL]"));
+    assert.ok(data.case.custom_case_details.includes("[REDACTED_CASE_REF]"));
+
+    assert.ok(!data.case.other_pressure_details.includes("98765 43210"));
+    assert.ok(data.case.other_pressure_details.includes("[REDACTED_PHONE]"));
+  });
 });
+
