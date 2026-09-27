@@ -419,4 +419,52 @@ describe("Custom User Check-in Suite (Without Persona)", () => {
     const finalPerson = await repo.getPerson(lookupData.person.id);
     assert.strictEqual(finalPerson?.checkin_count, 2);
   });
+
+  it("should return consent details in GET /api/persons list and allow check-in without toggling consent", async () => {
+    // 1. Create a self-directed persona
+    const createReq = new NextRequest("http://localhost:3000/api/persons", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        pseudonym: "A-9901",
+        language: "en",
+        isMinor: false,
+        hasCase: false,
+        consentGranted: true,
+      }),
+    });
+    const createRes = await personPostHandler(createReq);
+    assert.strictEqual(createRes.status, 201);
+    const { person, consent } = await createRes.json();
+
+    // 2. Query the list of persons via GET /api/persons
+    const listReq = new NextRequest("http://localhost:3000/api/persons");
+    const listRes = await personGetHandler(listReq);
+    assert.strictEqual(listRes.status, 200);
+    const listData = await listRes.json();
+    assert.ok(Array.isArray(listData.persons));
+
+    const found = listData.persons.find((p: any) => p.id === person.id);
+    assert.ok(found, "Newly created persona must be present in GET /api/persons list");
+    assert.strictEqual(found.consentId, consent.id, "consentId must match active consent record, not person.id");
+    assert.strictEqual(found.hasConsent, true, "hasConsent must be true");
+
+    // 3. Immediate check-in with this persona must succeed without 403
+    const checkinReq = new NextRequest("http://localhost:3000/api/checkin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        personId: found.id,
+        consentId: found.consentId,
+        channel: "chat",
+        transcript: "Checking in for the first time",
+        structured: { q1: 1, q2: 1, q3: 0 },
+        abandoned: false,
+      }),
+    });
+    const checkinRes = await checkinHandler(checkinReq);
+    assert.strictEqual(checkinRes.status, 200);
+    const checkinData = await checkinRes.json();
+    assert.strictEqual(checkinData.status, "ok");
+  });
 });

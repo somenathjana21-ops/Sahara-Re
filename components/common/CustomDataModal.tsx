@@ -19,7 +19,7 @@ import { CustomPersonRequest } from "@/types/contract";
 interface CustomDataModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (persona: PresetPersona) => void;
+  onSave: (persona: PresetPersona, hasConsent?: boolean) => void;
   initialPersona?: PresetPersona;
 }
 
@@ -252,6 +252,7 @@ export default function CustomDataModal({
         setAppLanguage(selectedLanguage);
       }
 
+      const isConsentActive = Boolean(data.consent && !data.consent.withdrawn_at);
       const newPresetPersona: PresetPersona = {
         id: data.person.id,
         consentId: data.consent.id,
@@ -263,7 +264,7 @@ export default function CustomDataModal({
         isCustom: true,
       };
 
-      onSave(newPresetPersona);
+      onSave(newPresetPersona, isConsentActive);
       onClose();
     } catch (err: any) {
       setErrorMsg(err.message || "An unexpected error occurred. Please try again.");

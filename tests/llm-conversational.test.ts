@@ -151,4 +151,58 @@ describe("LLM Conversational Control & Anti-Fixation Suite", () => {
     assert.strictEqual(json.status, "ok");
     assert.ok(json.reply);
   });
+
+  it("should detect primary intake completion in Stage 3 and forbid repeating energy/safety questions", () => {
+    const history = [
+      { role: "user" as const, content: "Hi" },
+      { role: "assistant" as const, content: "Hi there, thanks for reaching out. How are you feeling today?" },
+      { role: "user" as const, content: "am feeling better" },
+      { role: "assistant" as const, content: "I'm glad to hear you're feeling better. Have you noticed any changes in your sleep or appetite lately?" },
+      { role: "user" as const, content: "i am unable to eat much" },
+      { role: "assistant" as const, content: "It sounds like eating has been tough for you right now. Not being able to get enough food can be draining. Would you like to share if this is affecting your energy during the day?" },
+      { role: "user" as const, content: "a bit" },
+      { role: "assistant" as const, content: "I hear that it's only a bit, and that can still feel draining. How are you feeling about your safety right now?" },
+    ];
+
+    const prompt = buildUserPrompt("its somewhat okay", "en", history);
+
+    // Verify prompt detects Stage 3 completion and bans repeating intake questions
+    assert.ok(prompt.includes("STAGE 3 GUIDANCE (PRIMARY INTAKE COMPLETE"));
+    assert.ok(prompt.includes("DO NOT ask any further intake questions about sleep, eating, energy, or safety"));
+    assert.ok(prompt.includes("DO NOT repeat any questions or phrases from earlier messages"));
+    assert.ok(prompt.includes("HOLDING SPACE"));
+  });
+
+  it("should respond with considerate synthesis and holding space instead of repeating energy question on 'its somewhat okay'", async () => {
+    const history = [
+      { role: "user" as const, content: "Hi" },
+      { role: "assistant" as const, content: "Hi there, thanks for reaching out. How are you feeling today?" },
+      { role: "user" as const, content: "am feeling better" },
+      { role: "assistant" as const, content: "I'm glad to hear you're feeling better. Have you noticed any changes in your sleep or appetite lately?" },
+      { role: "user" as const, content: "i am unable to eat much" },
+      { role: "assistant" as const, content: "It sounds like eating has been tough for you right now. Not being able to get enough food can be draining. Would you like to share if this is affecting your energy during the day?" },
+      { role: "user" as const, content: "a bit" },
+      { role: "assistant" as const, content: "Thank you for letting me know. Even slight disruptions can be wearing. Do you feel safe in your environment right now?" },
+    ];
+
+    const turn5 = await analyzeTranscript({
+      transcript: "its somewhat okay",
+      language: "en",
+      history,
+    });
+
+    assert.ok(turn5.reply);
+    // Strict Anti-Repetition: Must NOT re-ask about energy levels!
+    assert.ok(
+      !turn5.reply.toLowerCase().includes("energy levels during the day"),
+      `Reply unexpectedly repeated energy question: ${turn5.reply}`
+    );
+    // Must demonstrate considerate synthesis of appetite/energy and holding space
+    assert.ok(
+      turn5.reply.toLowerCase().includes("gentle") ||
+        turn5.reply.toLowerCase().includes("safe") ||
+        turn5.reply.toLowerCase().includes("appetite") ||
+        turn5.reply.toLowerCase().includes("here whenever")
+    );
+  });
 });

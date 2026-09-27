@@ -267,8 +267,10 @@ import {
   SEED_ASSESSMENTS,
 } from "@/scripts/fixtures";
 
-// Singleton repository holder
-let globalRepo: IRepository | null = null;
+// Singleton repository holder attached to globalThis to ensure cross-route persistence in Next.js
+const globalForRepo = globalThis as unknown as {
+  globalRepo?: IRepository;
+};
 
 export function createDefaultSeededRepository(): InMemoryRepository {
   const repo = new InMemoryRepository();
@@ -283,19 +285,20 @@ export function createDefaultSeededRepository(): InMemoryRepository {
 }
 
 export function getRepository(): IRepository {
-  if (!globalRepo) {
+  if (!globalForRepo.globalRepo) {
     // Note: If Supabase credentials are present, SupabaseRepository can be returned.
     // For universal portability, development, and unit testing, InMemoryRepository is initialized with default seeds.
-    globalRepo = createDefaultSeededRepository();
+    globalForRepo.globalRepo = createDefaultSeededRepository();
   }
-  return globalRepo;
+  return globalForRepo.globalRepo;
 }
 
 export function resetRepository(): IRepository {
-  globalRepo = createDefaultSeededRepository();
-  return globalRepo;
+  globalForRepo.globalRepo = createDefaultSeededRepository();
+  return globalForRepo.globalRepo;
 }
 
 export function setRepository(repo: IRepository): void {
-  globalRepo = repo;
+  globalForRepo.globalRepo = repo;
 }
+

@@ -176,7 +176,17 @@
     "minorNotice": "Notice: Support for young individuals is coordinated directly through dedicated child welfare services and Childline (1098).",
     "resourcesTitle": "Immediate Emergency Helplines (24/7 Toll-Free)",
     "caseContextBanner": "Case Docket Context (S3 Standing Score)",
-    "tierBadge": "Current Tier"
+    "tierBadge": "Current Tier",
+    "s1RecordedTitle": "Wellbeing Self-Report Recorded",
+    "s1OnceSession": "Recorded once for active session",
+    "s1RecordedDesc": "Your wellbeing scale responses have been submitted for this check-in session. Subsequent messages will focus entirely on your conversation with Havenline.",
+    "q1Short": "Emotional Distress:",
+    "q2Short": "Sleep & Rest:",
+    "q3Short": "Safety Status:",
+    "skipS1": "Skip for this session",
+    "skipped": "Skipped",
+    "sessionStatus": "Session Status:",
+    "dialogueActive": "Dialogue in Progress"
   },
   "call": {
     "pageTitle": "Simulated Voice Call (IVRS)",

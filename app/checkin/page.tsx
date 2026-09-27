@@ -57,6 +57,7 @@ export default function CheckinPage() {
   const [q1, setQ1] = useState<number | undefined>(undefined);
   const [q2, setQ2] = useState<number | undefined>(undefined);
   const [q3, setQ3] = useState<number | undefined>(undefined);
+  const [s1SubmittedInSession, setS1SubmittedInSession] = useState(false);
 
   // Chat message thread
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -95,12 +96,12 @@ export default function CheckinPage() {
                 if (!existingIds.has(p.id) && !existingPseudos.has(p.pseudonym)) {
                   extras.push({
                     id: p.id,
-                    consentId: p.id,
+                    consentId: p.consentId || p.id,
                     pseudonym: p.pseudonym,
                     label: `${p.pseudonym} — Self-Directed Profile`,
                     language: p.language,
                     isMinor: p.is_minor_flag,
-                    s3Standing: 0,
+                    s3Standing: p.s3Standing || 0,
                     isCustom: true,
                   });
                 }
@@ -119,6 +120,10 @@ export default function CheckinPage() {
   // Match Persona history & check-in timeline when selectedPersona changes
   useEffect(() => {
     let isMounted = true;
+    setQ1(undefined);
+    setQ2(undefined);
+    setQ3(undefined);
+    setS1SubmittedInSession(false);
 
     async function loadPersonaHistory() {
       try {
@@ -142,6 +147,17 @@ export default function CheckinPage() {
 
         const data = await res.json();
         if (!isMounted) return;
+
+        if (data.consent?.id) {
+          setSelectedPersona((prev) => ({
+            ...prev,
+            consentId: data.consent.id,
+            s3Standing: data.s3Standing !== undefined ? data.s3Standing : prev.s3Standing,
+          }));
+          setHasConsent(true);
+        } else if (data.consent === null) {
+          setHasConsent(false);
+        }
 
         const checkins = data.checkins || [];
 
@@ -279,6 +295,7 @@ export default function CheckinPage() {
   // Submit S1 structured questions (q1, q2, q3)
   const handleSubmitS1Questions = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
+    if (s1SubmittedInSession) return;
     if (q1 === undefined && q2 === undefined && q3 === undefined) {
       return;
     }
@@ -320,6 +337,9 @@ export default function CheckinPage() {
       });
 
       const data: CheckInResponse = await res.json();
+      if (res.ok) {
+        setS1SubmittedInSession(true);
+      }
 
       if (res.status === 403 || data.status === "forbidden") {
         setMessages((prev) => [
@@ -423,11 +443,15 @@ export default function CheckinPage() {
     setSubmitting(true);
 
     try {
-      // Include any S1 answers that haven't been submitted yet
-      const structured: StructuredCheckin = {};
-      if (q1 !== undefined) structured.q1 = q1;
-      if (q2 !== undefined) structured.q2 = q2;
-      if (q3 !== undefined) structured.q3 = q3;
+      // Only include S1 answers once in a session if they haven't been submitted yet
+      let structured: StructuredCheckin | undefined = undefined;
+      if (!s1SubmittedInSession && (q1 !== undefined || q2 !== undefined || q3 !== undefined)) {
+        structured = {};
+        if (q1 !== undefined) structured.q1 = q1;
+        if (q2 !== undefined) structured.q2 = q2;
+        if (q3 !== undefined) structured.q3 = q3;
+        setS1SubmittedInSession(true);
+      }
 
       // Extract recent dialogue history (both user and Havenline messages) so LLM has full context
       const chatHistory = messages
@@ -443,7 +467,7 @@ export default function CheckinPage() {
         consentId: selectedPersona.consentId,
         channel: "chat",
         transcript: currentText,
-        structured: Object.keys(structured).length > 0 ? structured : undefined,
+        structured: structured,
         abandoned: false,
         history: chatHistory,
       };
@@ -547,6 +571,7 @@ export default function CheckinPage() {
     setQ1(undefined);
     setQ2(undefined);
     setQ3(undefined);
+    setS1SubmittedInSession(false);
   };
 
   return (
@@ -749,152 +774,222 @@ export default function CheckinPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column: S1 Structured Wellbeing Scale (Questions q1, q2, q3) */}
-        <div className="lg:col-span-5 bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-2xs">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
-            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span>{t("checkin.s1Header", "Self-Report Wellbeing Scale (S1)")}</span>
-            </h2>
-            <span className="text-[11px] text-slate-400 font-medium">Optional</span>
-          </div>
-          <p className="text-xs text-slate-500 mb-5 leading-relaxed">
-            {t(
-              "checkin.s1Explanation",
-              "Answering these questions is optional. They help us gauge how you are coping today."
-            )}
-          </p>
-
-          <div className="space-y-5">
-            {/* Question 1: Overall distress */}
-            <div>
-              <label className="block text-xs font-bold text-slate-900 mb-2">
-                {t(
-                  "checkin.q1Title",
-                  "1. Overall distress or emotional pressure today:"
-                )}
-              </label>
-              <div className="grid grid-cols-5 gap-1.5">
-                {[0, 1, 2, 3, 4].map((val) => (
-                  <button
-                    key={val}
-                    type="button"
-                    onClick={() => setQ1(q1 === val ? undefined : val)}
-                    className={`py-2 text-xs font-bold rounded-lg border transition-all cursor-pointer text-center ${
-                      q1 === val
-                        ? "bg-primary text-white border-primary shadow-2xs"
-                        : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
-                    }`}
-                  >
-                    {val}
-                  </button>
-                ))}
+        {!s1SubmittedInSession ? (
+          <div className="lg:col-span-5 bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-2xs">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+              <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-primary" />
+                <span>{t("checkin.s1Header", "Self-Report Wellbeing Scale (S1)")}</span>
+              </h2>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setS1SubmittedInSession(true)}
+                  className="text-[11px] text-slate-400 hover:text-slate-600 underline font-medium cursor-pointer"
+                >
+                  {t("checkin.skipS1", "Skip for this session")}
+                </button>
+                <span className="text-[11px] text-slate-400 font-medium">Optional</span>
               </div>
-              <div className="flex justify-between text-[10px] text-slate-500 mt-1 px-0.5">
-                <span>{t("checkin.q1Opt0", "0 — Calm")}</span>
-                <span>{t("checkin.q1Opt4", "4 — Overwhelming")}</span>
+            </div>
+            <p className="text-xs text-slate-500 mb-5 leading-relaxed">
+              {t(
+                "checkin.s1Explanation",
+                "Answering these questions is optional. They help us gauge how you are coping today."
+              )}
+            </p>
+
+            <div className="space-y-5">
+              {/* Question 1: Overall distress */}
+              <div>
+                <label className="block text-xs font-bold text-slate-900 mb-2">
+                  {t(
+                    "checkin.q1Title",
+                    "1. Overall distress or emotional pressure today:"
+                  )}
+                </label>
+                <div className="grid grid-cols-5 gap-1.5">
+                  {[0, 1, 2, 3, 4].map((val) => (
+                    <button
+                      key={val}
+                      type="button"
+                      onClick={() => setQ1(q1 === val ? undefined : val)}
+                      className={`py-2 text-xs font-bold rounded-lg border transition-all cursor-pointer text-center ${
+                        q1 === val
+                          ? "bg-primary text-white border-primary shadow-2xs"
+                          : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
+                      }`}
+                    >
+                      {val}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex justify-between text-[10px] text-slate-500 mt-1 px-0.5">
+                  <span>{t("checkin.q1Opt0", "0 — Calm")}</span>
+                  <span>{t("checkin.q1Opt4", "4 — Overwhelming")}</span>
+                </div>
+              </div>
+
+              {/* Question 2: Sleep and rest */}
+              <div>
+                <label className="block text-xs font-bold text-slate-900 mb-2">
+                  {t(
+                    "checkin.q2Title",
+                    "2. Sleep and physical rest over the past day:"
+                  )}
+                </label>
+                <div className="grid grid-cols-5 gap-1.5">
+                  {[0, 1, 2, 3, 4].map((val) => (
+                    <button
+                      key={val}
+                      type="button"
+                      onClick={() => setQ2(q2 === val ? undefined : val)}
+                      className={`py-2 text-xs font-bold rounded-lg border transition-all cursor-pointer text-center ${
+                        q2 === val
+                          ? "bg-primary text-white border-primary shadow-2xs"
+                          : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
+                      }`}
+                    >
+                      {val}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex justify-between text-[10px] text-slate-500 mt-1 px-0.5">
+                  <span>{t("checkin.q2Opt0", "0 — Restful")}</span>
+                  <span>{t("checkin.q2Opt4", "4 — No sleep")}</span>
+                </div>
+              </div>
+
+              {/* Question 3: Safety (CRITICAL Trigger when set to 4) */}
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <label className="block text-xs font-bold text-slate-900 mb-1">
+                  {t(
+                    "checkin.q3Title",
+                    "3. Do you feel safe where you are right now?"
+                  )}
+                </label>
+                <p className="text-[11px] text-rose-700 mb-2.5 font-medium">
+                  {t(
+                    "checkin.q3SafetyWarning",
+                    "Important: Answering 'No' indicates danger and will trigger immediate priority support."
+                  )}
+                </p>
+                <div className="grid grid-cols-5 gap-1.5">
+                  {[0, 1, 2, 3, 4].map((val) => (
+                    <button
+                      key={val}
+                      type="button"
+                      onClick={() => setQ3(q3 === val ? undefined : val)}
+                      className={`py-2 text-xs font-bold rounded-lg border transition-all cursor-pointer text-center ${
+                        q3 === val
+                          ? val === 4
+                            ? "bg-rose-700 text-white border-rose-800 shadow-2xs"
+                            : "bg-primary text-white border-primary shadow-2xs"
+                          : "bg-white text-slate-700 border-slate-200 hover:bg-slate-100"
+                      }`}
+                    >
+                      {val}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex justify-between text-[10px] text-slate-500 mt-1.5 px-0.5">
+                  <span>{t("checkin.q3Opt0", "0 — Completely safe")}</span>
+                  <span className="text-rose-700 font-bold">
+                    {t("checkin.q3Opt4", "4 — NOT safe / Danger")}
+                  </span>
+                </div>
               </div>
             </div>
 
-            {/* Question 2: Sleep and rest */}
-            <div>
-              <label className="block text-xs font-bold text-slate-900 mb-2">
+            {/* Submit S1 Questions Button */}
+            <div className="pt-3 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={handleSubmitS1Questions}
+                disabled={
+                  submitting ||
+                  (q1 === undefined && q2 === undefined && q3 === undefined)
+                }
+                className="w-full py-2.5 px-4 rounded-xl bg-primary hover:bg-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
+              >
+                <CheckCircle2 className="w-4 h-4" />
+                <span>
+                  {submitting
+                    ? t("checkin.sending", "Processing...")
+                    : t("checkin.submitS1Button", "Submit Self-Report Questions")}
+                </span>
+              </button>
+              <p className="text-[10px] text-slate-400 text-center mt-1.5">
                 {t(
-                  "checkin.q2Title",
-                  "2. Sleep and physical rest over the past day:"
-                )}
-              </label>
-              <div className="grid grid-cols-5 gap-1.5">
-                {[0, 1, 2, 3, 4].map((val) => (
-                  <button
-                    key={val}
-                    type="button"
-                    onClick={() => setQ2(q2 === val ? undefined : val)}
-                    className={`py-2 text-xs font-bold rounded-lg border transition-all cursor-pointer text-center ${
-                      q2 === val
-                        ? "bg-primary text-white border-primary shadow-2xs"
-                        : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
-                    }`}
-                  >
-                    {val}
-                  </button>
-                ))}
-              </div>
-              <div className="flex justify-between text-[10px] text-slate-500 mt-1 px-0.5">
-                <span>{t("checkin.q2Opt0", "0 — Restful")}</span>
-                <span>{t("checkin.q2Opt4", "4 — No sleep")}</span>
-              </div>
-            </div>
-
-            {/* Question 3: Safety (CRITICAL Trigger when set to 4) */}
-            <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-              <label className="block text-xs font-bold text-slate-900 mb-1">
-                {t(
-                  "checkin.q3Title",
-                  "3. Do you feel safe where you are right now?"
-                )}
-              </label>
-              <p className="text-[11px] text-rose-700 mb-2.5 font-medium">
-                {t(
-                  "checkin.q3SafetyWarning",
-                  "Important: Answering 'No' indicates danger and will trigger immediate priority support."
+                  "checkin.submitS1Hint",
+                  "Submits only the 3 wellbeing questions above. Chat input below can be submitted separately."
                 )}
               </p>
-              <div className="grid grid-cols-5 gap-1.5">
-                {[0, 1, 2, 3, 4].map((val) => (
-                  <button
-                    key={val}
-                    type="button"
-                    onClick={() => setQ3(q3 === val ? undefined : val)}
-                    className={`py-2 text-xs font-bold rounded-lg border transition-all cursor-pointer text-center ${
-                      q3 === val
-                        ? val === 4
-                          ? "bg-rose-700 text-white border-rose-800 shadow-2xs"
-                          : "bg-primary text-white border-primary shadow-2xs"
-                        : "bg-white text-slate-700 border-slate-200 hover:bg-slate-100"
-                    }`}
-                  >
-                    {val}
-                  </button>
-                ))}
-              </div>
-              <div className="flex justify-between text-[10px] text-slate-500 mt-1.5 px-0.5">
-                <span>{t("checkin.q3Opt0", "0 — Completely safe")}</span>
-                <span className="text-rose-700 font-bold">
-                  {t("checkin.q3Opt4", "4 — NOT safe / Danger")}
+            </div>
+          </div>
+        ) : (
+          <div className="lg:col-span-4 bg-white rounded-2xl p-5 border border-emerald-200/80 bg-emerald-50/20 shadow-2xs transition-all">
+            <div className="flex items-center gap-2 pb-3 border-b border-emerald-100 mb-3.5">
+              <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+              <div>
+                <h2 className="text-sm font-bold text-slate-900">
+                  {t("checkin.s1RecordedTitle", "Wellbeing Self-Report Recorded")}
+                </h2>
+                <span className="text-[10px] text-emerald-700 font-semibold uppercase tracking-wider">
+                  {t("checkin.s1OnceSession", "Recorded once for active session")}
                 </span>
               </div>
             </div>
-          </div>
 
-          {/* Submit S1 Questions Button */}
-          <div className="pt-3 border-t border-slate-100">
-            <button
-              type="button"
-              onClick={handleSubmitS1Questions}
-              disabled={
-                submitting ||
-                (q1 === undefined && q2 === undefined && q3 === undefined)
-              }
-              className="w-full py-2.5 px-4 rounded-xl bg-primary hover:bg-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
-            >
-              <CheckCircle2 className="w-4 h-4" />
-              <span>
-                {submitting
-                  ? t("checkin.sending", "Processing...")
-                  : t("checkin.submitS1Button", "Submit Self-Report Questions")}
-              </span>
-            </button>
-            <p className="text-[10px] text-slate-400 text-center mt-1.5">
+            <p className="text-xs text-slate-600 mb-4 leading-relaxed">
               {t(
-                "checkin.submitS1Hint",
-                "Submits only the 3 wellbeing questions above. Chat input below can be submitted separately."
+                "checkin.s1RecordedDesc",
+                "Your wellbeing scale responses have been submitted for this check-in session. Subsequent messages will focus entirely on your conversation with Havenline."
               )}
             </p>
+
+            {/* Summary Chips */}
+            <div className="space-y-2 p-3 bg-white rounded-xl border border-slate-200/80 text-xs">
+              <div className="flex justify-between items-center text-slate-700">
+                <span className="font-medium">{t("checkin.q1Short", "Emotional Distress:")}</span>
+                <span className="font-bold text-slate-900 px-2 py-0.5 rounded bg-slate-100 font-mono text-[11px]">
+                  {q1 !== undefined ? `${q1} / 4` : t("checkin.skipped", "Skipped")}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-slate-700">
+                <span className="font-medium">{t("checkin.q2Short", "Sleep & Rest:")}</span>
+                <span className="font-bold text-slate-900 px-2 py-0.5 rounded bg-slate-100 font-mono text-[11px]">
+                  {q2 !== undefined ? `${q2} / 4` : t("checkin.skipped", "Skipped")}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-slate-700">
+                <span className="font-medium">{t("checkin.q3Short", "Safety Status:")}</span>
+                <span
+                  className={`font-bold px-2 py-0.5 rounded font-mono text-[11px] ${
+                    q3 === 4
+                      ? "bg-rose-100 text-rose-800"
+                      : q3 !== undefined
+                      ? "bg-emerald-100 text-emerald-800"
+                      : "bg-slate-100 text-slate-900"
+                  }`}
+                >
+                  {q3 !== undefined ? (q3 === 4 ? "Danger (4/4)" : `${q3} / 4`) : t("checkin.skipped", "Skipped")}
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-4 pt-3 border-t border-emerald-100/80 flex items-center justify-between text-[11px] text-slate-500">
+              <span>{t("checkin.sessionStatus", "Session Status:")}</span>
+              <span className="font-bold text-emerald-800 inline-flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                {t("checkin.dialogueActive", "Dialogue in Progress")}
+              </span>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Right Column: Conversational Dialogue Area */}
-        <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200 shadow-2xs flex flex-col h-[580px]">
+        <div className={`${!s1SubmittedInSession ? "lg:col-span-7" : "lg:col-span-8"} bg-white rounded-2xl border border-slate-200 shadow-2xs flex flex-col h-[580px] transition-all`}>
           {/* Header */}
           <div className="px-5 py-3.5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 rounded-t-2xl">
             <div className="flex items-center gap-2">
@@ -1041,7 +1136,7 @@ export default function CheckinPage() {
         isOpen={isCustomModalOpen}
         onClose={() => setIsCustomModalOpen(false)}
         initialPersona={customPersona || undefined}
-        onSave={(persona) => {
+        onSave={(persona, isConsentActive) => {
           setCustomPersona(persona);
           setSelectedPersona(persona);
           setPersonas((prev) => {
@@ -1055,7 +1150,7 @@ export default function CheckinPage() {
             }
             return [...prev, persona];
           });
-          setHasConsent(true);
+          setHasConsent(isConsentActive ?? true);
         }}
       />
     </div>

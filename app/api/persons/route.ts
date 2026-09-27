@@ -208,7 +208,20 @@ export async function GET(request: NextRequest) {
     }
 
     const persons = await repo.listPersons();
-    return NextResponse.json({ ok: true, persons }, { status: 200 });
+    const personsWithDetails = await Promise.all(
+      persons.map(async (p) => {
+        const consent = await repo.getActiveConsent(p.id);
+        const caseRecord = await repo.getCaseByPersonId(p.id);
+        const s3Details = caseRecord ? computeS3(caseRecord) : null;
+        return {
+          ...p,
+          consentId: consent?.id || null,
+          hasConsent: Boolean(consent && !consent.withdrawn_at),
+          s3Standing: s3Details ? s3Details.score : 0,
+        };
+      })
+    );
+    return NextResponse.json({ ok: true, persons: personsWithDetails }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to retrieve persons", message: (error as Error).message },

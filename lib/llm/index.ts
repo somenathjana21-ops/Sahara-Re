@@ -168,6 +168,27 @@ function generateDeterministicMock(
     };
   }
 
+  // Physical functioning / appetite / eating difficulties
+  if (
+    text.includes("unable to eat") ||
+    text.includes("eating") ||
+    text.includes("appetite") ||
+    text.includes("bhookh") ||
+    text.includes("khana")
+  ) {
+    return {
+      reply:
+        preferredLanguage === "hi"
+          ? "यह सुनकर खेद है कि आपको खाने में परेशानी हो रही है। कम पोषण से थकान हो सकती है। क्या इसका असर आपकी दिन की ऊर्जा पर पड़ रहा है?"
+          : "It sounds like eating has been tough right now. Not being able to eat enough can be wearing. Is this affecting your energy during the day?",
+      s2_score: 30,
+      markers: ["exhaustion"],
+      evidence: [transcript.slice(0, 30)],
+      language: preferredLanguage,
+      next_question_id: "q2",
+    };
+  }
+
   // Brief nuance response: "a bit" / "little" / "thoda"
   if (text.includes("a bit") || text.includes("little") || text.includes("thoda")) {
     return {
@@ -180,6 +201,26 @@ function generateDeterministicMock(
       evidence: [transcript.slice(0, 30)],
       language: preferredLanguage,
       next_question_id: "q3",
+    };
+  }
+
+  // Nuanced safety / coping response: "somewhat okay", "managing", "okay" (Stage 3 Synthesis & Closure)
+  if (
+    text.includes("somewhat") ||
+    text.includes("thoda theek") ||
+    text.includes("kuch theek") ||
+    (text.includes("okay") && history && history.length >= 3)
+  ) {
+    return {
+      reply:
+        preferredLanguage === "hi"
+          ? "अपनी बात साझा करने के लिए धन्यवाद। जब भूख और ऊर्जा कम हो, तो स्थिति संभालना कठिन हो सकता है भले ही सुरक्षा कुछ हद तक ठीक हो। कृपया आज खुद का ध्यान रखें—हम यहीं हैं।"
+          : "Thank you for sharing that with me. Coping with low appetite and low energy is demanding even when safety feels somewhat okay. Please be gentle with yourself today—we are here whenever you'd like to talk.",
+      s2_score: 25,
+      markers: ["exhaustion"],
+      evidence: [transcript.slice(0, 30)],
+      language: preferredLanguage,
+      next_question_id: undefined,
     };
   }
 

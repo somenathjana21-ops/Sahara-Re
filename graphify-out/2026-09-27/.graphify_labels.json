@@ -1,6 +1,6 @@
 {
   "0": "InMemoryRepository",
-  "1": "interlock.ts",
+  "1": "llm/index.ts",
   "2": "AGENTS.md - Project SAHARA Agent Instructions",
   "3": "fixtures.ts",
   "4": "useLanguage",
@@ -8,11 +8,10 @@
   "6": "dependencies",
   "7": "compilerOptions",
   "8": "devDependencies",
-  "9": "llm/index.ts",
+  "9": "checkin/route.ts",
   "10": "middleware.ts",
   "11": "rules",
   "12": "schema.sql",
-  "13": "auth/route.ts",
   "14": "test-runner.ts",
   "15": "CI workflow",
   "16": "error.tsx",
@@ -20,9 +19,5 @@
   "18": "CLAUDE.md - Graphify Integration Rules",
   "19": "next.config.ts",
   "20": "postcss.config.mjs",
-  "21": "tailwind.config.ts",
-  "22": "policy/index.ts",
-  "23": "replies.ts",
-  "24": "checkin/route.ts",
-  "25": "scoring/index.ts"
+  "21": "tailwind.config.ts"
 }
