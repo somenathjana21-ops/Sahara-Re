@@ -8,12 +8,14 @@ interface CrisisHelplinesModalProps {
   isOpen: boolean;
   onClose: () => void;
   triggerReason?: string;
+  havenlineMessage?: string;
 }
 
 export default function CrisisHelplinesModal({
   isOpen,
   onClose,
   triggerReason,
+  havenlineMessage,
 }: CrisisHelplinesModalProps) {
   const { t, language } = useLanguage();
 
@@ -138,6 +140,24 @@ export default function CrisisHelplinesModal({
           </button>
         </div>
 
+        {/* Havenline Recent Message (Context Preservation) */}
+        {havenlineMessage && (
+          <div className="mx-5 mt-4 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs">
+            <div className="flex items-center gap-1.5 mb-1.5 text-primary font-bold text-[11px]">
+              <span className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center text-[10px] text-emerald-800 font-bold">
+                HL
+              </span>
+              <span>Havenline</span>
+              <span className="text-[10px] font-normal text-slate-400 ml-auto">
+                {t("checkin.havenlineRecentMessage", "Havenline's Message")}
+              </span>
+            </div>
+            <p className="text-slate-700 leading-relaxed italic whitespace-pre-line bg-white/80 p-2.5 rounded-lg border border-slate-100">
+              &ldquo;{havenlineMessage}&rdquo;
+            </p>
+          </div>
+        )}
+
         {/* Helplines List */}
         <div className="p-5 overflow-y-auto space-y-3.5">
           {helplines.map((item) => (
@@ -185,9 +205,9 @@ export default function CrisisHelplinesModal({
           <span>{t("common.safeConnection", "Safe connection")} • Zero logs</span>
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 font-medium transition-colors"
+            className="px-4 py-2 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 font-medium transition-colors cursor-pointer"
           >
-            {language === "hi" ? "वापस जाएँ" : "Close"}
+            {t("checkin.backToChat", language === "hi" ? "बातचीत पर वापस जाएँ" : "Back to Conversation")}
           </button>
         </div>
       </div>

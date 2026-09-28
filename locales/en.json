@@ -191,7 +191,13 @@
     "sessionStatus": "Session Status:",
     "dialogueActive": "Dialogue in Progress",
     "needHumanAssistance": "Need to speak with a human caseworker or helpline right now?",
-    "talkToPersonPill": "Talk to a Person (24/7 Helplines)"
+    "talkToPersonPill": "Talk to a Person (24/7 Helplines)",
+    "emergencyBannerTitle": "Emergency Support Alerted — Toll-free help is available 24/7",
+    "emergencyBannerSub": "Your safety is our priority. Call directly below or continue messaging Havenline.",
+    "allHelplinesButton": "All Helplines",
+    "backToChat": "Back to Conversation",
+    "havenlineRecentMessage": "Havenline's Message",
+    "counsellorNotified": "Human Support Alerted"
   },
   "call": {
     "pageTitle": "Simulated Voice Call (IVRS)",

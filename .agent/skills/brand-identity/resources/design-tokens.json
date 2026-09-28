@@ -1,0 +1,139 @@
+{
+  "meta": {
+    "brand_name": "Project SAHARA",
+    "tagline": "AI-Powered Dynamic Mental Health Monitoring & Distress Prediction System for Victims of Atrocities",
+    "authority": "Ministry of Social Justice and Empowerment — Smart India Hackathon (SIH 26094)",
+    "governing_principle": "The AI does not decide. It decides who a human looks at next, and why.",
+    "version": "1.1.0",
+    "description": "Therapeutic Design System Tokens calibrated for WCAG 2.1 AAA contrast and emotional de-escalation."
+  },
+  "colors": {
+    "primary": {
+      "DEFAULT": "#206140",
+      "container": "#3b7a57",
+      "light": "#e8f3ec",
+      "dark": "#15422b",
+      "foreground": "#ffffff"
+    },
+    "secondary": {
+      "DEFAULT": "#475569",
+      "container": "#e2e8f0",
+      "light": "#f1f5f9",
+      "foreground": "#ffffff"
+    },
+    "tertiary": {
+      "DEFAULT": "#8e3d22",
+      "rose": "#d97757",
+      "light": "#fef2ee",
+      "foreground": "#ffffff"
+    },
+    "surface": {
+      "DEFAULT": "#f8fafc",
+      "dim": "#f1f5f9",
+      "card": "#ffffff",
+      "elevated": "#ffffff",
+      "on_surface": "#0f172a",
+      "on_surface_variant": "#475569"
+    },
+    "outline": {
+      "DEFAULT": "#cbd5e1",
+      "subtle": "#e2e8f0"
+    },
+    "distress_tiers": {
+      "GREEN": {
+        "color": "#15803d",
+        "bg_light": "#f0fdf4",
+        "border": "#bbf7d0",
+        "label": "Stable / Routine Monitoring",
+        "sla_minutes": 10080
+      },
+      "AMBER": {
+        "color": "#d97706",
+        "bg_light": "#fffbeb",
+        "border": "#fde68a",
+        "label": "Elevated Distress / Attention Required",
+        "sla_minutes": 1440
+      },
+      "RED": {
+        "color": "#dc2626",
+        "bg_light": "#fef2f2",
+        "border": "#fecaca",
+        "label": "High Risk / Mandatory Counsellor Review",
+        "sla_minutes": 30
+      },
+      "CRITICAL": {
+        "color": "#991b1b",
+        "bg_light": "#450a0a",
+        "border": "#f87171",
+        "label": "Crisis Event / Immediate Emergency Handoff",
+        "sla_minutes": 0
+      }
+    },
+    "quick_exit": {
+      "background": "#fef2ee",
+      "border": "#f2d0c5",
+      "text": "#b24e31",
+      "destination": "https://www.weather.com",
+      "shortcut": "ESC"
+    }
+  },
+  "typography": {
+    "font_family_headings": ["Plus Jakarta Sans", "Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+    "font_family_body": ["Plus Jakarta Sans", "Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+    "font_weight_bold": "700",
+    "font_weight_semibold": "600",
+    "font_weight_medium": "500",
+    "font_weight_normal": "400",
+    "scales": {
+      "display_lg": { "fontSize": "44px", "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "600" },
+      "headline_lg": { "fontSize": "32px", "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" },
+      "headline_md": { "fontSize": "24px", "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" },
+      "headline_sm": { "fontSize": "20px", "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "600" },
+      "body_lg": { "fontSize": "18px", "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "400" },
+      "body_md": { "fontSize": "16px", "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "400" },
+      "body_sm": { "fontSize": "14px", "lineHeight": "22px", "letterSpacing": "0.01em", "fontWeight": "400" },
+      "label_lg": { "fontSize": "16px", "lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "600" },
+      "label_md": { "fontSize": "14px", "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" },
+      "label_sm": { "fontSize": "12px", "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }
+    },
+    "body_line_height": "1.65",
+    "max_prose_chars": 64
+  },
+  "layout_and_spacing": {
+    "max_content_width": "1140px",
+    "max_prose_width": "640px",
+    "grid_columns_desktop": 12,
+    "grid_columns_tablet": 8,
+    "grid_columns_mobile": 4,
+    "spacing_base_unit": "8px",
+    "spacing": {
+      "space_xs": "4px",
+      "space_sm": "8px",
+      "space_md": "16px",
+      "space_lg": "24px",
+      "space_xl": "40px"
+    },
+    "border_radius": {
+      "sm": "0.25rem",
+      "DEFAULT": "0.5rem",
+      "md": "0.75rem",
+      "lg": "1rem",
+      "xl": "1.5rem",
+      "2xl": "1rem",
+      "3xl": "1.5rem",
+      "full": "9999px"
+    },
+    "touch_targets": {
+      "crisis_action_min_height": "56px",
+      "form_input_min_height": "48px",
+      "interactive_tap_min": "44px"
+    }
+  },
+  "scoring_weights": {
+    "s1_self_report": 0.35,
+    "s2_linguistic": 0.25,
+    "s3_case_context": 0.25,
+    "s4_engagement": 0.15,
+    "s5_acoustic": 0.00
+  }
+}

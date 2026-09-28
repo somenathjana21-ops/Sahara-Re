@@ -14,6 +14,8 @@ import {
   Phone,
   Sparkles,
   ChevronRight,
+  ChevronDown,
+  ChevronUp,
   RefreshCw,
   Scale,
   Calendar,
@@ -64,11 +66,16 @@ export default function CheckinPage() {
   const [inputVal, setInputVal] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  // Instant emergency helpline modal
+  // Instant emergency helpline modal and persistent non-blocking alert banner
   const [isHelplineModalOpen, setIsHelplineModalOpen] = useState(false);
   const [helplineTriggerReason, setHelplineTriggerReason] = useState<string | undefined>(
     undefined
   );
+  const [hasCriticalAlert, setHasCriticalAlert] = useState(false);
+  const [isCriticalBannerMinimized, setIsCriticalBannerMinimized] = useState(false);
+
+  // Latest Havenline message for context preservation
+  const latestHavenlineMessage = [...messages].reverse().find((m) => m.sender === "sahara")?.text;
 
   // Auto-scroll chat to bottom
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -124,6 +131,8 @@ export default function CheckinPage() {
     setQ2(undefined);
     setQ3(undefined);
     setS1SubmittedInSession(false);
+    setHasCriticalAlert(false);
+    setIsCriticalBannerMinimized(false);
 
     async function loadPersonaHistory() {
       try {
@@ -316,14 +325,14 @@ export default function CheckinPage() {
     const userMsgId = `user-${Date.now()}`;
     const nowTime = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
-    // Check if q3 was set to 4 locally to warn or trigger modal
+    // Check if q3 was set to 4 locally to warn or trigger emergency banner
     if (q3 === 4) {
       setHelplineTriggerReason(
         language === "hi"
           ? "आत्म-मूल्यांकन Q3 (सुरक्षा स्थिति) में 'खतरा / असुरक्षित' दर्ज किया गया"
           : "Self-report Q3 indicated imminent danger ('No, not safe')"
       );
-      setIsHelplineModalOpen(true);
+      setHasCriticalAlert(true);
     }
 
     setSubmitting(true);
@@ -399,8 +408,11 @@ export default function CheckinPage() {
             ? "सिस्टम द्वारा अति-महत्वपूर्ण संकट इंटरलॉक सक्रिय किया गया"
             : "System Safety Interlock triggered Pass 1 Critical alert"
         );
-        setIsHelplineModalOpen(true);
+        setHasCriticalAlert(true);
       } else {
+        if (data.tier === "CRITICAL") {
+          setHasCriticalAlert(true);
+        }
         setMessages((prev) => [
           ...prev,
           {
@@ -539,8 +551,11 @@ export default function CheckinPage() {
             ? "सिस्टम द्वारा अति-महत्वपूर्ण संकट इंटरलॉक सक्रिय किया गया"
             : "System Safety Interlock triggered Pass 1 Critical alert"
         );
-        setIsHelplineModalOpen(true);
+        setHasCriticalAlert(true);
       } else {
+        if (data.tier === "CRITICAL") {
+          setHasCriticalAlert(true);
+        }
         setMessages((prev) => [
           ...prev,
           {
@@ -587,6 +602,9 @@ export default function CheckinPage() {
     setQ2(undefined);
     setQ3(undefined);
     setS1SubmittedInSession(false);
+    setHasCriticalAlert(false);
+    setIsCriticalBannerMinimized(false);
+    setHelplineTriggerReason(undefined);
   };
 
   return (
@@ -1022,6 +1040,87 @@ export default function CheckinPage() {
             </button>
           </div>
 
+          {/* Sticky Emergency Alert Banner (Non-blocking, high visibility) */}
+          {hasCriticalAlert && (
+            <div className="border-b border-rose-200/90 bg-gradient-to-r from-rose-50 via-rose-50/95 to-amber-50/80 px-4 py-2.5 transition-all shadow-2xs">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                  <div className="relative flex shrink-0">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                    <span className="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center border border-rose-300">
+                      <ShieldAlert className="w-4 h-4 text-rose-700" />
+                    </span>
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold text-rose-900 truncate">
+                        {t("checkin.emergencyBannerTitle", "Emergency Support Alerted — Toll-free help is available 24/7")}
+                      </span>
+                    </div>
+                    {!isCriticalBannerMinimized && (
+                      <p className="text-[11px] text-rose-800/90 leading-tight mt-0.5 hidden sm:block">
+                        {t("checkin.emergencyBannerSub", "Your safety is our priority. Call directly below or continue messaging Havenline.")}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1.5 shrink-0">
+                  {/* Quick-dial chip 1: NHAA 14566 */}
+                  <a
+                    href="tel:14566"
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-rose-700 hover:bg-rose-800 text-white font-bold text-[11px] shadow-2xs transition-colors"
+                    title={language === "hi" ? "राष्ट्रीय अत्याचार निवारण हेल्पलाइन" : "National Helpline Against Atrocities"}
+                  >
+                    <Phone className="w-3 h-3" />
+                    <span>14566</span>
+                  </a>
+
+                  {/* Quick-dial chip 2: Tele-MANAS 14416 */}
+                  <a
+                    href="tel:14416"
+                    className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-[11px] shadow-2xs transition-colors"
+                    title={language === "hi" ? "टेली-मानस परामर्श हेल्पलाइन" : "Tele-MANAS Mental Health"}
+                  >
+                    <Phone className="w-3 h-3" />
+                    <span>14416</span>
+                  </a>
+
+                  {/* All Helplines button to open full modal on demand */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setHelplineTriggerReason(
+                        language === "hi"
+                          ? "आपातकालीन सहायता बैनर से हेल्पलाइन विवरण खोला गया"
+                          : "Accessed via Emergency Support Banner"
+                      );
+                      setIsHelplineModalOpen(true);
+                    }}
+                    className="text-[11px] font-semibold text-rose-800 hover:text-rose-950 px-2 py-1 rounded-md hover:bg-rose-100/70 transition-colors cursor-pointer"
+                  >
+                    {t("checkin.allHelplinesButton", "All Helplines")}
+                  </button>
+
+                  {/* Collapse/Expand Toggle */}
+                  <button
+                    type="button"
+                    onClick={() => setIsCriticalBannerMinimized((prev) => !prev)}
+                    className="p-1 rounded-md text-rose-600 hover:text-rose-900 hover:bg-rose-100/70 transition-colors cursor-pointer"
+                    aria-label={isCriticalBannerMinimized ? "Expand banner" : "Minimize banner"}
+                    title={isCriticalBannerMinimized ? "Expand banner" : "Minimize banner"}
+                  >
+                    {isCriticalBannerMinimized ? (
+                      <ChevronDown className="w-3.5 h-3.5" />
+                    ) : (
+                      <ChevronUp className="w-3.5 h-3.5" />
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Messages Flow */}
           <div className="flex-1 p-5 overflow-y-auto space-y-4">
             {messages.map((msg) => {
@@ -1056,7 +1155,7 @@ export default function CheckinPage() {
                   <div
                     className={`max-w-[90%] sm:max-w-[85%] rounded-2xl rounded-tl-xs px-4 py-3 text-xs sm:text-sm leading-relaxed border shadow-2xs break-words overflow-hidden ${
                       msg.isCritical
-                        ? "bg-rose-50 border-rose-200 text-slate-900"
+                        ? "bg-rose-50/90 border-rose-300 text-slate-900 ring-1 ring-rose-200"
                         : msg.tier === "RED"
                         ? "bg-amber-50/70 border-amber-200 text-slate-900"
                         : msg.isMinor
@@ -1065,8 +1164,13 @@ export default function CheckinPage() {
                     }`}
                   >
                     {/* Header tag */}
-                    <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                      <span className="font-bold text-xs text-primary">Havenline</span>
+                    <div className="flex items-center gap-2 mb-2 flex-wrap">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center text-[10px] text-emerald-800 font-bold">
+                          HL
+                        </span>
+                        <span className="font-bold text-xs text-primary">Havenline</span>
+                      </div>
                       {msg.tier === "RED" && !msg.isCritical && (
                         <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-amber-100 text-amber-800 border border-amber-300">
                           <AlertTriangle className="w-3 h-3 text-amber-600" />
@@ -1074,36 +1178,59 @@ export default function CheckinPage() {
                         </span>
                       )}
                       {msg.isCritical && (
-                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-rose-100 text-rose-800 border border-rose-300">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800 border border-rose-300">
+                          <span className="relative flex h-2 w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-600"></span>
+                          </span>
                           <ShieldAlert className="w-3 h-3 text-rose-600" />
-                          {t("checkin.crisisPriority", "Crisis Priority")}
+                          {t("checkin.crisisPriority", "Crisis Priority")} • {t("checkin.counsellorNotified", "Human Support Alerted")}
                         </span>
                       )}
                     </div>
 
-                    <p className="whitespace-pre-line break-words">{msg.text}</p>
+                    <p className={`whitespace-pre-line break-words ${msg.isCritical ? "font-medium text-slate-900" : ""}`}>
+                      {msg.text}
+                    </p>
 
                     {/* Resources list if crisis or distress triggered */}
                     {msg.resources && msg.resources.length > 0 && (
-                      <div className={`mt-3 pt-3 border-t ${msg.isCritical ? "border-rose-200/80" : "border-amber-200/80"} space-y-2`}>
-                        <span className={`block font-bold text-xs ${msg.isCritical ? "text-rose-800" : "text-amber-900"}`}>
-                          {t("checkin.resourcesTitle", "Immediate Emergency Helplines (24/7 Toll-Free)")}:
-                        </span>
+                      <div className={`mt-3 pt-3 border-t ${msg.isCritical ? "border-rose-200/90" : "border-amber-200/80"} space-y-2`}>
+                        <div className="flex items-center justify-between">
+                          <span className={`block font-bold text-xs ${msg.isCritical ? "text-rose-900" : "text-amber-900"}`}>
+                            {t("checkin.resourcesTitle", "Immediate Emergency Helplines (24/7 Toll-Free)")}:
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setHelplineTriggerReason(
+                                language === "hi"
+                                  ? "संदेश इनलाइन कार्ड से आपातकालीन हेल्पलाइन खोली गई"
+                                  : "Direct view from Havenline message emergency box"
+                              );
+                              setIsHelplineModalOpen(true);
+                            }}
+                            className="text-[10px] font-semibold text-rose-700 hover:text-rose-900 underline underline-offset-2 cursor-pointer"
+                          >
+                            {t("checkin.allHelplinesButton", "All Helplines")}
+                          </button>
+                        </div>
                         <div className="space-y-1.5">
                           {msg.resources.map((r, i) => (
                             <div
                               key={i}
-                              className={`p-2 rounded-lg bg-white border ${msg.isCritical ? "border-rose-200" : "border-amber-200"} flex items-center justify-between text-xs`}
+                              className={`p-2.5 rounded-xl bg-white border ${msg.isCritical ? "border-rose-200 shadow-2xs" : "border-amber-200"} flex items-center justify-between text-xs gap-2`}
                             >
-                              <div>
-                                <span className="font-bold text-slate-900 block">{r.name}</span>
-                                <span className="text-[11px] text-slate-500">{r.description}</span>
+                              <div className="min-w-0 flex-1">
+                                <span className="font-bold text-slate-900 block truncate">{r.name}</span>
+                                <span className="text-[11px] text-slate-500 line-clamp-1">{r.description}</span>
                               </div>
                               <a
                                 href={`tel:${r.number}`}
-                                className={`px-2.5 py-1 rounded-lg ${msg.isCritical ? "bg-rose-700 hover:bg-rose-800" : "bg-amber-700 hover:bg-amber-800"} text-white font-bold text-xs shrink-0 ml-2`}
+                                className={`px-3 py-1.5 rounded-lg ${msg.isCritical ? "bg-rose-700 hover:bg-rose-800" : "bg-amber-700 hover:bg-amber-800"} text-white font-bold text-xs shrink-0 inline-flex items-center gap-1.5 transition-colors shadow-2xs`}
                               >
-                                {r.number}
+                                <Phone className="w-3 h-3" />
+                                <span>{r.number}</span>
                               </a>
                             </div>
                           ))}
@@ -1183,6 +1310,7 @@ export default function CheckinPage() {
         isOpen={isHelplineModalOpen}
         onClose={() => setIsHelplineModalOpen(false)}
         triggerReason={helplineTriggerReason}
+        havenlineMessage={latestHavenlineMessage}
       />
 
       {/* Custom User Data Modal (Allows checking in without a preset persona) */}

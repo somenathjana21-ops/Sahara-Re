@@ -1,7 +1,7 @@
 # Graph Report - sahara-re  (2026-09-29)
 
 ## Corpus Check
-- 88 files · ~845,001 words
+- 88 files · ~844,361 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
