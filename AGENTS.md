@@ -139,7 +139,7 @@ PROJECT_TZ=Asia/Kolkata  # Required for policy engine date logic
 ## Known Quirks
 
 - **ESLint**: Uses legacy `.eslintrc.json` (flat config migration pending); `next lint` shows deprecation warning but works
-- **No README.md** — see `docs/PROJECT_BRIEF.md` and `ARCHITECTURE.md` for context
+- **README.md** — comprehensive project documentation and quickstart guide (see also `docs/PROJECT_BRIEF.md` and `ARCHITECTURE.md`)
 - **Supabase not required for tests** — in-memory repo used; `npm run seed` needs real credentials
 - **Mock LLM** is default — set `LLM_PROVIDER` for real providers
 - **Timezone matters** — `PROJECT_TZ` affects S3 time-windowed calculations

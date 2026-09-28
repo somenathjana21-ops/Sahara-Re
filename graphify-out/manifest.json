@@ -402,10 +402,10 @@
     "semantic_hash": "99387c79d22a3156c4572b282b0309a9"
   },
   "AGENTS.md": {
-    "mtime": 1790452836.8161693,
-    "seen": 1790453821.7499433,
-    "ast_hash": "2be06bb8c0b2ae848ed9a588665b3b82",
-    "semantic_hash": "2be06bb8c0b2ae848ed9a588665b3b82"
+    "mtime": 1790618821.2292652,
+    "seen": 1790618828.4620085,
+    "ast_hash": "4cb34643788cc11f7e454b5eddd2dd91",
+    "semantic_hash": ""
   },
   "ARCHITECTURE.md": {
     "mtime": 1790377189.5604093,
@@ -597,6 +597,12 @@
     "mtime": 1790534838.2443864,
     "seen": 1790616832.7311184,
     "ast_hash": "7a4c71e46d0e7b426ff858e2ad685a29",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1790618808.1161046,
+    "seen": 1790618828.4620137,
+    "ast_hash": "3818e3564adde8f2e239a37570de1350",
     "semantic_hash": ""
   }
 }
