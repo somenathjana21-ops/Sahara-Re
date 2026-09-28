@@ -21,5 +21,6 @@
   "19": "next.config.ts",
   "20": "postcss.config.mjs",
   "21": "tailwind.config.ts",
-  "22": "persons/route.ts"
+  "22": "persons/route.ts",
+  "23": "generate_docx_report.py"
 }

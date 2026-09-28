@@ -3,6 +3,8 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/i18n/LanguageContext";
 import Header from "@/components/common/Header";
+import SihWelcomeModal from "@/components/common/SihWelcomeModal";
+import SihFloatingLauncher from "@/components/common/SihFloatingLauncher";
 
 /**
  * Self-hosted font via next/font/google — prevents IP leakage
@@ -32,6 +34,8 @@ export default function RootLayout({
         <LanguageProvider>
           <Header />
           <main className="w-full pt-28 flex-grow">{children}</main>
+          <SihWelcomeModal />
+          <SihFloatingLauncher />
         </LanguageProvider>
       </body>
     </html>

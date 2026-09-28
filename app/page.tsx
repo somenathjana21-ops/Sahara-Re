@@ -210,7 +210,7 @@ export default function HomePage() {
                 </p>
               </div>
 
-              <div>
+              <div className="flex flex-col gap-2">
                 <Link
                   href="/checkin"
                   className="w-full h-12 rounded-xl bg-slate-800 hover:bg-slate-900 text-white flex items-center justify-center gap-2 text-sm font-semibold transition-colors shadow-xs"
@@ -218,7 +218,14 @@ export default function HomePage() {
                   <MessageSquare className="w-4 h-4" />
                   <span>{t("hero.channel2Action", "Start Anonymous Chat")}</span>
                 </Link>
-                <p className="text-center text-xs text-slate-500 mt-2 font-normal">
+                <Link
+                  href="/checkin"
+                  className="w-full h-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 flex items-center justify-center gap-2 text-xs font-semibold transition-colors"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-slate-600" />
+                  <span>Start Discreet Session</span>
+                </Link>
+                <p className="text-center text-[11px] text-slate-500 font-normal">
                   {t("hero.channel2Subtext", "Opens isolated secure sandbox")}
                 </p>
               </div>
@@ -246,15 +253,22 @@ export default function HomePage() {
                 </p>
               </div>
 
-              <div>
+              <div className="flex flex-col gap-2">
                 <Link
                   href="/checkin"
-                  className="w-full h-12 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-900 flex items-center justify-center gap-2 text-sm font-semibold transition-colors"
+                  className="w-full h-12 rounded-xl bg-primary hover:bg-emerald-800 text-white flex items-center justify-center gap-2 text-sm font-semibold transition-colors shadow-xs"
                 >
-                  <Smartphone className="w-4 h-4 text-slate-700" />
+                  <Smartphone className="w-4 h-4 text-white" />
                   <span>{t("hero.channel3Action", "Open Text Check-in")}</span>
                 </Link>
-                <p className="text-center text-xs text-slate-500 mt-2 font-normal">
+                <Link
+                  href="/checkin"
+                  className="w-full h-10 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/60 flex items-center justify-center gap-2 text-xs font-semibold transition-colors"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Wellbeing Scale (S1)</span>
+                </Link>
+                <p className="text-center text-[11px] text-slate-500 font-normal">
                   {t("hero.channel3Subtext", "Structured self-report & gentle dialogue")}
                 </p>
               </div>

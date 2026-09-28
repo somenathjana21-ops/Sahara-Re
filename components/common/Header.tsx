@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShieldCheck, MessageCircle, Phone, Menu, X, HeartHandshake } from "lucide-react";
+import { ShieldCheck, MessageCircle, Phone, Menu, X, HeartHandshake, Sparkles, BookOpen } from "lucide-react";
 
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
@@ -16,14 +16,14 @@ export default function Header() {
   const navLinks = [
     { href: "/", label: t("nav.getImmediateHelp", "Get Immediate Help") },
     { href: "/#breathing", label: t("nav.selfCare", "Grounding & Breathing") },
-    { href: "/checkin", label: t("nav.chatCheckin", "Text Check-in") },
     { href: "/call", label: t("nav.simulatedCall", "Simulated Call") },
     { href: "/staff", label: t("nav.staffDashboard", "Counsellor Triage") },
+    { href: "/guide", label: t("nav.sihGuide", "SIH PPT Guide"), isSpecial: true },
   ];
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-outline-subtle">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* 24/7 Hotline Quick Notice Sub-bar */}
         <div className="h-9 py-1 flex items-center justify-between border-b border-slate-100 text-xs text-on-surface-variant">
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
@@ -83,6 +83,25 @@ export default function Header() {
             <nav className="hidden lg:flex items-center gap-1 text-sm font-medium text-slate-600">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
+                if (link.isSpecial) {
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all text-xs font-semibold ${
+                        isActive
+                          ? "bg-emerald-700 text-white shadow-xs"
+                          : "bg-emerald-50 text-emerald-900 hover:bg-emerald-100 border border-emerald-200"
+                      }`}
+                    >
+                      <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>{link.label}</span>
+                      <span className="text-[10px] uppercase font-mono px-1 py-0.2 rounded bg-emerald-200/70 text-emerald-900">
+                        PS 26094
+                      </span>
+                    </Link>
+                  );
+                }
                 return (
                   <Link
                     key={link.href}
@@ -100,14 +119,14 @@ export default function Header() {
             </nav>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {/* Language Switcher */}
             <LanguageSwitcher />
 
             {/* Checkin button */}
             <Link
               href="/checkin"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-primary text-white text-xs sm:text-sm font-medium hover:bg-emerald-800 transition-colors shadow-xs"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-primary text-white text-xs sm:text-sm font-semibold hover:bg-emerald-800 transition-colors shadow-xs shrink-0 whitespace-nowrap"
             >
               <MessageCircle className="w-4 h-4" />
               <span>{t("common.chatCheckin", "Text Check-in")}</span>
@@ -133,13 +152,20 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`px-3 py-2 rounded-lg ${
+                className={`px-3 py-2 rounded-lg flex items-center justify-between ${
                   pathname === link.href
                     ? "bg-slate-100 text-slate-900 font-semibold"
+                    : link.isSpecial
+                    ? "bg-emerald-50 text-emerald-900 font-semibold"
                     : "text-slate-700 hover:bg-slate-50"
                 }`}
               >
-                {link.label}
+                <span>{link.label}</span>
+                {link.isSpecial && (
+                  <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-200/70 text-emerald-900">
+                    PS 26094
+                  </span>
+                )}
               </Link>
             ))}
             <div className="pt-2 border-t border-slate-100 flex gap-2">

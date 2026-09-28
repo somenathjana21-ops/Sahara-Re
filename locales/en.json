@@ -29,7 +29,8 @@
     "selfCare": "Grounding & Breathing",
     "chatCheckin": "Check-in Chat",
     "simulatedCall": "Simulated Call",
-    "staffDashboard": "Counsellor Triage"
+    "staffDashboard": "Counsellor Triage",
+    "sihGuide": "SIH PPT Guide"
   },
   "hero": {
     "liveStatus": "Listeners active and ready",

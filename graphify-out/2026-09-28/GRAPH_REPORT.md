@@ -1,16 +1,16 @@
-# Graph Report - Sahara-Re  (2026-09-27)
+# Graph Report - Sahara-Re  (2026-09-28)
 
 ## Corpus Check
-- 80 files · ~84,923 words
+- 81 files · ~460,642 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 516 nodes · 1119 edges · 23 communities (19 shown, 4 thin omitted)
+- 518 nodes · 1120 edges · 24 communities (20 shown, 4 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 14 edges (avg confidence: 0.81)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `cb79d6f0`
+- Built from commit: `e0edb199`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -69,11 +69,11 @@
 - **6-Phase Implementation Plan** — concept_phase1_contracts, concept_phase2_safety, concept_phase3_scoring, concept_phase4_pipeline, concept_phase5_ui, concept_phase6_dashboard [EXTRACTED 0.90]
 - **Safety Interlock System (Two-Pass)** — concept_pass1_interlock, concept_pass2_interlock, concept_lexicon_v1, concept_boxed_llm_call [EXTRACTED 0.90]
 
-## Communities (23 total, 4 thin omitted)
+## Communities (24 total, 4 thin omitted)
 
 ### Community 0 - "InMemoryRepository"
 Cohesion: 0.06
-Nodes (27): GET(), TIER_PRIORITY, TriageQueueItem, StaffTriageQueuePage(), PersonDetailScreen(), AckModal(), AckModalProps, StaffAuthGate() (+19 more)
+Nodes (20): StaffTriageQueuePage(), PersonDetailScreen(), AckModal(), AckModalProps, StaffAuthGate(), StaffAuthGateProps, TrendChart(), TrendChartProps (+12 more)
 
 ### Community 1 - "llm/index.ts"
 Cohesion: 0.16
@@ -84,16 +84,16 @@ Cohesion: 0.12
 Nodes (58): AGENTS.md - Project SAHARA Agent Instructions, ARCHITECTURE.md - Technical Architecture, 10-Step Pipeline, Audit Logging (Every Staff Read), Box Breathing Widget (4-4-4), Boxed LLM Call, Change Point Detection (z > 2.0), CI Pipeline (Typecheck, Test, Build) (+50 more)
 
 ### Community 3 - "fixtures.ts"
-Cohesion: 0.08
-Nodes (45): GET(), POST(), CasePatchSchema, GET(), PATCH(), DELETE(), GET(), POST() (+37 more)
+Cohesion: 0.07
+Nodes (48): GET(), POST(), CasePatchSchema, GET(), PATCH(), DELETE(), GET(), POST() (+40 more)
 
 ### Community 4 - "useLanguage"
-Cohesion: 0.08
-Nodes (32): CallPage(), ChatMessage, CheckinPage(), metadata, plusJakartaSans, HomePage(), BreathingWidget(), CrisisHelplinesModal() (+24 more)
+Cohesion: 0.09
+Nodes (30): CallPage(), ChatMessage, CheckinPage(), metadata, plusJakartaSans, HomePage(), BreathingWidget(), CrisisHelplinesModal() (+22 more)
 
 ### Community 5 - "contract.ts"
 Cohesion: 0.07
-Nodes (32): ExplainabilityChart(), ExplainabilityChartProps, BASE_WEIGHTS, CompositeDistressResult, RawScores, ScoringWeights, S1Result, S5_CAVEAT (+24 more)
+Nodes (33): ExplainabilityChart(), ExplainabilityChartProps, BASE_WEIGHTS, CompositeDistressResult, RawScores, ScoringWeights, S1Result, S5_CAVEAT (+25 more)
 
 ### Community 6 - "dependencies"
 Cohesion: 0.06
@@ -108,8 +108,8 @@ Cohesion: 0.09
 Nodes (23): autoprefixer, eslint, eslint-config-next, devDependencies, autoprefixer, eslint, eslint-config-next, postcss (+15 more)
 
 ### Community 9 - "checkin/route.ts"
-Cohesion: 0.07
-Nodes (44): POST(), ConditionSchema, EscalationConfigSchema, evaluatePolicy(), EvaluatePolicyInput, getActivePolicy(), parseAndValidatePolicy(), PolicyDefinition (+36 more)
+Cohesion: 0.06
+Nodes (49): POST(), TriageQueueItem, ConditionSchema, DeterministicTriggerInput, EscalationConfigSchema, evaluatePolicy(), EvaluatePolicyInput, EvaluatePolicyResult (+41 more)
 
 ### Community 10 - "middleware.ts"
 Cohesion: 0.27
@@ -147,17 +147,17 @@ Nodes (11): GET(), POST(), containsPII(), PII_PATTERNS, scrubPII(), ScrubResult,
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `PersonRecord` connect `InMemoryRepository` to `fixtures.ts`, `contract.ts`, `persons/route.ts`?**
+- **Why does `PersonRecord` connect `InMemoryRepository` to `checkin/route.ts`, `fixtures.ts`, `contract.ts`, `persons/route.ts`?**
   _High betweenness centrality (0.017) - this node is a cross-community bridge._
-- **Why does `AlertRecord` connect `InMemoryRepository` to `fixtures.ts`, `contract.ts`?**
+- **Why does `AlertRecord` connect `InMemoryRepository` to `checkin/route.ts`, `fixtures.ts`, `contract.ts`?**
   _High betweenness centrality (0.016) - this node is a cross-community bridge._
 - **What connects `extends`, `next/core-web-vitals`, `react/no-unescaped-entities` to the rest of the system?**
   _152 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `InMemoryRepository` be split into smaller, more focused modules?**
-  _Cohesion score 0.05719298245614035 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06189640035118525 - nodes in this community are weakly interconnected._
 - **Should `AGENTS.md - Project SAHARA Agent Instructions` be split into smaller, more focused modules?**
   _Cohesion score 0.1161524500907441 - nodes in this community are weakly interconnected._
 - **Should `fixtures.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.07978142076502732 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07451923076923077 - nodes in this community are weakly interconnected._
 - **Should `useLanguage` be split into smaller, more focused modules?**
-  _Cohesion score 0.08163265306122448 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected._

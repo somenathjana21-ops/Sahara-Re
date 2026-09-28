@@ -2199,7 +2199,7 @@
       "file_type": "code",
       "norm_label": "rootlayout()",
       "source_file": "app/layout.tsx",
-      "source_location": "L24"
+      "source_location": "L26"
     },
     {
       "id": "app_page_homepage",
@@ -2334,6 +2334,30 @@
       "source_location": "L23"
     },
     {
+      "id": "components_common_sihfloatinglauncher_sihfloatinglauncher",
+      "label": "SihFloatingLauncher()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "useLanguage",
+      "file_type": "code",
+      "norm_label": "sihfloatinglauncher()",
+      "source_file": "components/common/SihFloatingLauncher.tsx",
+      "source_location": "L8"
+    },
+    {
+      "id": "components_common_sihwelcomemodal_sihwelcomemodal",
+      "label": "SihWelcomeModal()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "useLanguage",
+      "file_type": "code",
+      "norm_label": "sihwelcomemodal()",
+      "source_file": "components/common/SihWelcomeModal.tsx",
+      "source_location": "L21"
+    },
+    {
       "id": "lib_i18n_languagecontext_languageprovider",
       "label": "LanguageProvider()",
       "_callable": true,
@@ -2380,6 +2404,18 @@
       "norm_label": "post()",
       "source_file": "app/api/checkin/route.ts",
       "source_location": "L38"
+    },
+    {
+      "id": "app_guide_page_sihguidepage",
+      "label": "SihGuidePage()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "sihguidepage()",
+      "source_file": "app/guide/page.tsx",
+      "source_location": "L42"
     },
     {
       "id": "lib_policy_index_evaluatepolicy",
@@ -3685,17 +3721,6 @@
       "source_location": "L94"
     },
     {
-      "id": "types_contract_consentrequestschema",
-      "label": "ConsentRequestSchema",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "fixtures.ts",
-      "file_type": "code",
-      "norm_label": "consentrequestschema",
-      "source_file": "types/contract.ts",
-      "source_location": "L119"
-    },
-    {
       "id": "types_contract_tierenum",
       "label": "TierEnum",
       "_origin": "ast",
@@ -3748,7 +3773,7 @@
       "file_type": "code",
       "norm_label": "metadata",
       "source_file": "app/layout.tsx",
-      "source_location": "L18"
+      "source_location": "L20"
     },
     {
       "id": "app_layout_plusjakartasans",
@@ -3759,7 +3784,7 @@
       "file_type": "code",
       "norm_label": "plusjakartasans",
       "source_file": "app/layout.tsx",
-      "source_location": "L11"
+      "source_location": "L13"
     },
     {
       "id": "app_page",
@@ -3836,6 +3861,28 @@
       "file_type": "code",
       "norm_label": "quickexit.tsx",
       "source_file": "components/common/QuickExit.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "components_common_sihfloatinglauncher",
+      "label": "SihFloatingLauncher.tsx",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "useLanguage",
+      "file_type": "code",
+      "norm_label": "sihfloatinglauncher.tsx",
+      "source_file": "components/common/SihFloatingLauncher.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "components_common_sihwelcomemodal",
+      "label": "SihWelcomeModal.tsx",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "useLanguage",
+      "file_type": "code",
+      "norm_label": "sihwelcomemodal.tsx",
+      "source_file": "components/common/SihWelcomeModal.tsx",
       "source_location": "L1"
     },
     {
@@ -4057,6 +4104,17 @@
       "norm_label": "componentsbreakdownschema",
       "source_file": "types/contract.ts",
       "source_location": "L76"
+    },
+    {
+      "id": "types_contract_consentrequestschema",
+      "label": "ConsentRequestSchema",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "contract.ts",
+      "file_type": "code",
+      "norm_label": "consentrequestschema",
+      "source_file": "types/contract.ts",
+      "source_location": "L119"
     },
     {
       "id": "types_contract_contributionsbreakdownschema",
@@ -5068,6 +5126,17 @@
       "file_type": "code",
       "norm_label": "checkin/route.ts",
       "source_file": "app/api/checkin/route.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_guide_page",
+      "label": "guide/page.tsx",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "checkin/route.ts",
+      "file_type": "code",
+      "norm_label": "guide/page.tsx",
+      "source_file": "app/guide/page.tsx",
       "source_location": "L1"
     },
     {
@@ -6711,6 +6780,18 @@
       "context": "call",
       "source_file": "app/checkin/page.tsx",
       "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "app_guide_page_sihguidepage",
+      "target": "lib_safety_interlock_checkinput",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "app/guide/page.tsx",
+      "source_location": "L64",
       "weight": 1.0
     },
     {
@@ -8778,6 +8859,42 @@
       "weight": 1.0
     },
     {
+      "source": "app_guide_page",
+      "target": "lib_safety_interlock_checkinput",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/guide/page.tsx",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "app_guide_page",
+      "target": "lib_safety_interlock_pass1result",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/guide/page.tsx",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "app_guide_page",
+      "target": "lib_constants_personas_preset_personas",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/guide/page.tsx",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
       "source": "app_layout",
       "target": "lib_i18n_languagecontext_languageprovider",
       "relation": "imports",
@@ -8799,6 +8916,30 @@
       "context": "import",
       "source_file": "app/layout.tsx",
       "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "app_layout",
+      "target": "components_common_sihwelcomemodal_sihwelcomemodal",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/layout.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "app_layout",
+      "target": "components_common_sihfloatinglauncher_sihfloatinglauncher",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/layout.tsx",
+      "source_location": "L7",
       "weight": 1.0
     },
     {
@@ -11694,6 +11835,30 @@
       "weight": 1.0
     },
     {
+      "source": "app_guide_page",
+      "target": "lib_safety_interlock",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/guide/page.tsx",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "app_guide_page",
+      "target": "lib_constants_personas",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/guide/page.tsx",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
       "source": "app_layout",
       "target": "lib_i18n_languagecontext",
       "relation": "imports_from",
@@ -11715,6 +11880,30 @@
       "context": "import",
       "source_file": "app/layout.tsx",
       "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "app_layout",
+      "target": "components_common_sihwelcomemodal",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/layout.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "app_layout",
+      "target": "components_common_sihfloatinglauncher",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "app/layout.tsx",
+      "source_location": "L7",
       "weight": 1.0
     },
     {
@@ -13277,6 +13466,17 @@
       "weight": 1.0
     },
     {
+      "source": "app_guide_page",
+      "target": "app_guide_page_sihguidepage",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/guide/page.tsx",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
       "source": "app_layout",
       "target": "app_layout_plusjakartasans",
       "relation": "contains",
@@ -13284,7 +13484,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/layout.tsx",
-      "source_location": "L11",
+      "source_location": "L13",
       "weight": 1.0
     },
     {
@@ -13295,7 +13495,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/layout.tsx",
-      "source_location": "L18",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -13306,7 +13506,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/layout.tsx",
-      "source_location": "L24",
+      "source_location": "L26",
       "weight": 1.0
     },
     {
@@ -13461,6 +13661,28 @@
       "confidence_score": 1.0,
       "source_file": "components/common/QuickExit.tsx",
       "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "components_common_sihfloatinglauncher",
+      "target": "components_common_sihfloatinglauncher_sihfloatinglauncher",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/common/SihFloatingLauncher.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "components_common_sihwelcomemodal",
+      "target": "components_common_sihwelcomemodal_sihwelcomemodal",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/common/SihWelcomeModal.tsx",
+      "source_location": "L21",
       "weight": 1.0
     },
     {
@@ -19222,5 +19444,5 @@
       "source_file": "AGENTS.md"
     }
   ],
-  "built_at_commit": "e0edb19977e203d0385c41e2b6f1e98cc0baa524"
+  "built_at_commit": "a2192a11d60a6cb666e243cf67c727f34e6d4444"
 }

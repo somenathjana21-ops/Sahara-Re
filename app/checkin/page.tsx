@@ -688,7 +688,7 @@ export default function CheckinPage() {
                   setHasConsent(true);
                 }
               }}
-              className="flex-1 max-w-md px-2.5 py-1.5 rounded-lg bg-slate-50 border border-slate-300 text-slate-900 font-medium focus:outline-none focus:border-primary text-xs"
+              className="flex-1 min-w-0 w-full sm:max-w-md px-2.5 py-1.5 rounded-lg bg-slate-50 border border-slate-300 text-slate-900 font-medium focus:outline-none focus:border-primary text-xs truncate"
             >
               {personas.map((p) => (
                 <option key={p.id} value={p.id}>
@@ -790,7 +790,7 @@ export default function CheckinPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column: S1 Structured Wellbeing Scale (Questions q1, q2, q3) */}
         {!s1SubmittedInSession ? (
-          <div className="lg:col-span-5 bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-2xs">
+          <div className="lg:col-span-5 bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-2xs w-full min-w-0">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
               <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-primary" />
@@ -943,7 +943,7 @@ export default function CheckinPage() {
             </div>
           </div>
         ) : (
-          <div className="lg:col-span-4 bg-white rounded-2xl p-5 border border-emerald-200/80 bg-emerald-50/20 shadow-2xs transition-all">
+          <div className="lg:col-span-4 bg-white rounded-2xl p-5 border border-emerald-200/80 bg-emerald-50/20 shadow-2xs transition-all w-full min-w-0">
             <div className="flex items-center gap-2 pb-3 border-b border-emerald-100 mb-3.5">
               <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
               <div>
@@ -1004,7 +1004,7 @@ export default function CheckinPage() {
         )}
 
         {/* Right Column: Conversational Dialogue Area */}
-        <div className={`${!s1SubmittedInSession ? "lg:col-span-7" : "lg:col-span-8"} bg-white rounded-2xl border border-slate-200 shadow-2xs flex flex-col h-[580px] transition-all`}>
+        <div className={`${!s1SubmittedInSession ? "lg:col-span-7" : "lg:col-span-8"} bg-white rounded-2xl border border-slate-200 shadow-2xs flex flex-col h-[600px] max-h-[82vh] transition-all w-full min-w-0 overflow-hidden`}>
           {/* Header */}
           <div className="px-5 py-3.5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 rounded-t-2xl">
             <div className="flex items-center gap-2">
@@ -1040,8 +1040,8 @@ export default function CheckinPage() {
               if (msg.sender === "user") {
                 return (
                   <div key={msg.id} className="flex justify-end">
-                    <div className="max-w-[80%] bg-primary text-white rounded-2xl rounded-tr-xs px-4 py-2.5 text-xs sm:text-sm leading-relaxed shadow-2xs">
-                      <p>{msg.text}</p>
+                    <div className="max-w-[85%] bg-primary text-white rounded-2xl rounded-tr-xs px-4 py-2.5 text-xs sm:text-sm leading-relaxed shadow-2xs break-words overflow-hidden">
+                      <p className="whitespace-pre-line break-words">{msg.text}</p>
                       <span className="block text-[10px] text-emerald-200 text-right mt-1">
                         {msg.timestamp}
                       </span>
@@ -1054,7 +1054,7 @@ export default function CheckinPage() {
               return (
                 <div key={msg.id} className="flex justify-start">
                   <div
-                    className={`max-w-[85%] rounded-2xl rounded-tl-xs px-4 py-3 text-xs sm:text-sm leading-relaxed border shadow-2xs ${
+                    className={`max-w-[90%] sm:max-w-[85%] rounded-2xl rounded-tl-xs px-4 py-3 text-xs sm:text-sm leading-relaxed border shadow-2xs break-words overflow-hidden ${
                       msg.isCritical
                         ? "bg-rose-50 border-rose-200 text-slate-900"
                         : msg.tier === "RED"
@@ -1081,7 +1081,7 @@ export default function CheckinPage() {
                       )}
                     </div>
 
-                    <p className="whitespace-pre-line">{msg.text}</p>
+                    <p className="whitespace-pre-line break-words">{msg.text}</p>
 
                     {/* Resources list if crisis or distress triggered */}
                     {msg.resources && msg.resources.length > 0 && (
@@ -1124,7 +1124,7 @@ export default function CheckinPage() {
           {/* Chat Input & Submit */}
           <form
             onSubmit={handleSubmitCheckin}
-            className="p-3 border-t border-slate-100 bg-white rounded-b-2xl flex flex-col gap-2"
+            className="p-3 sm:p-4 border-t border-slate-100 bg-white rounded-b-2xl flex flex-col gap-2.5 w-full min-w-0"
           >
             {/* Quick Action Bar for Human Support */}
             <div className="flex items-center justify-between gap-2 px-1 text-xs">
@@ -1137,7 +1137,7 @@ export default function CheckinPage() {
               <button
                 type="button"
                 onClick={handleTalkToPersonClick}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-semibold transition-colors cursor-pointer ml-auto shadow-2xs"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-semibold transition-colors cursor-pointer ml-auto shadow-2xs shrink-0"
               >
                 <Phone className="w-3 h-3 text-rose-600 animate-pulse" />
                 <span>
@@ -1149,7 +1149,7 @@ export default function CheckinPage() {
               </button>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 w-full min-w-0">
               <input
                 type="text"
                 value={inputVal}
@@ -1159,14 +1159,14 @@ export default function CheckinPage() {
                   "Type how you are feeling or what happened today..."
                 )}
                 disabled={submitting}
-                className="flex-1 h-11 px-4 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-primary focus:bg-white transition-all"
+                className="flex-1 min-w-0 w-full h-12 px-4 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/15 transition-all shadow-2xs"
               />
               <button
                 type="submit"
                 disabled={submitting || !inputVal.trim()}
-                className="h-11 px-4 sm:px-5 rounded-xl bg-primary hover:bg-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 transition-colors shrink-0 cursor-pointer shadow-2xs"
+                className="h-12 px-4 sm:px-6 rounded-xl bg-primary hover:bg-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-colors shrink-0 cursor-pointer shadow-xs whitespace-nowrap"
               >
-                <Send className="w-4 h-4" />
+                <Send className="w-4 h-4 shrink-0" />
                 <span>
                   {submitting
                     ? t("checkin.sending", "Processing...")

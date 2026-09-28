@@ -1,16 +1,16 @@
-# Graph Report - Sahara-Re  (2026-09-28)
+# Graph Report - sahara-re  (2026-09-28)
 
 ## Corpus Check
-- 81 files · ~460,642 words
+- 84 files · ~838,266 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 518 nodes · 1120 edges · 24 communities (20 shown, 4 thin omitted)
+- 524 nodes · 1133 edges · 24 communities (20 shown, 4 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 14 edges (avg confidence: 0.81)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e0edb199`
+- Built from commit: `a2192a11`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -84,16 +84,16 @@ Cohesion: 0.12
 Nodes (58): AGENTS.md - Project SAHARA Agent Instructions, ARCHITECTURE.md - Technical Architecture, 10-Step Pipeline, Audit Logging (Every Staff Read), Box Breathing Widget (4-4-4), Boxed LLM Call, Change Point Detection (z > 2.0), CI Pipeline (Typecheck, Test, Build) (+50 more)
 
 ### Community 3 - "fixtures.ts"
-Cohesion: 0.07
-Nodes (48): GET(), POST(), CasePatchSchema, GET(), PATCH(), DELETE(), GET(), POST() (+40 more)
+Cohesion: 0.08
+Nodes (47): GET(), POST(), CasePatchSchema, GET(), PATCH(), DELETE(), GET(), POST() (+39 more)
 
 ### Community 4 - "useLanguage"
-Cohesion: 0.09
-Nodes (30): CallPage(), ChatMessage, CheckinPage(), metadata, plusJakartaSans, HomePage(), BreathingWidget(), CrisisHelplinesModal() (+22 more)
+Cohesion: 0.08
+Nodes (32): CallPage(), ChatMessage, CheckinPage(), metadata, plusJakartaSans, HomePage(), BreathingWidget(), CrisisHelplinesModal() (+24 more)
 
 ### Community 5 - "contract.ts"
 Cohesion: 0.07
-Nodes (33): ExplainabilityChart(), ExplainabilityChartProps, BASE_WEIGHTS, CompositeDistressResult, RawScores, ScoringWeights, S1Result, S5_CAVEAT (+25 more)
+Nodes (34): ExplainabilityChart(), ExplainabilityChartProps, BASE_WEIGHTS, CompositeDistressResult, RawScores, ScoringWeights, S1Result, S5_CAVEAT (+26 more)
 
 ### Community 6 - "dependencies"
 Cohesion: 0.06
@@ -109,7 +109,7 @@ Nodes (23): autoprefixer, eslint, eslint-config-next, devDependencies, autoprefi
 
 ### Community 9 - "checkin/route.ts"
 Cohesion: 0.06
-Nodes (49): POST(), TriageQueueItem, ConditionSchema, DeterministicTriggerInput, EscalationConfigSchema, evaluatePolicy(), EvaluatePolicyInput, EvaluatePolicyResult (+41 more)
+Nodes (50): POST(), TriageQueueItem, SihGuidePage(), ConditionSchema, DeterministicTriggerInput, EscalationConfigSchema, evaluatePolicy(), EvaluatePolicyInput (+42 more)
 
 ### Community 10 - "middleware.ts"
 Cohesion: 0.27
@@ -158,6 +158,6 @@ _Questions this graph is uniquely positioned to answer:_
 - **Should `AGENTS.md - Project SAHARA Agent Instructions` be split into smaller, more focused modules?**
   _Cohesion score 0.1161524500907441 - nodes in this community are weakly interconnected._
 - **Should `fixtures.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.07451923076923077 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0763888888888889 - nodes in this community are weakly interconnected._
 - **Should `useLanguage` be split into smaller, more focused modules?**
-  _Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0784313725490196 - nodes in this community are weakly interconnected._

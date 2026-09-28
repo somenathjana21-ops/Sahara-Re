@@ -502,5 +502,47 @@
     "seen": 1790526070.590379,
     "ast_hash": "5504f47959f1870c726a4f50bd173d9c",
     "semantic_hash": ""
+  },
+  "scripts/generate_docx_report.py": {
+    "mtime": 1790535077.9440663,
+    "seen": 1790535876.4924746,
+    "ast_hash": "0f031326c59dab0fd54a9ae1129c4e65",
+    "semantic_hash": ""
+  },
+  "extracted_slides/slide_1.png": {
+    "mtime": 1790534836.7244668,
+    "seen": 1790535876.4925268,
+    "ast_hash": "0cc1b84a6ad7cd758225136e9db50240",
+    "semantic_hash": ""
+  },
+  "extracted_slides/slide_2.png": {
+    "mtime": 1790534837.1794093,
+    "seen": 1790535876.4925318,
+    "ast_hash": "afa1b5d631d87cb983e2cc6e9ce0acdc",
+    "semantic_hash": ""
+  },
+  "extracted_slides/slide_3.png": {
+    "mtime": 1790534837.4474695,
+    "seen": 1790535876.4925334,
+    "ast_hash": "a19b817519d83990df77e9a64c908e93",
+    "semantic_hash": ""
+  },
+  "extracted_slides/slide_4.png": {
+    "mtime": 1790534837.6981812,
+    "seen": 1790535876.4925354,
+    "ast_hash": "ae3af259ef74119ffbf11f255b2f9476",
+    "semantic_hash": ""
+  },
+  "extracted_slides/slide_5.png": {
+    "mtime": 1790534837.9556725,
+    "seen": 1790535876.4925365,
+    "ast_hash": "763475df9a44df924818c1de81de971f",
+    "semantic_hash": ""
+  },
+  "extracted_slides/slide_6.png": {
+    "mtime": 1790534838.2443864,
+    "seen": 1790535876.4925385,
+    "ast_hash": "7a4c71e46d0e7b426ff858e2ad685a29",
+    "semantic_hash": ""
   }
 }
